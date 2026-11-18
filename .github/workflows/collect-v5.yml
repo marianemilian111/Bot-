@@ -34,6 +34,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: b999e47f1e14fa53c995702769657fd5f6cb046a   # FROZEN collection code (PREREG amendment); dev pushes do not affect it
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -77,6 +78,7 @@ jobs:
         run: |
           git config user.name "paper-collector"
           git config user.email "paper-collector@users.noreply.github.com"
+          echo "collection code: $(git rev-parse HEAD)"
           rm -rf /tmp/keep && mkdir -p /tmp/keep && cp -r state logs /tmp/keep/ 2>/dev/null || true
           if git fetch origin "$DATA_BRANCH" 2>/dev/null; then git checkout -f -B "$DATA_BRANCH" "origin/$DATA_BRANCH"; else git checkout -f --orphan "$DATA_BRANCH"; git rm -rqf --cached . || true; fi
           find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
