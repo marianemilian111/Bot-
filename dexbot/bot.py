@@ -10,6 +10,9 @@ from .config import Config
 from .dashboard import render, write_state
 
 
+STALE_S = 120          # market data older than this is not used for any decision (live feeds only)
+
+
 class Bot:
     def __init__(self, cfg: Config, feed, now: datetime, logdir="logs", sell_checker=None, tag="", strategy_id="momentum-v1"):
         os.makedirs(logdir, exist_ok=True)
@@ -51,6 +54,15 @@ class Bot:
         for a in self.ex.positions:                    # keep marking held pairs
             if a not in pairs and self.feed.get(a):
                 pairs[a] = self.feed.get(a)
+        t_now = time.time()
+        stale = {a for a, p in pairs.items() if p.fetched_at is not None and t_now - p.fetched_at > STALE_S}
+        for a in stale & set(self.ex.positions):
+            key = (a, "STALE", int(pairs[a].fetched_at))
+            if key not in self.seen:
+                self.seen.add(key)
+                self.log.log(now, "STALE", f"{pairs[a].symbol} mint={a}: market data {t_now - pairs[a].fetched_at:.0f}s old; "
+                                           "no exit decision on it, position kept until fresh data")
+        pairs = {a: p for a, p in pairs.items() if a not in stale}
         self.ex.manage(pairs, now)
         equity = self.eq.cash + self.ex.value({a: p.price for a, p in pairs.items()})
         self.eq.check_drawdown(now, equity, c.dd_limit)

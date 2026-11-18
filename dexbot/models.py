@@ -32,6 +32,7 @@ class Pair:
     dev_sold: bool = False
     lp_pulled: bool = False
     pair_addr: Optional[str] = None
+    fetched_at: Optional[float] = None      # wall time the market data was fetched (None = simulator)
     liquidity_source: Optional[str] = None   # dexscreener | pump_curve_rpc | None (unknown)
     sell_holder: Optional[tuple] = None      # (owner, raw_amount) public holder used for the small sell simulation
     sell_holders: Optional[list] = None      # [(owner, raw_amount)] public non-pool holders, largest first

@@ -83,6 +83,28 @@ else:
     why = ("no closed trades on at least one side" if not (a["closed"] and b["closed"])
            else "the baseline never had more than one eligible option")
     o += ["", f"Comparison with the random baseline: **NETESTABIL** ({why}). Momentum is not claimed to beat it."]
+def per_day(st):
+    days = collections.OrderedDict()
+    for t in sorted(st["trades"], key=lambda t: t["closed"]):
+        d = t["closed"][:10]
+        x = days.setdefault(d, {"n": 0, "net": 0.0, "imputed": 0.0})
+        x["n"] += 1; x["net"] += t["proceeds"] - t["cost"]; x["imputed"] += t.get("written_off", 0)
+    return days
+
+import datetime as _dt
+span = [x for x, _ in json.load(open(f"state/paper_state_{V3}.json"))["curve"]]
+d0 = _dt.date.fromisoformat(span[0][:10]); d1 = _dt.date.fromisoformat(json.load(open(f"state/paper_state_{V3}.json"))["saved"][:10])
+all_days = [(d0 + _dt.timedelta(days=i)).isoformat() for i in range((d1 - d0).days + 1)]
+o += ["", "## Per day (close date, UTC)", "", "| Day | Momentum closed | Momentum net | Momentum imputed | Baseline closed | Baseline net |", "|---|---|---|---|---|---|"]
+pdm, pdb = per_day(json.load(open(f"state/paper_state_{V3}.json"))), per_day(json.load(open(f"state/paper_state_{V3B}.json")))
+for d in all_days:
+    m_, b_ = pdm.get(d), pdb.get(d)
+    o.append(f"| {d} | {m_['n'] if m_ else 0} | {f(m_['net']) if m_ else 'N/A'} | {f(-m_['imputed']) if m_ else 'N/A'} | "
+             f"{b_['n'] if b_ else 0} | {f(b_['net']) if b_ else 'N/A'} |")
+no_trade = [d for d in all_days if d not in pdm]
+worst = min(pdm.items(), key=lambda kv: kv[1]["net"]) if pdm else None
+o += ["", f"Days in the test span: {len(all_days)}; Momentum days without a closed trade: {len(no_trade)}; worst day: "
+      + (f"{worst[0]} {f(worst[1]['net'])}" if worst else "N/A") + ". A positive total does not mean every day was positive."]
 n = a["closed"]
 o += ["", f"Verdict: **{'INSUFICIENT' if n < 30 else 'see criteria'}** ({n} closed Momentum trades; validation needs >= 30 over >= 7 days "
       "of new data, positive net PnL, above the baseline, drawdown < 30 %, no trade > 30 % of net profit). "

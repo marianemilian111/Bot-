@@ -197,7 +197,7 @@ class LiveFeed:
                 if r.get("chainId") != "solana" or not r.get("pairCreatedAt"):
                     continue
                 a = r["baseToken"]["address"]
-                if a not in best or (r.get("liquidity") or {}).get("usd", 0) > (best[a].get("liquidity") or {}).get("usd", 0):
+                if a not in best or ((r.get("liquidity") or {}).get("usd") or 0) > ((best[a].get("liquidity") or {}).get("usd") or 0):
                     best[a] = r
             for a, r in best.items():
                 self.cache[a] = self._to_pair(a, r)
@@ -215,12 +215,13 @@ class LiveFeed:
         # only spend a RugCheck call on pairs that could pass the loosest variant's floors
         s = self._security(a) if (v.get("m5") or 0) >= self.gate_vol and (liq is None or liq >= self.gate_liq) else {}
         h = s.get("holders")
-        if h:
-            self.holder_hist[a].append((time.time(), h))
+        t_fetch = (self.sec.get(a) or (None,))[0]
+        if h and t_fetch and (not self.holder_hist[a] or self.holder_hist[a][-1][0] != t_fetch):
+            self.holder_hist[a].append((t_fetch, h))     # observation time = when RugCheck was read, not the cycle time
         old = [x for t, x in self.holder_hist[a] if time.time() - t >= 600]
         sm, kol = self.wallet_hook(a) if self.wallet_hook else (0, False)
         return Pair(
-            addr=a, pair_addr=r.get("pairAddress"), symbol=r["baseToken"].get("symbol", "?"),
+            addr=a, pair_addr=r.get("pairAddress"), fetched_at=time.time(), symbol=r["baseToken"].get("symbol", "?"),
             source=SOURCES.get(r.get("dexId", ""), r.get("dexId", "?")),
             age_s=time.time() - r["pairCreatedAt"] / 1000, price=price,
             liquidity=liq, liquidity_source=liq_src, vol5m=v.get("m5") or 0,

@@ -25,7 +25,7 @@ from datetime import datetime, timezone
 
 from .agents import Executor, RugCheck, Scanner
 from .alert import evaluate
-from .bot import Bot
+from .bot import STALE_S, Bot
 from .collector import _decision, save_state
 from .execsim import NET_FEE_USD, buy_quote, classify, sell_simulation
 from .live import CURVE_DEX, GT, LiveFeed
@@ -262,7 +262,8 @@ def run_v3(minutes, early_stop_min=20, interval_s=30, out_dir="logs", state_dir=
             except Exception as e:
                 b.log.log(now, "ERROR", repr(e)[:200])
         cycles += 1
-        snap = [p for p in feed.snapshot() if p.age_s <= cfg.max_age_s]
+        snap = [p for p in feed.snapshot() if p.age_s <= cfg.max_age_s
+                and (p.fetched_at is None or time.time() - p.fetched_at <= STALE_S)]   # no stale data in candidates
         eligible = []
         for p in snap:
             verdict, why, sig = evaluate(cfg, scanner, rug, p, skip_sell=True)
