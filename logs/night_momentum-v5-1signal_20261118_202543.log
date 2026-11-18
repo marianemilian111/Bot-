@@ -1,0 +1,14 @@
+2026-11-18 20:25:43 INFO     start balance=$250.00
+2026-11-18 20:25:43 INFO     strategy=momentum-v5-1signal fingerprint=d9d4191e906de84d rules={"baseline": "paired: one random draw among same-cycle pairs passing universe+safety, per Momentum entry", "baseline_seed": 20261119, "changed_vs_v1": "min_signals 2 -> 1 (only change); execution as v3", "discovery": "LiveFeed: DexScreener profiles + boosts latest/top, GeckoTerminal new/trending (discovery only, never a signal)", "entry_parts": 2, "exit_fill": "only a passing sell simulation at size; FAIL -> $0 imputed; UNKNOWN -> retry next cycle", "fills": "jupiter quote at size + net fee", "max_age_s": 21600, "min_age_s": 0, "min_signals": 1, "net_fee_usd": 0.02, "position_usd": 50.0, "stale_data_s": 120, "start_balance": 250.0} resumed=True (PAPER ONLY)
+2026-11-18 20:25:43 FILTERED FruitPay (pump.fun) mint=8raQ5kYTCxNq9a6T4x92WQMKE6mAHnuuXpUJ5FuYpump signals=BUY_RATIO reason: liquidity $12,899 < $40,000
+2026-11-18 20:25:43 FILTERED GTABOY (pump.fun) mint=689ZZbpm9NGPgCDQfe1bhVXEm5qqGJtKaARCtNVCpump signals=BUY_RATIO reason: liquidity $10,553 < $40,000
+2026-11-18 20:25:43 FILTERED MGH (pump.fun) mint=8e4Km4t4Et7HMapKjQ9rVzubXeS18kYpq2692wxGpump signals=VOL_SPIKE reason: liquidity $4,283 < $40,000
+2026-11-18 20:25:43 FILTERED Founder (pump.fun) mint=Eyp4dHQD8oLLF4XLyA1QDcFxSYxQSFnphiujRvugpump signals=BUY_RATIO reason: liquidity $37,493 < $40,000
+2026-11-18 20:25:43 FILTERED Snapmatic (pump.fun) mint=4S8pUKWKUAtQKfE5qokSjszWDp1RqQWnom8jNYSWpump signals=VOL_SPIKE reason: liquidity $15,070 < $40,000
+2026-11-18 20:25:43 FILTERED FOUNDER (pump.fun) mint=79QjDainx3coswjB3qk8PijgDeBBN258n1qv272ipump signals=VOL_SPIKE reason: liquidity $16,435 < $40,000
+2026-11-18 20:26:43 FILTERED DAKITTY (pump.fun) mint=3YyNSd5dAe5hbKu83syLCjZKWYD9d94EGYCfEWNkpump signals=VOL_SPIKE+BUY_RATIO reason: liquidity $24,496 < $40,000
+2026-11-18 20:26:43 FILTERED Mabel (pump.fun) mint=HaHzKarZeigf9QnfipoJkJGrPJpyKcU1xKxwzBeaBnc signals=VOL_SPIKE+BUY_RATIO reason: holders 144 < 300
+2026-11-18 20:26:43 FILTERED Mabel (pump.fun) mint=EhjRG9DDTeP9z9N8UByx1FGpXNCVKidHXsVwkQ4jpump signals=VOL_SPIKE reason: liquidity $10,746 < $40,000
+2026-11-18 20:27:13 FILTERED SOL (pump.fun) mint=RTHBJ6p98WEQAjjfMiiM3dRFtMLbhuLpUTF1pyjpump signals=BUY_RATIO reason: liquidity $4,608 < $40,000
+2026-11-18 20:27:43 FILTERED FLC (pump.fun) mint=pcDL74F9AYQ8ConwemryWMHQX5LWbPHyAEbULGNpump signals=BUY_RATIO reason: liquidity $16,012 < $40,000
+2026-11-18 20:31:43 INFO     end cycles=12 open=0 closed=0 failed_exits=0 (open positions stay open; no sale is invented)
