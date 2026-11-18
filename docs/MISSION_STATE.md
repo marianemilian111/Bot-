@@ -15,3 +15,24 @@ plus execution and risk tests passed, and no unresolved critical defect. Never f
 | 6 | Execution without money | DONE (offline) | `tests/test_execution.py` (9) | `be76e01` | wire into the strategy runner only for a pilot |
 | 7 | Risk limits | DONE (offline) | `tests/test_execution.py` Risk (3) | `be76e01` | pilot values proposed, not approved |
 | 8 | Pilot decision | NOT READY | needs 1/4 + 5 + 6 + 7 and D8 resolved | - | - |
+
+
+## v6 fingerprint audit (2026-11-18, read-only check against git history)
+| Item | Value |
+|---|---|
+| f9f64f071c181687 | `V6_RULES` at 215dd5e (21:24 UTC) |
+| c717981470d4b5b7 | `V6_RULES` at d97073d (21:42:14 UTC); computed == frozen at 7132899 |
+| Fields changed | `universe`: LP ">= 95 % locked/burned" -> "BURNED verified on chain (LP mint supply 0); lock without verifiable 30-day date fails"; `exits`: "DEV_SELL (creator balance fell), LP_PULLED (liquidity < 50 %: proxy)" -> "DEV_SELL only on a confirmed sell swap; balance drop / liquidity drop = log only" |
+| Why | D8 (ANT: unlocked main-pool LP held by the creator, masked by a locked dust pool) and the instruction that a % locked is not a 30-day proof and that balance/liquidity drops are not proof of sell/pull |
+| When vs data | before ANY v6 data: first test run 21:42:57, validation start 22:01:16 |
+| Prereg | `docs/PREREG_V6_INDEPENDENT.md` at 7132899 states c717981470d4b5b7 and the same rules; v6_gate.py unchanged since 215dd5e (criteria identical) |
+| After the pin | 70cb18d: documentation only (Meteora DAMM v2 LP_UNKNOWN limitation) |
+| Verdict | NO deviation: validation runs the configuration fixed before it started |
+
+## v6 validation data eligibility
+| Run | Status | Eligible |
+|---|---|---|
+| 44407410908 (22:01-22:16 UTC) | crashed after 15 min: ZeroDivisionError on priceChange.h1 = -100 (infra, not a rule); no meta / run-history file written, 0 trades, 0 positions | NO - excluded (the gate counts only runs with a meta file, so it is already outside every window) |
+| next runs | code pinned at ef5a17e = 7132899 + infra fix only, same fingerprint | yes |
+
+v5 note: the same -100 % case costs v5 that cycle (caught, logged ERROR) - a data gap to read in the v5 diagnostic; v5 code unchanged.

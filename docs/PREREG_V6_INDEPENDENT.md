@@ -46,3 +46,8 @@ logged, never filled in.
 Meteora DAMM v2 pools have no LP mint (RugCheck `mintLP` = system address; example pool 9v8KHSTe..., run 44404310078),
 so an on-chain burn cannot be verified -> LP UNKNOWN -> not eligible. In practice v6 can only enter pump.fun / PumpSwap
 and Raydium pools whose LP mint supply is 0. Reported as a coverage limit, not relaxed.
+
+## Amendment log (infrastructure only; rules and criteria unchanged)
+* 2026-11-18 ~22:20 UTC: validation run 44407410908 crashed (division by zero on a -100 % 1 h price change). Fixed in
+  ef5a17e (no rule change, fingerprint c717981470d4b5b7 unchanged); collection code pinned to it. The crashed run has no
+  meta file and no trades; it is excluded from every window.
