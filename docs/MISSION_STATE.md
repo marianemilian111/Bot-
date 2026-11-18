@@ -73,3 +73,18 @@ After run 44410378519 writes `logs/runs/capture-v6_*.json` on `paper-data-v6` (e
    this run (`since` = its `started_utc`, `phase` VALIDATION).
 2. Run `python scripts/v6_coverage_audit.py <dir>`; list failed cycles and the gate-vs-supported difference per session.
 3. Record both here. Status stays BLOCAT - ACOPERIRE NEVERIFICATA (reason above) unless the recording fix is approved.
+
+## Executor vs Jupiter (2026-11-18, read-only comparison)
+* Reference: `Jupiter-DevRel/python-examples` @ d1134f8 (2025-11-25), files `standalone_script_examples/swap-api/simple-quote-and-swap/main.py`
+  (Swap API `lite-api.jup.ag/swap/v1`, single `send_transaction(skip_preflight=True)`, no confirmation / retry / expiry check)
+  and `standalone_script_examples/ultra-api/order-and-execute/main.py` (Ultra API `/ultra/v1/order` + `/execute`, single call).
+  Docs (developers.jup.ag/docs/ultra/execute-order): resubmitting the SAME signedTransaction + requestId for up to 2 min
+  polls status and cannot double execute (same signature); Ultra marked as superseded by Swap V2.
+* Gap chosen: confirmation without duplicates after a timeout. The example does NOT cover it.
+* Found in OUR executor: `_submit` retried `broker.submit` 3x on an RPC error -> a landed transaction whose response was
+  lost was sent 3 times (test reproduced `3 != 1` on the old code). FIXED: submit is never retried; outcome stays
+  unknown until `recover()` (tests/test_timeout_confirmation.py).
+* Still open (expected-failure test): journal the transaction signature + lastValidBlockHeight BEFORE sending and resolve
+  a timed-out order by that signature (confirmed / expired) instead of marking it FAILED. Needs signing -> pilot scope.
+* Verdict: PASTRAM CODUL NOSTRU (the example has no timeout/confirmation logic to adopt); adopt the documented principle
+  "resend only the identical signed bytes, never a re-signed transaction, until the blockhash expires".

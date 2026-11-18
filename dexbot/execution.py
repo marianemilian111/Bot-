@@ -160,7 +160,7 @@ class ExecutionEngine:
     def _submit(self, o, q, note):
         o.state = "SUBMITTING"; self.j.write(o, note)           # journal first: a crash here is resolved by recover()
         try:
-            sig = self._rpc(self.broker.submit, o, q)
+            sig = self.broker.submit(o, q)                       # NEVER retried: a lost response may hide a landed tx
         except ExecutionDisabled as e:
             o.state, o.reason = "DRY_RUN_STOP", str(e); self.j.write(o, "not sent (no signing/sending in this build)")
             return o
