@@ -1,0 +1,84 @@
+name: Collect v6 capture paper data (independent, pre-registered)
+
+# Paper only: no wallet, no keys, no orders. Separate from v5 (own data branch, state, gate). Schedule added after test runs.
+on:
+  workflow_dispatch:
+    inputs:
+      minutes:
+        description: "Collection minutes for this run (5-345)"
+        default: "345"
+        type: string
+      data_branch:
+        description: "Branch holding state/logs (paper-data-v6 = validation; anything else = test)"
+        default: "paper-data-v6"
+        type: string
+
+permissions:
+  contents: write                   # only to commit state/logs to the data branch
+
+concurrency:
+  group: collect-v6-${{ inputs.data_branch || 'paper-data-v6' }}
+  cancel-in-progress: false
+
+env:
+  DATA_BRANCH: ${{ inputs.data_branch || 'paper-data-v6' }}
+  MINUTES_IN: ${{ inputs.minutes || '345' }}
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: 7132899c12a4c47c2cd83e50488bf3a07398b96f   # FROZEN v6 code (docs/PREREG_V6_INDEPENDENT.md, fingerprint c717981470d4b5b7)
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        run: python -m unittest discover -s tests
+      - name: Restore state and logs from the data branch
+        run: |
+          case "$DATA_BRANCH" in (paper-data-*) ;; (*) echo "refusing data branch $DATA_BRANCH"; exit 1;; esac
+          if git fetch origin "$DATA_BRANCH" 2>/dev/null; then
+            git checkout "origin/$DATA_BRANCH" -- state logs && echo "restored from $DATA_BRANCH"
+          else
+            echo "first run on $DATA_BRANCH: empty state"
+          fi
+          ls -R state logs 2>/dev/null | head -50 || true
+      - name: Gate (pre-registered stop rules)
+        id: gate
+        run: |
+          set +e
+          python scripts/v6_gate.py | tee gate.json
+          code=${PIPESTATUS[0]}
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Preflight
+        id: pre
+        if: steps.gate.outputs.code == '0'
+        continue-on-error: true
+        run: python scripts/preflight.py
+      - name: Paper collection v6 (own balance, positions, quotes; resumes)
+        if: steps.gate.outputs.code == '0' && steps.pre.outcome == 'success'
+        run: |
+          m="$MINUTES_IN"; case "$m" in (''|*[!0-9]*) m=345;; esac
+          [ "$m" -gt 345 ] && m=345; [ "$m" -lt 5 ] && m=5
+          python run.py --v6 --resume --minutes "$m"
+      - name: Report + gate after the run (job log + Summary)
+        if: always()
+        run: |
+          { echo "Data branch: $DATA_BRANCH"; echo '```'; python scripts/v6_gate.py; echo '```'; } | tee -a "$GITHUB_STEP_SUMMARY" || true
+          python scripts/v3_report.py logs/v6_meta.json | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Save state and logs to the data branch
+        if: always()
+        run: |
+          git config user.name "paper-collector"
+          git config user.email "paper-collector@users.noreply.github.com"
+          echo "collection code: $(git rev-parse HEAD)"
+          rm -rf /tmp/keep && mkdir -p /tmp/keep && cp -r state logs /tmp/keep/ 2>/dev/null || true
+          if git fetch origin "$DATA_BRANCH" 2>/dev/null; then git checkout -f -B "$DATA_BRANCH" "origin/$DATA_BRANCH"; else git checkout -f --orphan "$DATA_BRANCH"; git rm -rqf --cached . || true; fi
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -r /tmp/keep/state /tmp/keep/logs . 2>/dev/null || true
+          git add -A state logs && git commit -qm "v6 paper data $(date -u +%FT%TZ) run ${GITHUB_RUN_ID}" && git push origin "$DATA_BRANCH" || echo "nothing to save"
