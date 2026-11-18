@@ -60,3 +60,34 @@ class T(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class FeedRobustness(unittest.TestCase):
+    def test_minus_100_percent_h1_does_not_crash(self):
+        """Run 44407410908 crashed on priceChange.h1 == -100 (division by zero)."""
+        f = live.LiveFeed(make(V1)); f.watch = ["M"]; f._discover = lambda: None
+        r = row(1.0, {"usd": 50000}); r["priceChange"] = {"h1": -100}
+        with mock.patch.object(live, "_get", lambda u: {"pairs": [r]}):
+            f.step(datetime.now())
+        self.assertIsNone(f.snapshot()[0].price_1h_ago)
+
+    def test_v6_runner_survives_a_failing_feed_step(self):
+        import os, tempfile
+        from dexbot import v6_runner as R
+        from dexbot.variants import V6_RULES, make_v6
+
+        class Bad:
+            def __init__(self, cfg, **kw): self.cache, self.watch, self.disc_errors = {}, [], {}
+            def step(self, now): raise ZeroDivisionError("float division by zero")
+            def snapshot(self): return []
+            def get(self, a): return None
+            def pin(self, a): pass
+            def sources(self, a): return []
+            def refresh(self, a): return None
+
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(R.time, "sleep", lambda s: None):
+            mom, _ = R.run_v6(make_v6(), V6_RULES, "fp", 0.001, interval_s=0, out_dir=os.path.join(d, "logs"),
+                              state_dir=os.path.join(d, "state"), wallets_path=os.path.join(d, "x.json"), feed_factory=Bad,
+                              rpc=lambda m, p: {})
+            self.assertTrue(os.path.exists(os.path.join(d, "logs", "v6_meta.json")))      # run completed and saved meta
+            self.assertTrue(any("feed step failed" in l for l in mom.log.tail))

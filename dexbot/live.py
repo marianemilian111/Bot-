@@ -232,7 +232,7 @@ class LiveFeed:
             liquidity=liq, liquidity_source=liq_src, vol5m=v.get("m5") or 0,
             vol_avg5m_1h=v.get("h1", 0) / 12, buys5m=m5.get("buys", 0), sells5m=m5.get("sells", 0),
             holders=h, holders_10m=old[-1] if old else None,
-            price_1h_ago=price / (1 + ch1 / 100) if ch1 is not None else None,
+            price_1h_ago=price / (1 + ch1 / 100) if ch1 is not None and ch1 > -100 else None,   # -100 % -> unknown
             pullback_pct=None,           # unknown -> no-chase rule stays strict
             smart_buyers_10m=sm, kol_bought=kol,
             dev_pct=s.get("dev_pct"), top10_pct=s.get("top10_pct"), bundled=s.get("bundled"),

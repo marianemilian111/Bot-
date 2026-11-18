@@ -153,7 +153,10 @@ def run_v6(cfg, rules, fp, minutes, interval_s=30, out_dir="logs", state_dir="st
                 feed.pin(a)
         before = set(mom.traded)
         mom.entries_enabled = sess is not None and (end - t0) > no_entry_last_min * 60   # entries only inside 23:00-07:00 Bucharest
-        feed.step(now)
+        try:
+            feed.step(now)                                      # a malformed row must cost one cycle, never the run
+        except Exception as e:
+            mom.log.log(now, "ERROR", f"feed step failed, cycle skipped: {repr(e)[:180]}")
         for a in list(feed.cache):                               # exit triggers for held positions (not fills)
             if a in mom.ex.positions or a in base.ex.positions:
                 watch.apply(feed.cache[a])
