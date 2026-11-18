@@ -14,20 +14,20 @@
   "baseline": "paired random draw among same-cycle pairs passing universe + safety, same sizing/exits",
   "seed": 20261120
  },
- "cycles": 12,
+ "cycles": 10,
  "resumed": true,
- "minutes_planned": 6.0,
- "minutes_run": 6.0,
+ "minutes_planned": 5.0,
+ "minutes_run": 5.0,
  "stop": null,
- "pools_discovered": 58,
- "evaluable_pairs": 2,
+ "pools_discovered": 59,
+ "evaluable_pairs": 1,
  "discovery_errors": {},
- "started_utc": "2026-11-18T21:43:36+00:00",
- "ended_utc": "2026-11-18T21:49:36+00:00",
+ "started_utc": "2026-11-18T21:53:18+00:00",
+ "ended_utc": "2026-11-18T21:58:18+00:00",
  "wallets": "LISTA LIPSA (no wallet with a documented public source)",
- "sha": "5ab308695c126381cf573982fae558f73ce44ab4",
- "run_id": "44404310078",
- "jsonl": "v6_collect_20261118_214336.jsonl",
+ "sha": "76d9b719cd240d2ca1811e9b378ab09bf9b4aded",
+ "run_id": "44405962769",
+ "jsonl": "v6_collect_20261118_215318.jsonl",
  "baseline_draws": [],
  "recaps": [],
  "entry_simulations": {
@@ -36,7 +36,7 @@
   "UNKNOWN": 0
  },
  "logs": {
-  "capture-v6": "night_capture-v6_20261118_214336.log",
-  "random-baseline-v6": "night_random-baseline-v6_20261118_214336.log"
+  "capture-v6": "night_capture-v6_20261118_215318.log",
+  "random-baseline-v6": "night_random-baseline-v6_20261118_215318.log"
  }
 }
