@@ -190,11 +190,14 @@ class LiveFeed:
 
     def step(self, now: datetime):
         self._discover()
+        self.step_status = {"t": time.time(), "chunks": 0, "failed": 0}      # recorded: a failed chunk is no longer silent
         for i in range(0, len(self.watch), 30):
             chunk = self.watch[i:i + 30]
+            self.step_status["chunks"] += 1
             try:
                 rows = _get(f"{DS}/latest/dex/tokens/{','.join(chunk)}").get("pairs") or []
             except Exception:
+                self.step_status["failed"] += 1
                 continue
             best: Dict[str, dict] = {}
             for r in rows:

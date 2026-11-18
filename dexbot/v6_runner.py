@@ -131,6 +131,7 @@ def run_v6(cfg, rules, fp, minutes, interval_s=30, out_dir="logs", state_dir="st
     jpath = os.path.join(out_dir, f"v6_collect_{now:%Y%m%d_%H%M%S}.jsonl")
     out = open(jpath, "a", buffering=1)
     t_start, end, cycles, draws, recaps, evaluable = time.time(), time.time() + minutes * 60, 0, [], [], set()
+    cycle_status = []                                           # [ts, ok | partial | failed] per cycle
     last_session = session_of(datetime.now(timezone.utc))
     session_start_balance = mom.eq.cash
     while time.time() < end:
@@ -155,8 +156,12 @@ def run_v6(cfg, rules, fp, minutes, interval_s=30, out_dir="logs", state_dir="st
         mom.entries_enabled = sess is not None and (end - t0) > no_entry_last_min * 60   # entries only inside 23:00-07:00 Bucharest
         try:
             feed.step(now)                                      # a malformed row must cost one cycle, never the run
+            st = getattr(feed, "step_status", None) or {"chunks": 1, "failed": 0}
+            status = "ok" if st["failed"] == 0 and st["chunks"] > 0 else ("failed" if st["failed"] >= st["chunks"] else "partial")
         except Exception as e:
+            status = "failed"
             mom.log.log(now, "ERROR", f"feed step failed, cycle skipped: {repr(e)[:180]}")
+        cycle_status.append([now_utc.isoformat(timespec="seconds"), status])
         for a in list(feed.cache):                               # exit triggers for held positions (not fills)
             if a in mom.ex.positions or a in base.ex.positions:
                 watch.apply(feed.cache[a])
@@ -181,6 +186,8 @@ def run_v6(cfg, rules, fp, minutes, interval_s=30, out_dir="logs", state_dir="st
                 eligible.append(p); evaluable.add(p.addr)
             verdict, why = _decision(mom, mom.sell_checker, p, verdict, why)
             out.write(json.dumps({"variant": V6, "ts": now_utc.isoformat(timespec="seconds"), "session": sess, "mint": p.addr,
+                                  "fetched_at": datetime.fromtimestamp(p.fetched_at, timezone.utc).isoformat(timespec="seconds") if p.fetched_at else None,
+                                  "fresh_this_cycle": bool(p.fetched_at and p.fetched_at >= t0), "cycle_feed": status,
                                   "pair": p.pair_addr, "dex_id": p.dex_id, "age_s": round(p.age_s), "price": p.price,
                                   "liquidity": p.liquidity, "vol5m": p.vol5m, "vol_avg5m_1h": p.vol_avg5m_1h,
                                   "buys5m": p.buys5m, "sells5m": p.sells5m, "holders": p.holders, "holders_10m": p.holders_10m,
@@ -220,7 +227,7 @@ def run_v6(cfg, rules, fp, minutes, interval_s=30, out_dir="logs", state_dir="st
             "started_utc": datetime.fromtimestamp(t_start, timezone.utc).isoformat(timespec="seconds"),
             "ended_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"), "wallets": wstatus,
             "sha": os.environ.get("GITHUB_SHA"), "run_id": os.environ.get("GITHUB_RUN_ID"), "jsonl": os.path.basename(jpath),
-            "baseline_draws": draws, "recaps": recaps, "entry_simulations": mom.sell_checker.entry,
+            "baseline_draws": draws, "recaps": recaps, "cycle_status": cycle_status, "interval_s": interval_s, "entry_simulations": mom.sell_checker.entry,
             "logs": {V6: os.path.basename(mom.log.path), V6B: os.path.basename(base.log.path)}}
     json.dump(meta, open(os.path.join(out_dir, "v6_meta.json"), "w"), indent=1)
     os.makedirs(os.path.join(out_dir, "runs"), exist_ok=True)

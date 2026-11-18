@@ -62,8 +62,10 @@ v5 note: the same -100 % case costs v5 that cycle (caught, logged ERROR) - a dat
   started that way is not evidence either.
 * Measurable part: `scripts/v6_coverage_audit.py <data dir>` -> per session gate minutes, cycles with rows, failed cycles,
   max supported minutes (upper bound), and whether the difference flips the 6 h threshold.
-* Resolution path (needs a decision, not applied): record per-pair fetch time and per-cycle feed status in the rows,
-  then a NEW validation window (data before the change stays diagnostic). Not deployed: the running test must not change.
+* Resolution path (prepared and tested, NOT deployed - the running test must not change): per-pair `fetched_at`,
+  `fresh_this_cycle`, per-cycle `cycle_feed` (ok / partial / failed) in the rows and `cycle_status` in the run meta;
+  `scripts/v6_coverage_audit.py` then counts only fully successful cycles (tests: `tests/test_coverage_recording.py`).
+  Using it needs a NEW validation window (the current window's data stays diagnostic) = a decision for the owner.
 
 ## FIRST TASK ON RESUME
 After run 44410378519 writes `logs/runs/capture-v6_*.json` on `paper-data-v6` (expected ~04:05 UTC 2026-11-19):

@@ -66,9 +66,25 @@ def audit(d):
                               "max_supported_minutes": sup, "gate_counts_session": g >= MIN_SESSION_MIN,
                               "supported_upper_bound_counts": sup >= MIN_SESSION_MIN,
                               "verdict_sensitive": (g >= MIN_SESSION_MIN) != (sup >= MIN_SESSION_MIN)}
-    out["silent_chunk_failures_detectable"] = False
-    out["status"] = ("BLOCAT - ACOPERIRE NEVERIFICATA" if any(v["gate_counts_session"] for v in out["sessions"].values())
-                     else "no session reaches the gate threshold yet")
+    recorded = runs and all("cycle_status" in m for m in runs)
+    out["silent_chunk_failures_detectable"] = bool(recorded)
+    if recorded:                                   # recording fix present: coverage from cycles whose whole feed succeeded
+        okm = {}
+        for m in runs:
+            step = (m.get("interval_s") or 30) / 60
+            for ts, stt in m["cycle_status"]:
+                s_ = session_of(utc(ts))
+                if s_ and stt == "ok":
+                    okm[s_] = okm.get(s_, 0) + step
+        for s_, v in out["sessions"].items():
+            v["verified_minutes_ok_cycles"] = round(okm.get(s_, 0), 1)
+            v["verified_counts"] = okm.get(s_, 0) >= MIN_SESSION_MIN
+            v["verdict_sensitive"] = v["gate_counts_session"] != v["verified_counts"]
+        out["status"] = ("BLOCAT - gate counts sessions the verified coverage does not support"
+                         if any(v["verdict_sensitive"] for v in out["sessions"].values()) else "coverage verified from cycle status")
+    else:
+        out["status"] = ("BLOCAT - ACOPERIRE NEVERIFICATA" if any(v["gate_counts_session"] for v in out["sessions"].values())
+                         else "no session reaches the gate threshold yet")
     return out
 
 
