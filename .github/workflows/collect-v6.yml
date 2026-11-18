@@ -1,7 +1,9 @@
 name: Collect v6 capture paper data (independent, pre-registered)
 
-# Paper only: no wallet, no keys, no orders. Separate from v5 (own data branch, state, gate). Schedule added after test runs.
+# Paper only: no wallet, no keys, no orders. Separate from v5. Resume verified on paper-data-v6-test (runs 44404310078, 44405962769).
 on:
+  schedule:
+    - cron: "47 */6 * * *"          # every 6 h on paper-data-v6 (validation); the v6 gate stops collection by itself
   workflow_dispatch:
     inputs:
       minutes:
