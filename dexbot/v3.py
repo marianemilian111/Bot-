@@ -86,11 +86,32 @@ class SizedExecutor(Executor):
                                    f"signals={'+'.join(pos.signals)}")
         return True
 
+    attempts_path = None                      # logs/exit_attempts.jsonl next to the bot log (set lazily)
+
+    def _attempt(self, p, why, tokens, r, imputed):
+        """One JSON line per exit attempt. Missing values are null (never NaN, never a zero stand-in)."""
+        import math
+        path = self.attempts_path or os.path.join(os.path.dirname(self.log.path) or ".", "exit_attempts.jsonl")
+        def nz(x):
+            return None if x is None or (isinstance(x, float) and (math.isnan(x) or math.isinf(x))) else x
+        ev = {"ts_utc": datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z"),
+              "log": os.path.basename(self.log.path), "mint": p.addr, "symbol": p.symbol, "reason": why,
+              "status": r["status"], "class": classify(r["status"], r["stage"], r["detail"]), "stage": r["stage"],
+              "error": r.get("error") if r["status"] != "OK" else None,
+              "tokens": tokens, "amount_raw": r.get("amount_raw"), "decimals": r.get("decimals"), "amount_unit": "token base units",
+              "quote_out_lamports": r.get("quote_out_lamports"), "quote_unit": "lamports (SOL x 1e9)",
+              "quote_impact": nz(r.get("quote_impact")), "sol_usd": nz(r.get("sol_usd")), "price_at_decision": nz(p.price),
+              "proceeds_usd": nz(r.get("proceeds_usd")) if r["status"] == "OK" else None,
+              "imputed_loss_usd": imputed, "delay_s": nz(self._delay())}
+        with open(path, "a") as f:
+            f.write(json.dumps(ev, allow_nan=False) + "\n")
+
     def _sell(self, pos, p, tokens, why, now):
         tokens = min(tokens, pos.tokens)
         if tokens <= 0:
             return False
         r = sell_simulation(p.addr, p.sell_holders, tokens)
+        self._attempt(p, why, tokens, r, pos.avg_entry * tokens if r["status"] == "FAIL" else None)
         if r["status"] == "UNKNOWN":
             if (pos.addr, why, r["stage"]) not in self._deferred:
                 self._deferred.add((pos.addr, why, r["stage"]))

@@ -54,32 +54,56 @@ def buy_quote(mint, usd):
 
 
 def sell_simulation(mint, holders, tokens):
-    """Simulate selling exactly `tokens` of `mint`. -> dict(status, stage, detail, proceeds_usd, quoted_impact)"""
+    """Simulate selling exactly `tokens` of `mint`. -> dict(status, stage, detail, proceeds_usd, quoted_impact) plus
+    attempt data for the exit log: amount_raw (base units actually sent), decimals, sol_usd, quote_out_lamports and
+    quote_impact (None when no quote came back), error (full text, secrets redacted; None when OK).
+    Status, stage and detail are unchanged, so trading decisions are unchanged."""
     su, dec = sol_usd(), token_decimals(mint)
+    att = {"amount_raw": None, "decimals": dec, "sol_usd": su, "quote_out_lamports": None, "quote_impact": None}
     if not su or dec is None:
-        return {"status": "UNKNOWN", "stage": "price/decimals", "detail": f"sol_usd={su} decimals={dec}"}
+        return {**att, "status": "UNKNOWN", "stage": "price/decimals", "detail": f"sol_usd={su} decimals={dec}",
+                "error": redact(f"sol_usd={su} decimals={dec}")}
     raw = int(tokens * 10 ** dec)
     holder = next((h for h in (holders or []) if h[1] >= raw * 1.01), None)
     if holder is None:
-        return {"status": "UNKNOWN", "stage": "holder lookup", "detail": f"no public holder with >= {tokens:,.0f} tokens"}
+        return {**att, "status": "UNKNOWN", "stage": "holder lookup", "detail": f"no public holder with >= {tokens:,.0f} tokens",
+                "error": f"no public holder with >= {raw} base units"}
+    att["amount_raw"] = raw
     s, q = http_json(f"{JUP}/quote?inputMint={mint}&outputMint={SOL}&amount={raw}&slippageBps=250")
     if s != 200 or not isinstance(q, dict) or "outAmount" not in q:
         st = "FAIL" if s == 400 and "ROUTE" in str(q).upper() else "UNKNOWN"
-        return {"status": st, "stage": "SELL_QUOTE", "detail": f"http={s} {str(q)[:120]}"}
+        return {**att, "status": st, "stage": "SELL_QUOTE", "detail": f"http={s} {str(q)[:120]}", "error": redact(f"http={s} {q}")}
+    att["quote_out_lamports"] = int(q["outAmount"])
+    att["quote_impact"] = float(q.get("priceImpactPct") or 0)
     s, sw = http_json(f"{JUP}/swap", {"quoteResponse": q, "userPublicKey": holder[0], "wrapAndUnwrapSol": True})
     if s != 200 or not isinstance(sw, dict) or not sw.get("swapTransaction"):
-        return {"status": "UNKNOWN", "stage": "swap build", "detail": f"http={s} {str(sw)[:120]}"}
+        return {**att, "status": "UNKNOWN", "stage": "swap build", "detail": f"http={s} {str(sw)[:120]}", "error": redact(f"http={s} {sw}")}
     s, sim = http_json(RPC, {"jsonrpc": "2.0", "id": 1, "method": "simulateTransaction",
                              "params": [sw["swapTransaction"], {"encoding": "base64", "sigVerify": False,
                                                                 "replaceRecentBlockhash": True, "commitment": "processed"}]})
     if s != 200 or not isinstance(sim, dict) or sim.get("error") or "result" not in sim:
-        return {"status": "UNKNOWN", "stage": "simulateTransaction", "detail": f"http={s} {str(sim)[:120]}"}
+        return {**att, "status": "UNKNOWN", "stage": "simulateTransaction", "detail": f"http={s} {str(sim)[:120]}",
+                "error": redact(f"http={s} {sim}")}
     v = sim["result"].get("value") or {}
     if v.get("err") is not None:
         logs = [l for l in (v.get("logs") or []) if "rror" in l][-1:]
-        return {"status": "FAIL", "stage": "simulateTransaction", "detail": f"err={str(v['err'])[:100]} {' '.join(logs)[:120]}"}
-    return {"status": "OK", "stage": "simulateTransaction", "detail": "err=null",
+        return {**att, "status": "FAIL", "stage": "simulateTransaction", "detail": f"err={str(v['err'])[:100]} {' '.join(logs)[:120]}",
+                "error": redact(f"err={v['err']} {' | '.join(l for l in (v.get('logs') or []) if 'rror' in l)}")}
+    return {**att, "status": "OK", "stage": "simulateTransaction", "detail": "err=null", "error": None,
             "proceeds_usd": int(q["outAmount"]) / 1e9 * su - NET_FEE_USD, "quoted_impact": float(q.get("priceImpactPct") or 0)}
+
+
+_SECRETS = [(r"(?i)(sig|signature|api[-_]?key|token|auth|key)=([^&\s'\"]+)", r"\1=REDACTED"),
+            (r"(?i)bearer\s+[A-Za-z0-9._-]+", "Bearer REDACTED")]
+
+
+def redact(text):
+    """Full error text with anything that looks like a credential removed (none are sent, this is a safeguard)."""
+    import re
+    t = str(text)
+    for pat, rep in _SECRETS:
+        t = re.sub(pat, rep, t)
+    return t
 
 
 def classify(status, stage, detail):
