@@ -40,7 +40,14 @@ unless >= 20 draws had more than one eligible option and both sides have >= 30 c
 * Stop: < 30 closed positions after 14 calendar days -> `INSUFICIENT` (signal too rare to evaluate); criterion not met
   -> `FARA AVANTAJ IN TEST`. No rule change between test and replication.
 
-## Collection mechanism (needs approval - nothing is running)
+## Automatic stop (scripts/v5_gate.py, run before and after every collection job)
+VALIDATION window from the first run; when >= 30 closed and >= 7 days with >= 12 h coverage -> criterion evaluated once:
+pass -> REPLICATION window starts at that moment (validation trades never count again); fail -> STOP `FARA AVANTAJ IN TEST`.
+REPLICATION complete -> STOP with `AVANTAJ PAPER REPLICAT` or `FARA AVANTAJ IN REPLICARE`. 14 days without a complete
+window -> STOP `INSUFICIENT`. Coverage per UTC day comes from one meta file per run (logs/runs/), so days without data
+are visible. Decision rules are code (tests in tests/test_v5_gate.py), not judgement after seeing results.
+
+## Collection mechanism
 `.github/workflows/collect-v5.yml` (in this branch, not pushed): every 6 h, one job of 350 min running
 `python run.py --v5 --resume --minutes 345`, state and logs committed to a separate branch `paper-data-v5` with the
 built-in token, report in job log + Summary. Known gaps: minutes between jobs, delayed/skipped scheduled runs, shared-IP

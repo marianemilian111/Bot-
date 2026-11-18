@@ -78,3 +78,37 @@ class Wiring(unittest.TestCase):
             out = subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                                   "scripts", "v3_report.py"), "logs/v5_meta.json"], cwd=d, capture_output=True, text=True).stdout
             self.assertIn("PnL: N/A", out)
+
+
+class Persistence(unittest.TestCase):
+    def test_resume_keeps_balance_positions_and_trades(self):
+        import json
+        from unittest import mock
+        from dexbot import v3 as V
+        from dexbot.models import Position, Trade
+
+        class Feed:
+            def __init__(self, cfg, **kw): self.watch, self.disc_errors = [], {}
+            def pin(self, a): pass
+            def step(self, now): pass
+            def snapshot(self): return []
+            def get(self, a): return None
+            def sources(self, a): return []
+            def refresh(self, a): return None
+
+        with tempfile.TemporaryDirectory() as d:
+            st, lg = os.path.join(d, "state"), os.path.join(d, "logs")
+            with mock.patch("dexbot.live.LiveFeed", Feed), mock.patch.object(V.time, "sleep", lambda s: None):
+                mom, base = V.run_v5(0.002, early_stop_min=99, out_dir=lg, state_dir=st)
+                # simulate what a first run could leave behind: one closed trade and one open position
+                mom.ex.trades.append(Trade("A", datetime(2026, 12, 1, 1), datetime(2026, 12, 1, 2), 50.0, 61.0, ["TP1_2x"], 0.0, "MA"))
+                mom.ex.positions["MB"] = Position("MB", "B", datetime(2026, 12, 1, 3), 50.0, ["VOL_SPIKE"], tokens=10.0,
+                                                  tokens_bought=10.0, cost=50.0, parts_done=2, last_price=5.0)
+                mom.eq.cash, mom.traded = 161.0, {"MA", "MB"}
+                save_state(mom, os.path.join(st, f"paper_state_{V5}.json"))
+                mom2, base2 = V.run_v5(0.002, early_stop_min=99, out_dir=lg, state_dir=st, resume=True)
+            self.assertEqual(mom2.eq.cash, 161.0)
+            self.assertEqual([t.symbol for t in mom2.ex.trades], ["A"])
+            self.assertIn("MB", mom2.ex.positions)                       # open position carried over, not sold
+            self.assertEqual(mom2.traded, {"MA", "MB"})
+            self.assertEqual(len(os.listdir(os.path.join(lg, "runs"))), 2) # one meta per run for coverage

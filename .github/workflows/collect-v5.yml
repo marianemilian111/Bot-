@@ -1,49 +1,82 @@
 name: Collect v5 paper data (pre-registered, multi-day)
 
-# NOT ACTIVE until approved and pushed. Paper only: no wallet, no keys, no orders.
+# Paper only: no wallet, no keys, no orders. Schedule is enabled only after a persistence check on a test data branch.
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "17 */6 * * *"          # every 6 h; one 350-min job per slot
+    inputs:
+      minutes:
+        description: "Collection minutes for this run (5-345)"
+        default: "345"
+        type: string
+      data_branch:
+        description: "Branch holding state/logs (paper-data-v5 = validation; anything else = test)"
+        default: "paper-data-v5"
+        type: string
 
 permissions:
-  contents: write                   # only to commit state/logs to the data branch paper-data-v5
+  contents: write                   # only to commit state/logs to the data branch
 
 concurrency:
-  group: collect-v5
+  group: collect-v5-${{ inputs.data_branch || 'paper-data-v5' }}
   cancel-in-progress: false
+
+env:
+  DATA_BRANCH: ${{ inputs.data_branch || 'paper-data-v5' }}
+  MINUTES_IN: ${{ inputs.minutes || '345' }}
 
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 355
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Unit tests
         run: python -m unittest discover -s tests
-      - name: Restore state from paper-data-v5 (if it exists)
+      - name: Restore state and logs from the data branch
         run: |
-          git fetch origin paper-data-v5 && git checkout origin/paper-data-v5 -- state logs || echo "first run: empty state"
+          case "$DATA_BRANCH" in (paper-data-*) ;; (*) echo "refusing data branch $DATA_BRANCH"; exit 1;; esac
+          if git fetch origin "$DATA_BRANCH" 2>/dev/null; then
+            git checkout "origin/$DATA_BRANCH" -- state logs && echo "restored from $DATA_BRANCH"
+          else
+            echo "first run on $DATA_BRANCH: empty state"
+          fi
+          ls -R state logs 2>/dev/null | head -50 || true
+      - name: Gate (pre-registered stop rules)
+        id: gate
+        run: |
+          set +e
+          python scripts/v5_gate.py | tee gate.json
+          code=${PIPESTATUS[0]}
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
       - name: Preflight
         id: pre
+        if: steps.gate.outputs.code == '0'
         continue-on-error: true
         run: python scripts/preflight.py
-      - name: Paper collection v5 (345 min, resumes balances and positions)
-        if: steps.pre.outcome == 'success'
-        run: python run.py --v5 --resume --minutes 345 --early-stop-min 9999
-      - name: Report (job log + Summary)
+      - name: Paper collection v5 (resumes balances, positions and trades)
+        if: steps.gate.outputs.code == '0' && steps.pre.outcome == 'success'
+        run: |
+          m="$MINUTES_IN"; case "$m" in (''|*[!0-9]*) m=345;; esac
+          [ "$m" -gt 345 ] && m=345; [ "$m" -lt 5 ] && m=5
+          python run.py --v5 --resume --minutes "$m" --early-stop-min 99999
+      - name: Report + gate after the run (job log + Summary)
         if: always()
-        run: python scripts/v3_report.py logs/v5_meta.json | tee -a "$GITHUB_STEP_SUMMARY"
-      - name: Save state and logs to paper-data-v5
+        run: |
+          { echo "Data branch: $DATA_BRANCH"; echo '```'; python scripts/v5_gate.py; echo '```'; } | tee -a "$GITHUB_STEP_SUMMARY" || true
+          python scripts/v3_report.py logs/v5_meta.json | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Save state and logs to the data branch
         if: always()
         run: |
           git config user.name "paper-collector"
           git config user.email "paper-collector@users.noreply.github.com"
-          mkdir -p /tmp/keep && cp -r state logs /tmp/keep/
-          git fetch origin paper-data-v5 && git checkout -B paper-data-v5 origin/paper-data-v5 || git checkout --orphan paper-data-v5
-          git rm -rq --cached . || true
-          rm -rf state logs && cp -r /tmp/keep/state /tmp/keep/logs .
-          git add -f state logs && git commit -qm "v5 paper data $(date -u +%FT%TZ)" && git push origin paper-data-v5
+          rm -rf /tmp/keep && mkdir -p /tmp/keep && cp -r state logs /tmp/keep/ 2>/dev/null || true
+          if git fetch origin "$DATA_BRANCH" 2>/dev/null; then git checkout -f -B "$DATA_BRANCH" "origin/$DATA_BRANCH"; else git checkout -f --orphan "$DATA_BRANCH"; git rm -rqf --cached . || true; fi
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -r /tmp/keep/state /tmp/keep/logs . 2>/dev/null || true
+          git add -A state logs && git commit -qm "v5 paper data $(date -u +%FT%TZ) run ${GITHUB_RUN_ID}" && git push origin "$DATA_BRANCH" || echo "nothing to save"

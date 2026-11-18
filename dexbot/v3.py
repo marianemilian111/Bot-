@@ -324,14 +324,19 @@ def run_v3(minutes, early_stop_min=20, interval_s=30, out_dir="logs", state_dir=
         save_state(b, os.path.join(state_dir, f"paper_state_{b.strategy_id}.json"))
         b.log.close()
     out.close()
-    json.dump({"strategy": V3_, "baseline": V3B_, "fingerprint": fp, "rules": R, "cycles": cycles,
+    meta = {"strategy": V3_, "baseline": V3B_, "fingerprint": fp, "rules": R, "cycles": cycles,
+               "started_utc": datetime.fromtimestamp(t_start, timezone.utc).isoformat(timespec="seconds"),
+               "ended_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"), "resumed": resume,
                "minutes_planned": minutes, "minutes_run": round((time.time() - t_start) / 60, 1), "stop": stop_reason,
                "sha": os.environ.get("GITHUB_SHA"), "run_id": os.environ.get("GITHUB_RUN_ID"), "jsonl": os.path.basename(jpath),
                "pools_discovered": len(getattr(feed, "v3_pools", None) or getattr(feed, "watch", [])), "evaluable_pairs": len(evaluable),
                "entry_simulations": mom.sell_checker.entry, "baseline_draws": draws, "baseline_entry_simulations": base.sell_checker.entry,
                "discovery_errors": {k: dict(v) for k, v in feed.disc_errors.items()},
-               "logs": {V3_: os.path.basename(mom.log.path), V3B_: os.path.basename(base.log.path)}},
-              open(os.path.join(out_dir, spec["meta"]), "w"), indent=1)
+               "logs": {V3_: os.path.basename(mom.log.path), V3B_: os.path.basename(base.log.path)}}
+    json.dump(meta, open(os.path.join(out_dir, spec["meta"]), "w"), indent=1)
+    hist = os.path.join(out_dir, "runs")                   # one meta per run: coverage per day, draws across runs
+    os.makedirs(hist, exist_ok=True)
+    json.dump(meta, open(os.path.join(hist, f"{V3_}_{datetime.fromtimestamp(t_start, timezone.utc):%Y%m%dT%H%M%S%fZ}_{os.environ.get('GITHUB_RUN_ID', 'local')}.json"), "w"), indent=1)
     return mom, base
 
 
