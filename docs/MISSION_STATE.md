@@ -48,3 +48,26 @@ v5 note: the same -100 % case costs v5 that cycle (caught, logged ERROR) - a dat
 | Carried state | its saved state equals a fresh v6 state: cash 70.0, 0 trades, 0 positions, 0 pending, traded [] (Momentum and baseline). Resuming from it is identical to a clean start; no trade, balance or coverage from it enters any window |
 | Its files | `logs/night_*_20261118_220154.log`, `logs/v6_collect_20261118_220154.jsonl` stay on the branch as diagnostics only; the gate reads state trades + `logs/runs/`, the report reads the latest run's own meta / jsonl |
 | Verdict | PASS - collection and conditional replication continue unchanged |
+
+## BLOCAT - ACOPERIRE NEVERIFICATA (v6 validation, recorded 2026-11-18 ~22:50 UTC, before any v6 result)
+* Pre-registered coverage = ">= 6 h of collection inside 23:00-07:00" per session; the gate counts run start -> end.
+* Why eligible coverage cannot be reconstructed from the collected files (code at ef5a17e):
+  1. `LiveFeed.step` skips a failed DexScreener chunk (`except Exception: continue`) with no log; if every chunk fails,
+     no error is raised at all.
+  2. v6 decision rows (`v6_collect_*.jsonl`) carry the cycle time, not the data fetch time; cached pairs (<= 120 s)
+     are written again under the new cycle time. A new timestamp does not prove new data.
+  3. Only whole-step failures are identifiable (`ERROR feed step failed` in the Momentum log).
+* Consequence: any gate PASS for v6 is NOT accepted as evidence until coverage is verified; the gate can still advance
+  VALIDATION -> REPLICATION automatically (workflow not modified, as instructed) - flagged as a blocker; a replication
+  started that way is not evidence either.
+* Measurable part: `scripts/v6_coverage_audit.py <data dir>` -> per session gate minutes, cycles with rows, failed cycles,
+  max supported minutes (upper bound), and whether the difference flips the 6 h threshold.
+* Resolution path (needs a decision, not applied): record per-pair fetch time and per-cycle feed status in the rows,
+  then a NEW validation window (data before the change stays diagnostic). Not deployed: the running test must not change.
+
+## FIRST TASK ON RESUME
+After run 44410378519 writes `logs/runs/capture-v6_*.json` on `paper-data-v6` (expected ~04:05 UTC 2026-11-19):
+1. `git fetch origin paper-data-v6`; extract it; run `python scripts/v6_gate.py` there -> confirm the window opened with
+   this run (`since` = its `started_utc`, `phase` VALIDATION).
+2. Run `python scripts/v6_coverage_audit.py <dir>`; list failed cycles and the gate-vs-supported difference per session.
+3. Record both here. Status stays BLOCAT - ACOPERIRE NEVERIFICATA (reason above) unless the recording fix is approved.
