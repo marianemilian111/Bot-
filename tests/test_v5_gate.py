@@ -63,3 +63,26 @@ class T(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PreregConformance(unittest.TestCase):
+    def test_drawdown_is_measured_against_the_250_start(self):
+        # peak 350 then down to 270: 80 $ below peak (> 75 $ = 30 % of start) -> fails, although only 23 % of the peak
+        mom = [{"cost": 50, "proceeds": 150, "closed": "2026-12-01T01:00:00"}, {"cost": 50, "proceeds": 50 - 80, "closed": "2026-12-01T02:00:00"}]
+        ok, checks, nums = G.criterion(mom, [], 0)
+        self.assertFalse(checks["max_drawdown_lt_30pct_of_start"]); self.assertEqual(nums["max_drawdown_usd"], 80)
+
+    def test_netestabil_baseline_is_not_success_and_labelled(self):
+        with tempfile.TemporaryDirectory() as d:
+            setup(d, 7, 30, [3.0, 2.0, 1.0], n_base=5, pnl_base=-1.0, multi=21)       # baseline < 30 closed
+            s = G.status(os.path.join(d, "state"), os.path.join(d, "logs"), T0 + timedelta(days=7))
+            self.assertEqual(s["action"], "STOP"); self.assertIn("NETESTABIL", s["verdict"])
+            self.assertFalse(s["checks"]["baseline_testable"])
+
+    def test_mixed_rule_sets_invalidate_the_window(self):
+        with tempfile.TemporaryDirectory() as d:
+            setup(d, 2, 1, [1.0])
+            for i, p in enumerate(sorted(os.listdir(os.path.join(d, "logs", "runs")))):
+                f = os.path.join(d, "logs", "runs", p); m = json.load(open(f)); m["fingerprint"] = f"fp{i}"; json.dump(m, open(f, "w"))
+            s = G.status(os.path.join(d, "state"), os.path.join(d, "logs"), T0 + timedelta(days=2))
+            self.assertEqual(s["action"], "STOP"); self.assertIn("INVALID", s["verdict"])

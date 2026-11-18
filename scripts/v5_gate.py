@@ -52,15 +52,15 @@ def criterion(mom, base, draws_multi):
     pn = [t["proceeds"] - t["cost"] for t in mom]
     net = sum(pn)
     bnet = sum(t["proceeds"] - t["cost"] for t in base)
-    eq, peak, dd = START, START, 0.0
+    eq, peak, dd_usd = START, START, 0.0              # PREREG (4): drawdown < 30 % of the $250 START, i.e. < $75 from peak
     for t in sorted(mom, key=lambda t: t["closed"]):
-        eq += t["proceeds"] - t["cost"]; peak = max(peak, eq); dd = max(dd, 1 - eq / peak)
-    baseline_ok = len(base) >= MIN_CLOSED and draws_multi >= 20
+        eq += t["proceeds"] - t["cost"]; peak = max(peak, eq); dd_usd = max(dd_usd, peak - eq)
+    baseline_ok = len(base) >= MIN_CLOSED and draws_multi >= 20   # PREREG baseline: NETESTABIL otherwise
     checks = {"net_after_costs_gt_0": net > 0, "net_without_best_gt_0": (net - max(pn)) > 0 if pn else False,
               "beats_baseline": baseline_ok and net > bnet, "baseline_testable": baseline_ok,
-              "max_drawdown_lt_30pct": dd < 0.30, "no_trade_gt_30pct_of_net": net > 0 and max(pn) <= 0.30 * net}
+              "max_drawdown_lt_30pct_of_start": dd_usd < 0.30 * START, "no_trade_gt_30pct_of_net": net > 0 and max(pn) <= 0.30 * net}
     return all(v for k, v in checks.items() if k != "baseline_testable"), checks, {"net": net, "baseline_net": bnet,
-                                                                                    "max_drawdown": dd, "closed": len(mom)}
+                                                                                    "max_drawdown_usd": dd_usd, "closed": len(mom)}
 
 
 def status(state_dir="state", logs="logs", now=None):
@@ -73,6 +73,11 @@ def status(state_dir="state", logs="logs", now=None):
     if ph["phase"] == "DONE":
         return {**ph, "action": "STOP"}
     since = _t(ph["since"])
+    fps = sorted({m.get("fingerprint") for m in rs if _t(m["ended_utc"]) >= since})
+    if len(fps) > 1:                                  # PREREG: same rules for the whole window; never mixed
+        verdict = f"INVALID: more than one rules fingerprint in the {ph['phase'].lower()} window {fps}"
+        json.dump({"phase": "DONE", "verdict": verdict, "previous": ph}, open(ph_path, "w"), indent=1)
+        return {"phase": ph["phase"], "action": "STOP", "verdict": verdict}
     cov = coverage(rs, since)
     days_ok = sorted(d for d, mins in cov.items() if mins >= MIN_DAY_MIN)
     mom, base = trades(state_dir, V5, since), trades(state_dir, V5B, since)
@@ -88,8 +93,12 @@ def status(state_dir="state", logs="logs", now=None):
             new = {"phase": "REPLICATION", "since": now.isoformat(timespec="seconds"), "validation": st}
             json.dump(new, open(ph_path, "w"), indent=1)
             return {**st, "action": "COLLECT", "verdict": "VALIDATION PASSED -> replication starts (same rules)"}
-        verdict = ("AVANTAJ PAPER REPLICAT" if ok else "FARA AVANTAJ IN REPLICARE") if ph["phase"] == "REPLICATION" \
-            else "FARA AVANTAJ IN TEST"
+        others_pass = all(v for k, v in checks.items() if k not in ("beats_baseline", "baseline_testable"))
+        if not ok and others_pass and not checks["baseline_testable"]:
+            verdict = f"NU TRECE: reper NETESTABIL (criteriul 3, {ph['phase'].lower()})"     # not success, not a 'loss' label
+        else:
+            verdict = ("AVANTAJ PAPER REPLICAT" if ok else "FARA AVANTAJ IN REPLICARE") if ph["phase"] == "REPLICATION" \
+                else "FARA AVANTAJ IN TEST"
         json.dump({"phase": "DONE", "verdict": verdict, "final": st, "previous": ph}, open(ph_path, "w"), indent=1)
         return {**st, "action": "STOP", "verdict": verdict}
     if (now - since) >= timedelta(days=MAX_DAYS):

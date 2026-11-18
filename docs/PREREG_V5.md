@@ -53,3 +53,10 @@ are visible. Decision rules are code (tests in tests/test_v5_gate.py), not judge
 built-in token, report in job log + Summary. Known gaps: minutes between jobs, delayed/skipped scheduled runs, shared-IP
 rate limits (recorded, never filled in). Cost: free on a public repository (earlier runs billed 0 ms); a private repo's
 2,000 free minutes/month would cover ~20 % of 7 days.
+
+## Amendment log (implementation conformance only; criteria text unchanged)
+* 2026-11-18 ~21:00 UTC, validation window open since 20:43 UTC with **0 closed positions** (no result seen):
+  gate aligned to this document - (4) drawdown measured in $ from peak against 30 % of the $250 start (was % of peak);
+  a NETESTABIL baseline now ends with the explicit label `NU TRECE: reper NETESTABIL` (decision unchanged: not a pass,
+  no replication); a window containing more than one rules fingerprint is `INVALID`. Collection code is pinned to the
+  commit carrying these fixes, so later development pushes cannot change the running test.
