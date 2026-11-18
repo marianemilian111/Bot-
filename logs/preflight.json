@@ -1,0 +1,40 @@
+{
+ "rows": [
+  {
+   "source": "DexScreener",
+   "mandatory": true,
+   "http": 200,
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "source": "RugCheck",
+   "mandatory": true,
+   "http": 200,
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "source": "Jupiter quote",
+   "mandatory": true,
+   "http": 200,
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "source": "Solana RPC",
+   "mandatory": true,
+   "http": 200,
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "source": "GeckoTerminal (history, optional)",
+   "mandatory": false,
+   "http": 200,
+   "ok": true,
+   "detail": ""
+  }
+ ],
+ "blocked": []
+}
