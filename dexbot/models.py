@@ -32,7 +32,10 @@ class Pair:
     dev_sold: bool = False
     lp_pulled: bool = False
     pair_addr: Optional[str] = None
-    fetched_at: Optional[float] = None      # wall time the market data was fetched (None = simulator)
+    fetched_at: Optional[float] = None
+    dex_id: Optional[str] = None            # raw DexScreener dexId of the traded pool
+    lp_by_market: Optional[dict] = None     # RugCheck lpLockedPct per market pubkey (traded pool = pair_addr)
+    creator: Optional[str] = None           # RugCheck creator address (dev wallet as reported)      # wall time the market data was fetched (None = simulator)
     liquidity_source: Optional[str] = None   # dexscreener | pump_curve_rpc | None (unknown)
     sell_holder: Optional[tuple] = None      # (owner, raw_amount) public holder used for the small sell simulation
     sell_holders: Optional[list] = None      # [(owner, raw_amount)] public non-pool holders, largest first

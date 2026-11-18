@@ -1,4 +1,8 @@
-# Pre-registration - v6 "capture" strategy (PAPER ONLY, separate from v5)
+# v6 "capture" strategy - SHADOW PARTIAL definition (PAPER ONLY, separate from v5)
+
+> **Status: SHADOW PARTIAL.** v5 trades filtered by the v6 rules. It is not a faithful v6 run, not a validation, not
+> evidence of profit and not a condition for a pilot: it reuses v5 fills at v5 sizes and cannot see candidates that
+> v5 did not trade. The independent v6 test is defined in docs/PREREG_V6_INDEPENDENT.md (pending).
 
 Fixed on 2026-11-18 before any v5 trade exists (v5 validation window opened 20:43 UTC with 0 closed positions).
 Code: `scripts/v6_shadow.py` (tests: `tests/test_v6_shadow.py`). v5 code, rules and collection are not changed.
@@ -35,7 +39,7 @@ slot (max 2 open) that a v6-eligible pair would have used, that v6 trade is miss
 * Minimum per window: >= 30 closed v6 trades AND >= 7 sessions with >= 6 h of collection inside 23:00-07:00.
 * Success (each window): net PnL after costs incl. imputed > 0; net without the best trade > 0; above the baseline
   (testable); max drawdown < 30 % of $70 (< $21 from peak); no trade > 30 % of net profit.
-  `AVANTAJ PAPER REPLICAT` only if validation and replication both pass. Reported per session: net, trades, worst
+  No verdict from this shadow can mark an advantage; it is an indicator only. Reported per session: net, trades, worst
   session, sessions without data; imputed losses and failed exits separately; zero closed -> PnL N/A.
 * If v5 collection stops early (INSUFICIENT / FARA AVANTAJ), v6 gets no more data -> v6 `INSUFICIENT`. Because the v6
   entry set is a subset of v5's, v6 can never have more closed trades than v5.

@@ -166,6 +166,9 @@ class LiveFeed:
             out["holders"] = r.get("totalHolders")
             locked = max([(m.get("lp") or {}).get("lpLockedPct", 0) for m in r.get("markets") or []] or [0])
             out["lp_status"] = "burned" if locked >= 95 else "locked_short" if locked > 0 else "unlocked"
+            out["lp_by_market"] = {m.get("pubkey"): (m.get("lp") or {}).get("lpLockedPct") for m in r.get("markets") or []}
+            out["lockers"] = r.get("lockers") or {}
+            out["creator"] = r.get("creator")
             creator = r.get("creatorBalance")
             supply = (r.get("token") or {}).get("supply")
             out["dev_pct"] = creator / supply * 100 if creator is not None and supply else None
@@ -221,7 +224,8 @@ class LiveFeed:
         old = [x for t, x in self.holder_hist[a] if time.time() - t >= 600]
         sm, kol = self.wallet_hook(a) if self.wallet_hook else (0, False)
         return Pair(
-            addr=a, pair_addr=r.get("pairAddress"), fetched_at=time.time(), symbol=r["baseToken"].get("symbol", "?"),
+            addr=a, pair_addr=r.get("pairAddress"), fetched_at=time.time(), dex_id=r.get("dexId"),
+            lp_by_market=s.get("lp_by_market"), creator=s.get("creator"), symbol=r["baseToken"].get("symbol", "?"),
             source=SOURCES.get(r.get("dexId", ""), r.get("dexId", "?")),
             age_s=time.time() - r["pairCreatedAt"] / 1000, price=price,
             liquidity=liq, liquidity_source=liq_src, vol5m=v.get("m5") or 0,

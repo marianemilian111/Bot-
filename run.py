@@ -11,6 +11,7 @@ ap = argparse.ArgumentParser()
 g = ap.add_mutually_exclusive_group(required=True)
 g.add_argument("--sim", action="store_true")
 g.add_argument("--live", action="store_true")
+g.add_argument("--v6", action="store_true", help="paper: capture-v6 (screenshot rules) vs random baseline - needs its own approved collection")
 g.add_argument("--v5", action="store_true", help="paper: momentum-v5-1signal vs random baseline (pre-registered, see docs/PREREG_V5.md)")
 g.add_argument("--v3", action="store_true", help="paper test: momentum-v3-migrated vs random baseline (separate hypothesis)")
 g.add_argument("--collect", action="store_true", help="read-only collector + paper trading of the frozen momentum strategy")
@@ -32,6 +33,11 @@ if a.sim:
     h, m = map(int, a.start.split(":"))
     start = datetime.now().replace(hour=h, minute=m, second=0, microsecond=0)
     run(cfg, lambda t: SimFeed(cfg, t, seed=a.seed), "SIM/PAPER", start, realtime=False, quiet=a.quiet)
+elif a.v6:
+    from dexbot.v6_runner import run_v6
+    from dexbot.variants import V6_RULES, assert_v6, make_v6
+    c6 = make_v6()
+    run_v6(c6, V6_RULES, assert_v6(c6), a.minutes, resume=a.resume)
 elif a.v5:
     from dexbot.v3 import run_v5
     run_v5(a.minutes, early_stop_min=a.early_stop_min, resume=a.resume)

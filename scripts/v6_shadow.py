@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""v6 'capture' strategy evaluated as a SHADOW of the v5 collection (no new collection, no new data source).
+"""SHADOW PARTIAL of the v6 'capture' strategy: v5 trades filtered by v6 rules. NOT a faithful v6 run, NOT validation,
+NOT evidence of profit and NOT a pilot condition (it reuses v5 fills and misses v6-only candidates).
 
 v6 entry set = v5 Momentum entries that also meet the screenshot rules: >= 2 distinct signals, DEX in
 {pump.fun, raydium, meteora}, entry inside the 23:00-07:00 Europe/Bucharest session. Everything else (universe,
@@ -146,13 +147,13 @@ def verdict(res, cov, n_multi_draws):
     testable = len(b) >= MIN_CLOSED and n_multi_draws >= 20
     ok = net > 0 and net - max(pn) > 0 and dd < 0.30 * START and max(pn) <= 0.30 * net and testable and net > bnet
     if not ok and not testable and net > 0 and net - max(pn) > 0 and dd < 0.30 * START and max(pn) <= 0.30 * net:
-        return "NU TRECE: reper NETESTABIL"
-    return "CRITERIU INDEPLINIT (validare)" if ok else "FARA AVANTAJ"
+        return "SHADOW indicator: reper NETESTABIL"
+    return "SHADOW indicator positive (NOT validation)" if ok else "SHADOW indicator negative"
 
 
 def report(res, runs_dir=None):
     tr = res["trades"]
-    o = ["# v6 capture strategy - SHADOW of the v5 collection (derived, paper only)", ""]
+    o = ["# v6 capture - SHADOW PARTIAL (v5 trades filtered by v6 rules; not a v6 run, not validation, not a pilot condition)", ""]
     o.append(f"Closed v6 trades: {len(tr)} | excluded v5 trades: {res['excluded']}")
     if not tr:
         o.append("PnL: N/A (no closed v6 trade)")
@@ -192,4 +193,4 @@ if __name__ == "__main__":
     v6 = {t["mint"] for t in res["trades"]}
     multi = sum(1 for f in glob.glob(os.path.join(d, "logs", "runs", "*.json")) for x in json.load(open(f)).get("baseline_draws", [])
                 if x.get("momentum_entry") in v6 and x["eligible_options"] > 1)
-    print("Sessions without data are those missing above. Verdict:", verdict(res, cov, multi))
+    print("Sessions without data are those missing above. SHADOW PARTIAL indicator (not a verdict):", verdict(res, cov, multi))

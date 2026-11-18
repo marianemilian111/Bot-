@@ -37,3 +37,18 @@ verifiable with the approved sources.
 
 Conclusion: the screenshot strategy, written faithfully, is v1's entry logic (>= 2 signals) with equity-based sizing.
 Its entry set is a strict subset of v5's (v5 needs >= 1 signal, same universe and safety).
+
+## v6 status after closing the gaps (branch `work/v6-capture`, tests in `tests/test_v6_rules.py`, `tests/test_v6_runner.py`)
+| # | v6 | Live check |
+|---|---|---|
+| U1 universe 0-6 h | IMPLEMENTAT (independent runner, own feed) | live feed |
+| U2 DEX list | IMPLEMENTAT (`V6Scanner`, raw dexId pumpfun/pumpswap/raydium*/meteora*) | - |
+| U5/R4 LP | IMPLEMENTAT on the TRADED pool (fixes D8); duration NEVERIFICAT (RugCheck `lockers` empty) | live reports read |
+| S2 volume average < 1 h | IMPLEMENTAT (average over existing 5-min windows) | - |
+| S5/S6 smart money / KOL | IMPLEMENTAT logic (`WalletSignals` + `WalletBuyWatch`), tested offline; NEVERIFICAT LIVE: LISTA LIPSA -> UNKNOWN | no list |
+| E4 dev sell / LP pull | IMPLEMENTAT (`DevLpWatch`: creator balance over RPC; liquidity < 50 % of entry = proxy) | creator balance read live (matches RugCheck) |
+| X2 pullback | IMPLEMENTAT (GeckoTerminal 5 m candles of the traded pool; unknown -> skip) | candles read live |
+| L3 session + 07:00 recap | IMPLEMENTAT (Europe/Bucharest, DST-aware; `SessionEquity`, `recap`) | - |
+| Z1-Z3 sizer | IMPLEMENTAT (v1 `Sizer`, $70, compounding, x0.5) | - |
+| R1 dev wallets beyond creator | NEVERIFICAT (no linked-wallet source) | - |
+| R3 bundle | NEVERIFICAT (RugCheck risk-name proxy only) | - |

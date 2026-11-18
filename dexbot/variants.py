@@ -115,3 +115,46 @@ def make(variant: str, start_balance: float = 1000.0) -> Config:     # noqa: F81
 
 
 FROZEN[V5] = "d9d4191e906de84d"
+
+
+# ---- v6 (paper only, separate): the screenshot strategy, independent run (docs/PREREG_V6_INDEPENDENT.md)
+V6 = "capture-v6"
+V6B = "random-baseline-v6"
+LABELS[V6] = "Capture v6 (screenshot rules, equity sizing from $70)"
+LABELS[V6B] = "Random baseline v6 (same candidates, sizing, exits)"
+V6_RULES = {
+    "universe": "age <= 6 h; DEX pumpfun/pumpswap/raydium*/meteora*; liq >= 40k; vol5m >= 25k; holders >= 300; mint+freeze closed; "
+                "LP of the TRADED pool >= 95 % locked/burned (duration not verifiable)",
+    "signals": "VOL_SPIKE (avg over existing 5-min windows when < 1 h), BUY_RATIO > 70 % (>= 20 txns), HOLDER_GROWTH >= 10 %/10 min, "
+               "SMART_MONEY >= 3 tracked wallets in 10 min, KOL bought in 10 min (no wallet list -> UNKNOWN, never counted); >= 2",
+    "rug": "dev < 5 % (creator address), top10 < 35 % raw incl. AMM, bundle proxy, sell simulation of the exact amount PASS",
+    "no_chase": "+300 % in 1 h without >= 10 % pullback from the 1 h high (GeckoTerminal 5 m candles of the traded pool; unknown -> skip)",
+    "sizer": "equity-based 20/30/40 % for 2/3/>=4 signals, x0.5 after 2 losses in a row, compounding, max 2 open, $70 paper",
+    "execution": "2 tranches each with its own Jupiter quote, 2.5 % cap, +$0.02/swap; exits only via passing sell simulation of the "
+                 "exact amount; FAIL -> imputed $0; UNKNOWN -> retry",
+    "exits": "40 % at 2x, 30 % at 4x, 25 % trailing rest, hard stop -12 %, time stop 25 min, DEV_SELL (creator balance fell), "
+             "LP_PULLED (traded pool liquidity < 50 % of entry: proxy)",
+    "session": "entries 23:00-07:00 Europe/Bucharest; 07:00 recap; 30 % drawdown from session peak -> pause entries",
+    "baseline": "paired random draw among same-cycle pairs passing universe + safety, same sizing/exits", "seed": 20261120,
+}
+
+
+def make_v6(start_balance: float = 70.0) -> Config:
+    return Config(start_balance=start_balance)
+
+
+def fingerprint_v6(cfg) -> str:
+    import hashlib
+    import json
+    from .frozen import fingerprint
+    return hashlib.sha256((fingerprint(cfg, V6) + json.dumps(V6_RULES, sort_keys=True)).encode()).hexdigest()[:16]
+
+
+def assert_v6(cfg) -> str:
+    fp = fingerprint_v6(cfg)
+    if fp != FROZEN[V6]:
+        raise SystemExit(f"{V6}: rules fingerprint {fp} != frozen {FROZEN[V6]}")
+    return fp
+
+
+FROZEN[V6] = "f9f64f071c181687"
