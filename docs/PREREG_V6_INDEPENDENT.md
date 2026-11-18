@@ -51,3 +51,12 @@ and Raydium pools whose LP mint supply is 0. Reported as a coverage limit, not r
 * 2026-11-18 ~22:20 UTC: validation run 44407410908 crashed (division by zero on a -100 % 1 h price change). Fixed in
   ef5a17e (no rule change, fingerprint c717981470d4b5b7 unchanged); collection code pinned to it. The crashed run has no
   meta file and no trades; it is excluded from every window.
+
+## Amendment B - clean validation window (prepared 2026-11-18 ~23:30 UTC; needs the owner's approval to publish)
+* Reason: the collection code in use (ef5a17e) records neither the fetch time per row nor the feed status per cycle, so
+  the coverage the gate counts (run start -> end) cannot be verified (MISSION_STATE: ACOPERIRE NERECONSTRUCTIBILA).
+* Change (measurement only; strategy rules and criteria unchanged, fingerprint c717981470d4b5b7): coverage per session =
+  30-s cycles whose whole feed step succeeded (`cycle_status` == ok, from 3ea5dc4); a run without cycle_status counts 0.
+  Everything else (>= 7 sessions with >= 6 h, >= 30 closed, success criteria, 14 + 14 days, NETESTABIL rule) unchanged.
+* New window on a NEW data branch `paper-data-v6b`, clean state. Data on `paper-data-v6` (collected with ef5a17e) is
+  diagnostic only and never enters a v6b window.

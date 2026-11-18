@@ -11,11 +11,13 @@ G6 = importlib.util.module_from_spec(spec); spec.loader.exec_module(G6)
 S0 = datetime(2026, 12, 1, 21, 0, tzinfo=timezone.utc)          # 23:00 Bucharest
 
 
-def setup(d, sessions, n, pnl, n_base=0, multi=0):
+def setup(d, sessions, n, pnl, n_base=0, multi=0, status="ok"):
     os.makedirs(os.path.join(d, "logs", "runs")); os.makedirs(os.path.join(d, "state"))
     for i in range(sessions):
         a = S0 + timedelta(days=i)
+        cs = [[(a + timedelta(seconds=30 * k)).isoformat(), status] for k in range(8 * 120)]
         json.dump({"started_utc": a.isoformat(), "ended_utc": (a + timedelta(hours=8)).isoformat(), "fingerprint": "f",
+                   "cycle_status": cs, "interval_s": 30,
                    "baseline_draws": [{"ts": (a + timedelta(hours=1)).replace(tzinfo=None).isoformat(), "eligible_options": 2}] * (multi // max(sessions, 1))},
                   open(os.path.join(d, "logs", "runs", f"capture-v6_{i}.json"), "w"))
     tr = lambda k, p: [{"cost": 14.0, "proceeds": 14.0 + p, "closed": (S0 + timedelta(hours=1 + j * sessions * 24 / max(k, 1))).replace(tzinfo=None).isoformat()} for j in range(k)]
@@ -38,6 +40,22 @@ class T(unittest.TestCase):
             setup(d, 14, 2, 1.0)
             s = G6.status(os.path.join(d, "state"), os.path.join(d, "logs"), S0 + timedelta(days=14, hours=1))
             self.assertIn("INSUFICIENT", s["verdict"])
+
+
+class CoverageFromCycles(unittest.TestCase):
+    def test_partial_or_failed_cycles_do_not_count(self):
+        with tempfile.TemporaryDirectory() as d:
+            setup(d, 7, 30, 0.5, n_base=30, multi=21, status="partial")
+            s = G6.status(os.path.join(d, "state"), os.path.join(d, "logs"), S0 + timedelta(days=7))
+            self.assertEqual(s["days_with_12h_coverage"], 0); self.assertEqual(s["action"], "COLLECT")
+
+    def test_run_without_cycle_status_counts_zero(self):
+        with tempfile.TemporaryDirectory() as d:
+            setup(d, 7, 30, 0.5, n_base=30, multi=21)
+            for f in os.listdir(os.path.join(d, "logs", "runs")):
+                p = os.path.join(d, "logs", "runs", f); m = json.load(open(p)); m.pop("cycle_status"); json.dump(m, open(p, "w"))
+            s = G6.status(os.path.join(d, "state"), os.path.join(d, "logs"), S0 + timedelta(days=7))
+            self.assertEqual(s["days_with_12h_coverage"], 0)
 
 
 if __name__ == "__main__":

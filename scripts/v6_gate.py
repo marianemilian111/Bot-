@@ -16,6 +16,22 @@ G.V5, G.V5B, G.START, G.MIN_DAY_MIN = "capture-v6", "random-baseline-v6", 70.0, 
 
 
 def session_coverage(rs, since):
+    """Coverage = 30-s cycles whose WHOLE feed step succeeded (`cycle_status` == ok), per session. A run without
+    cycle_status cannot prove coverage and counts 0 (strict). Wall-clock run time is no longer counted."""
+    cov = {}
+    for m in rs:
+        if "cycle_status" not in m:
+            continue
+        step = (m.get("interval_s") or 30) / 60
+        for ts, stt in m["cycle_status"]:
+            t = G._t(ts)
+            s = session_of(t)
+            if s and stt == "ok" and t >= since:
+                cov[s] = cov.get(s, 0) + step
+    return cov
+
+
+def _wallclock_coverage_unused(rs, since):
     cov = {}
     for m in rs:
         a, b = max(G._t(m["started_utc"]), since), G._t(m["ended_utc"])
