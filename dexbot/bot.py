@@ -31,7 +31,14 @@ class Bot:
         key = (p.addr, reason.split(" ")[0])
         if key not in self.seen:
             self.seen.add(key)
-            self.log.log(now, "FILTERED", f"{p.symbol} ({p.source}) signals={'+'.join(signals)} reason: {reason}")
+            self.log.log(now, "FILTERED", f"{p.symbol} ({p.source}) mint={p.addr} signals={'+'.join(signals)} reason: {reason}")
+
+    def _skipped(self, now, p, signals, reason):
+        """Passed the universe filter but not evaluated for entry (no rule involved, just capacity/timing)."""
+        key = (p.addr, "SKIP " + reason)
+        if key not in self.seen:
+            self.seen.add(key)
+            self.log.log(now, "SKIPPED", f"{p.symbol} ({p.source}) mint={p.addr} signals={'+'.join(signals)} reason: {reason}")
 
     def tick(self, now: datetime, step: bool = True):
         c = self.cfg
@@ -57,8 +64,10 @@ class Bot:
                 self._filtered(now, p, f.signals, f.universe_fail)
                 continue
             if self.eq.paused or not self.entries_enabled:
-                continue                                  # PAUSE already logged / entries closed for this run
+                self._skipped(now, p, f.signals, "daily drawdown pause" if self.eq.paused else "entries closed in the last minutes of the run")
+                continue
             if len(self.ex.positions) >= c.max_open:
+                self._skipped(now, p, f.signals, f"max {c.max_open} open positions")
                 continue
             if p.price_1h_ago and p.price / p.price_1h_ago >= c.no_chase_mult and \
                     not (p.pullback_pct is not None and p.pullback_pct >= c.pullback_min):

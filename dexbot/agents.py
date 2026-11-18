@@ -86,7 +86,7 @@ class RugCheck:
             (p.top10_pct is not None and p.top10_pct < c.top10_max_pct, f"top10 holders {p.top10_pct}% (need <{c.top10_max_pct}%)"),
             (p.bundled is False, f"bundled launch ({p.bundled})"),
             (p.lp_status in ("burned", "locked_30d"), f"LP {p.lp_status} (need burned/locked 30d+)"),
-            (p.honeypot is False, "SELL_SIMULATION=" + ("FAIL (honeypot)" if p.honeypot else "UNKNOWN (a SELL_QUOTE is not a simulation)")),
+            (p.honeypot is False, "SELL_SIMULATION=" + ("FAIL (sale failed in simulation)" if p.honeypot else "UNKNOWN (a SELL_QUOTE is not a simulation)")),
             (p.mint_frozen is False, "frozen mint"),
             (p.mint_auth_open is False, "open mint authority"),
         ]
@@ -187,6 +187,7 @@ class Executor:
                     self.log.log(now, "EXIT_DEFERRED", f"{p.symbol} {why}: SELL_SIMULATION=UNKNOWN ({self.sell_detail(p)}), retry next tick")
                 return False
             if st == "FAIL":                          # sale blocked: written off, counted as a loss
+                pos.written_off += pos.avg_entry * tokens
                 pos.tokens -= tokens
                 pos.reasons.append("EXIT_FAILED")
                 self.failed_exits += 1
@@ -212,7 +213,7 @@ class Executor:
             return
         self.positions.pop(pos.addr, None)
         self.pending.pop(pos.addr, None)
-        t = Trade(pos.symbol, pos.opened, now, pos.cost, pos.proceeds, pos.reasons)
+        t = Trade(pos.symbol, pos.opened, now, pos.cost, pos.proceeds, pos.reasons, pos.written_off, pos.addr)
         self.trades.append(t)
         self.eq.on_close(now, t, self.value(prices))
         self.log.log(now, "CLOSED", f"{t.symbol} total pnl={t.pnl:+,.2f} ({t.pnl_pct:+.1f}%) "

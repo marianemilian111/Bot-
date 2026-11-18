@@ -59,6 +59,7 @@ class Position:
     peak: float = 0.0
     last_price: float = 0.0
     reasons: List[str] = field(default_factory=list)
+    written_off: float = 0.0     # cost basis lost to failed exits (proceeds $0)
 
     @property
     def avg_entry(self) -> float:
@@ -73,6 +74,8 @@ class Trade:
     cost: float
     proceeds: float
     reasons: List[str]
+    written_off: float = 0.0
+    addr: str = ""
 
     @property
     def pnl(self) -> float:

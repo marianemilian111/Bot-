@@ -6,6 +6,7 @@ import base64
 import json
 import struct
 import time
+import urllib.error
 import urllib.request
 from collections import defaultdict, deque
 from datetime import datetime
@@ -17,6 +18,8 @@ from .models import Pair
 DS = "https://api.dexscreener.com"
 RC = "https://api.rugcheck.xyz/v1/tokens/{}/report"
 RPC = "https://api.mainnet-beta.solana.com"
+GT = "https://api.geckoterminal.com/api/v2/networks/solana"
+CURVE_DEX = ("pump-fun", "pumpfun", "dbc", "launchlab", "bags", "moonshot", "moonit", "boop")   # launch curves, not migrated pools
 PUMP_PROGRAM = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
 SEC_TTL, SEC_RETRY, CURVE_TTL = 300, 60, 60
 SOURCES = {"pumpfun": "pump.fun", "pumpswap": "pump.fun", "raydium": "raydium", "meteora": "meteora"}
@@ -42,24 +45,81 @@ class LiveFeed:
         self.sec: Dict[str, dict] = {}
         self.holder_hist = defaultdict(lambda: deque(maxlen=600))
         self.last_discovery = 0.0
+        self.last_gt, self.gt_turn = 0.0, 0
+        self.disc_src: Dict[str, set] = defaultdict(set)            # mint -> discovery sources
+        self.gt_pools: Dict[str, tuple] = {}                        # pool address -> (mint, dex, source), deduped
+        self.disc_errors = defaultdict(lambda: defaultdict(int))
+        self.pinned: set = set()
         self.watch: List[str] = []
 
     def pin(self, addr: str):
         """Keep a held token in the watch list so its price keeps updating."""
+        self.pinned.add(addr)
         if addr not in self.watch:
             self.watch.insert(0, addr)
 
+    def _gt_pools(self, path):
+        """GeckoTerminal pools (public, keyless, ~30 calls/min shared per IP). Returns [(pool, mint, dex, created_ts)] or None."""
+        try:
+            req = urllib.request.Request(f"{GT}/{path}", headers={"User-Agent": "dexbot/0.1", "Accept": "application/json"})
+            with urllib.request.urlopen(req, timeout=10) as r:
+                data = json.load(r).get("data") or []
+        except urllib.error.HTTPError as e:
+            self.disc_errors[f"gt_{path.split('?')[0]}"][f"http {e.code}"] += 1
+            return None
+        except Exception as e:
+            self.disc_errors[f"gt_{path.split('?')[0]}"][type(e).__name__] += 1
+            return None
+        out = []
+        for x in data:
+            try:
+                a, rel = x["attributes"], x["relationships"]
+                mint = rel["base_token"]["data"]["id"].split("_", 1)[1]
+                dex = rel["dex"]["data"]["id"]
+                created = a.get("pool_created_at")
+                ts = datetime.fromisoformat(created.replace("Z", "+00:00")).timestamp() if created else None
+                out.append((a["address"], mint, dex, ts))
+            except Exception:
+                continue
+        return out
+
+    def sources(self, mint: str) -> List[str]:
+        return sorted(self.disc_src.get(mint, ()))
+
     def _discover(self):
+        """Discovery only: which tokens to look at. Boosts/profiles/trending are NOT buy signals."""
         if time.time() - self.last_discovery < 60:
             return
         self.last_discovery = time.time()
-        addrs = []
-        for ep in ("/token-profiles/latest/v1", "/token-boosts/latest/v1"):
+        found: Dict[str, List[str]] = defaultdict(list)
+        for src, ep in (("ds_profiles", "/token-profiles/latest/v1"), ("ds_boosts_latest", "/token-boosts/latest/v1"),
+                        ("ds_boosts_top", "/token-boosts/top/v1")):
             try:
-                addrs += [x["tokenAddress"] for x in _get(DS + ep) if x.get("chainId") == "solana"]
-            except Exception:
-                pass
-        self.watch = list(dict.fromkeys(addrs + self.watch))[:200]
+                for x in _get(DS + ep):
+                    if x.get("chainId") == "solana":
+                        found[src].append(x["tokenAddress"])
+            except Exception as e:
+                self.disc_errors[src][type(e).__name__] += 1
+        if time.time() - self.last_gt >= 120:          # one GeckoTerminal call every 2 min, alternating endpoints
+            self.last_gt = time.time()
+            path = ("new_pools?page=1", "trending_pools?page=1")[self.gt_turn % 2]
+            self.gt_turn += 1
+            src = "gt_" + path.split("?")[0]
+            for pool, mint, dex, ts in self._gt_pools(path) or []:
+                if any(c in dex for c in CURVE_DEX):
+                    continue                            # still on a launch curve: not a migrated pool
+                if ts is not None and time.time() - ts > self.cfg.max_age_s:
+                    continue                            # older than 6 h: outside the universe
+                if pool not in self.gt_pools:           # dedupe by pool address
+                    self.gt_pools[pool] = (mint, dex, src)
+                found[src].append(mint)
+        for src, mints in found.items():
+            for m in mints:
+                self.disc_src[m].add(src)
+        extended = [m for src in ("gt_new_pools", "gt_trending_pools", "ds_boosts_top") for m in found.get(src, [])]
+        base = found.get("ds_profiles", []) + found.get("ds_boosts_latest", [])
+        pinned = [a for a in self.watch if a in self.pinned]
+        self.watch = list(dict.fromkeys(pinned + extended + base + self.watch))[:300]
 
     def _rpc(self, method, params):
         req = urllib.request.Request(RPC, data=json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params}).encode(),

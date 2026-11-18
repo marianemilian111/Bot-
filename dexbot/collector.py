@@ -48,7 +48,7 @@ def load_state(bot, path) -> bool:
         p["opened"] = _dt(p["opened"])
         ex.positions[a] = Position(**p)
     ex.pending = d["pending"]
-    ex.trades = [Trade(**{**t, "opened": _dt(t["opened"]), "closed": _dt(t["closed"])}) for t in d["trades"]]
+    ex.trades = [Trade(**{**t, "opened": _dt(t["opened"]), "closed": _dt(t["closed"])}) for t in d["trades"]]  # older states lack written_off -> 0
     ex.failed_exits = d.get("failed_exits", 0)
     bot.traded = set(d["traded"])
     return True
@@ -112,7 +112,7 @@ def run_collector(base_cfg: Config, minutes: float, variants=(V1,), interval_s: 
                 out.write(json.dumps({
                     "variant": vid, "ts": datetime.now(timezone.utc).isoformat(timespec="seconds"), "mint": p.addr,
                     "pair": p.pair_addr, "source": p.source, "age_s": round(p.age_s), "price": p.price,
-                    "liquidity": p.liquidity, "liquidity_source": p.liquidity_source, "vol5m": p.vol5m, "vol_avg5m_1h": p.vol_avg5m_1h, "buys5m": p.buys5m,
+                    "liquidity": p.liquidity, "liquidity_source": p.liquidity_source, "disc": feed.sources(p.addr), "vol5m": p.vol5m, "vol_avg5m_1h": p.vol_avg5m_1h, "buys5m": p.buys5m,
                     "sells5m": p.sells5m, "holders": p.holders, "holders_10m": p.holders_10m, "signals": sig,
                     "verdict": verdict, "reason": why}) + "\n")
             save_state(b, b.state_path)
@@ -126,6 +126,11 @@ def run_collector(base_cfg: Config, minutes: float, variants=(V1,), interval_s: 
     json.dump({"variants": list(variants), "cycles": cycles, "minutes": minutes, "sha": os.environ.get("GITHUB_SHA"),
                "run_id": os.environ.get("GITHUB_RUN_ID"), "jsonl": os.path.basename(jpath),
                "sellsim_entry": checker.entry, "sellsim_exit": checker.exit,
+               "discovery": {"gt_pools_unique": len(feed.gt_pools),
+                             "gt_pools_by_source": {k: sum(1 for v in feed.gt_pools.values() if v[2] == k) for k in ("gt_new_pools", "gt_trending_pools")},
+                             "tokens_by_source": {k: sum(1 for v in feed.disc_src.values() if k in v) for k in
+                                                  ("ds_profiles", "ds_boosts_latest", "ds_boosts_top", "gt_new_pools", "gt_trending_pools")},
+                             "errors": {k: dict(v) for k, v in feed.disc_errors.items()}},
                "logs": {v: os.path.basename(b.log.path) for v, (b, *_ ) in bots.items()}},
               open(os.path.join(out_dir, "run_meta.json"), "w"), indent=1)
     return bots, jpath, checker
