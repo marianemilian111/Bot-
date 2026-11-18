@@ -18,16 +18,16 @@
   "baseline_seed": 20261119,
   "stale_data_s": 120
  },
- "cycles": 12,
- "started_utc": "2026-11-18T20:25:43+00:00",
- "ended_utc": "2026-11-18T20:31:43+00:00",
+ "cycles": 10,
+ "started_utc": "2026-11-18T20:35:16+00:00",
+ "ended_utc": "2026-11-18T20:40:16+00:00",
  "resumed": true,
- "minutes_planned": 6.0,
- "minutes_run": 6.0,
+ "minutes_planned": 5.0,
+ "minutes_run": 5.0,
  "stop": null,
  "sha": "5e20196756234bd6b32a41c0304fae6ce0eee548",
- "run_id": "44390805217",
- "jsonl": "v3_collect_20261118_202543.jsonl",
+ "run_id": "44392451443",
+ "jsonl": "v3_collect_20261118_203516.jsonl",
  "pools_discovered": 62,
  "evaluable_pairs": 0,
  "entry_simulations": {
@@ -43,7 +43,7 @@
  },
  "discovery_errors": {},
  "logs": {
-  "momentum-v5-1signal": "night_momentum-v5-1signal_20261118_202543.log",
-  "random-baseline-v5": "night_random-baseline-v5_20261118_202543.log"
+  "momentum-v5-1signal": "night_momentum-v5-1signal_20261118_203516.log",
+  "random-baseline-v5": "night_random-baseline-v5_20261118_203516.log"
  }
 }

@@ -1,0 +1,14 @@
+2026-11-18 20:35:16 INFO     start balance=$250.00
+2026-11-18 20:35:16 INFO     strategy=momentum-v5-1signal fingerprint=d9d4191e906de84d rules={"baseline": "paired: one random draw among same-cycle pairs passing universe+safety, per Momentum entry", "baseline_seed": 20261119, "changed_vs_v1": "min_signals 2 -> 1 (only change); execution as v3", "discovery": "LiveFeed: DexScreener profiles + boosts latest/top, GeckoTerminal new/trending (discovery only, never a signal)", "entry_parts": 2, "exit_fill": "only a passing sell simulation at size; FAIL -> $0 imputed; UNKNOWN -> retry next cycle", "fills": "jupiter quote at size + net fee", "max_age_s": 21600, "min_age_s": 0, "min_signals": 1, "net_fee_usd": 0.02, "position_usd": 50.0, "stale_data_s": 120, "start_balance": 250.0} resumed=True (PAPER ONLY)
+2026-11-18 20:35:16 FILTERED DAKITTY (pump.fun) mint=3YyNSd5dAe5hbKu83syLCjZKWYD9d94EGYCfEWNkpump signals=VOL_SPIKE+BUY_RATIO reason: liquidity $26,926 < $40,000
+2026-11-18 20:35:16 FILTERED GTABOY (pump.fun) mint=689ZZbpm9NGPgCDQfe1bhVXEm5qqGJtKaARCtNVCpump signals=BUY_RATIO reason: liquidity $9,270 < $40,000
+2026-11-18 20:35:16 FILTERED Founder (pump.fun) mint=Eyp4dHQD8oLLF4XLyA1QDcFxSYxQSFnphiujRvugpump signals=BUY_RATIO reason: liquidity $37,129 < $40,000
+2026-11-18 20:35:16 FILTERED DCTYCAT (pump.fun) mint=BUm7phoWgN4hjbXvKtrL6vkoTpU8rfEoiZ1zYN79pump signals=BUY_RATIO reason: liquidity $27,154 < $40,000
+2026-11-18 20:35:16 FILTERED Mabel (pump.fun) mint=EhjRG9DDTeP9z9N8UByx1FGpXNCVKidHXsVwkQ4jpump signals=VOL_SPIKE reason: liquidity $21,427 < $40,000
+2026-11-18 20:35:16 FILTERED APY (pump.fun) mint=8VpF5FToHRo4WWP6nYvEvJvpg85JGCYwcSAcPVFppump signals=VOL_SPIKE reason: liquidity $27,614 < $40,000
+2026-11-18 20:36:16 FILTERED Cowboy Cat (pump.fun) mint=BqY559dJkG44EwyD1WwguwtDzP6d3pYQDzxNT7gkXKjm signals=VOL_SPIKE+BUY_RATIO reason: liquidity $29,626 < $40,000
+2026-11-18 20:36:16 FILTERED DCTY (pump.fun) mint=7n8RYu6Cevagkih4ZXnTBC12i2V7nAKJP34k4Vk1pump signals=VOL_SPIKE+BUY_RATIO reason: liquidity $24,826 < $40,000
+2026-11-18 20:36:16 FILTERED ONYX (pump.fun) mint=7sNgCttjCxY3JxBZuj5d6XsT3FCoYPCJyZ8cZu2Dpump signals=BUY_RATIO reason: liquidity $5,841 < $40,000
+2026-11-18 20:36:16 FILTERED FISH (meteora) mint=4LWFoxFW1823j3JqxfjuFeGjtGzcbHSwvLJPhHnRaRMv signals=VOL_SPIKE reason: liquidity $22,912 < $40,000
+2026-11-18 20:36:46 FILTERED MGH (pump.fun) mint=8e4Km4t4Et7HMapKjQ9rVzubXeS18kYpq2692wxGpump signals=BUY_RATIO reason: liquidity $2,816 < $40,000
+2026-11-18 20:40:16 INFO     end cycles=10 open=0 closed=0 failed_exits=0 (open positions stay open; no sale is invented)
