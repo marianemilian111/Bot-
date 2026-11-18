@@ -1,0 +1,23 @@
+{
+ "strategy": "momentum-v1",
+ "saved": "2026-11-18T03:11:37.926558",
+ "start": 1000.0,
+ "cash": 1000.0,
+ "wins": 0,
+ "losses": 0,
+ "loss_streak": 0,
+ "day": "2026-11-18",
+ "peak": 1000.0,
+ "paused": false,
+ "curve": [
+  [
+   "2026-11-18T03:07:37.924249",
+   1000.0
+  ]
+ ],
+ "positions": {},
+ "pending": {},
+ "trades": [],
+ "failed_exits": 0,
+ "traded": []
+}

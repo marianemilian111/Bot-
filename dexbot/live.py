@@ -33,6 +33,11 @@ class LiveFeed:
         self.last_discovery = 0.0
         self.watch: List[str] = []
 
+    def pin(self, addr: str):
+        """Keep a held token in the watch list so its price keeps updating."""
+        if addr not in self.watch:
+            self.watch.insert(0, addr)
+
     def _discover(self):
         if time.time() - self.last_discovery < 60:
             return
@@ -63,6 +68,11 @@ class LiveFeed:
             out["dev_pct"] = creator / supply * 100 if creator is not None and supply else None
             risks = [x.get("name", "").lower() for x in r.get("risks") or []]
             out["bundled"] = any("bundl" in x or "snip" in x for x in risks)
+            pools = {m.get("pubkey") for m in r.get("markets") or []}
+            for h in tops:
+                if h.get("owner") not in pools and not h.get("insider") and h.get("amount", 0) >= 10 ** 8:
+                    out["sell_holder"] = (h["owner"], h["amount"])     # public holder for the sell simulation
+                    break
             out["honeypot"] = None   # SELL_SIMULATION unavailable. A quote (SELL_QUOTE) is not a simulation. UNKNOWN = reject
         except Exception:
             pass
@@ -111,7 +121,7 @@ class LiveFeed:
             pullback_pct=None,           # unknown -> no-chase rule stays strict
             smart_buyers_10m=sm, kol_bought=kol,
             dev_pct=s.get("dev_pct"), top10_pct=s.get("top10_pct"), bundled=s.get("bundled"),
-            lp_status=s.get("lp_status"), mint_frozen=s.get("mint_frozen"),
+            sell_holder=s.get("sell_holder"), lp_status=s.get("lp_status"), mint_frozen=s.get("mint_frozen"),
             mint_auth_open=s.get("mint_auth_open"), honeypot=s.get("honeypot"))
 
     def snapshot(self) -> List[Pair]:

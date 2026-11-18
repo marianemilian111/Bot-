@@ -32,6 +32,7 @@ class Pair:
     dev_sold: bool = False
     lp_pulled: bool = False
     pair_addr: Optional[str] = None
+    sell_holder: Optional[tuple] = None   # (owner, raw_amount) public holder used for the sell simulation
 
 
 @dataclass

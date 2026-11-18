@@ -45,3 +45,12 @@ No overnight run was started. Nothing in `--sim` output is evidence of profit.
 Thresholds were not changed. Resume only with (1) an authorized method of simulating the sell, and
 (2) data collected across several time windows, with filters frozen before looking at results.
 No wallet, real executor, paid subscription or new dashboard was added.
+
+## Update: read-only collector + paper mode (frozen `momentum-v1`)
+* `python3 run.py --collect --minutes 15` - live public data only (DexScreener, RugCheck, Jupiter quote/swap-build, Solana RPC
+  `simulateTransaction`), JSONL snapshot of every evaluated pair, paper trades with state in `state/paper_state.json`.
+* SELL_QUOTE is not SELL_SIMULATION: a pair only passes when the simulated sell returns `err=null`; FAIL or UNKNOWN rejects it.
+  At exit time UNKNOWN defers the sale (no invented fill) and FAIL writes the position off and counts it as a loss.
+* Rules and filters are frozen (`dexbot/frozen.py` fingerprint); a changed config aborts the run.
+* Actions -> "Live smoke test (read-only, paper)" -> Run workflow (max 15 min). BLOCAT is reported if a mandatory source is unreachable.
+* 7-day plan (proposal only): `docs/COLLECTION_PLAN.md`. Smoke tests are not evidence of profit.

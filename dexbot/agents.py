@@ -78,7 +78,7 @@ class RugCheck:
     def status(self):
         return f"PASS {self.passed} / FAIL {self.failed}"
 
-    def check(self, p: Pair) -> Tuple[bool, str]:
+    def check(self, p: Pair, skip_sell: bool = False) -> Tuple[bool, str]:
         c = self.cfg
         # unknown (None) data fails closed
         checks = [
@@ -91,9 +91,14 @@ class RugCheck:
             (p.mint_auth_open is False, "open mint authority"),
         ]
         for ok, why in checks:
+            if skip_sell and why.startswith("SELL_SIMULATION"):
+                continue
             if not ok:
-                self.failed += 1
+                if not skip_sell:
+                    self.failed += 1
                 return False, why
+        if skip_sell:
+            return True, "all non-sell checks passed"
         self.passed += 1
         return True, "all checks passed"
 
@@ -131,6 +136,9 @@ class Executor:
         self.pending: Dict[str, float] = {}   # addr -> usd still to buy (part 2)
         self.trades: List[Trade] = []
         self.status = "idle"
+        self.sell_gate = None          # optional: Pair -> "OK" | "FAIL" | "UNKNOWN" (sell simulation at exit time)
+        self.failed_exits = 0
+        self._deferred = set()
 
     # slippage from constant-product depth: buying $x into a pool with liq/2 in quote
     def slip(self, usd: float, liq: float) -> float:
@@ -166,10 +174,24 @@ class Executor:
             self.pending[p.addr] = usd - usd / parts
         return True
 
-    def _sell(self, pos: Position, p: Pair, tokens: float, why: str, now: datetime):
+    def _sell(self, pos: Position, p: Pair, tokens: float, why: str, now: datetime) -> bool:
         tokens = min(tokens, pos.tokens)
         if tokens <= 0:
-            return
+            return False
+        if self.sell_gate is not None:
+            st = self.sell_gate(p)
+            if st == "UNKNOWN":                       # cannot verify the sale: do not invent a fill
+                if (pos.addr, why) not in self._deferred:
+                    self._deferred.add((pos.addr, why))
+                    self.log.log(now, "EXIT_DEFERRED", f"{p.symbol} {why}: SELL_SIMULATION=UNKNOWN, retry next tick")
+                return False
+            if st == "FAIL":                          # sale blocked: written off, counted as a loss
+                pos.tokens -= tokens
+                pos.reasons.append("EXIT_FAILED")
+                self.failed_exits += 1
+                self.log.log(now, "EXIT_FAILED", f"{p.symbol} {why}: sell simulation failed, "
+                                                 f"{tokens / pos.tokens_bought:.0%} written off (proceeds $0)")
+                return True
         usd_val = tokens * p.price
         sl = min(self.slip(usd_val, p.liquidity), 0.5)
         fill = p.price * (1 - sl)
@@ -182,6 +204,7 @@ class Executor:
         pnl = got - part_cost
         self.log.log(now, "EXIT", f"{p.symbol} {why} sold={tokens / pos.tokens_bought:.0%} size=${got:,.2f} "
                                   f"fill={fill:.8g} pnl={pnl:+,.2f} ({pnl / part_cost * 100:+.1f}%)")
+        return True
 
     def _close_if_done(self, pos: Position, now: datetime, prices: Dict[str, float]):
         if pos.tokens > 1e-12:
@@ -222,11 +245,11 @@ class Executor:
                     self._buy(pos, p, usd, f"part 2/{c.entry_parts}", now)
                     avg = pos.avg_entry
                 if pos.stage < 1 and p.price >= avg * c.tp1_mult:
-                    self._sell(pos, p, pos.tokens_bought * c.tp1_frac, "TP1_2x", now)
-                    pos.stage = 1
-                if pos.stage < 2 and p.price >= avg * c.tp2_mult:
-                    self._sell(pos, p, pos.tokens_bought * c.tp2_frac, "TP2_4x", now)
-                    pos.stage = 2
+                    if self._sell(pos, p, pos.tokens_bought * c.tp1_frac, "TP1_2x", now):
+                        pos.stage = 1
+                if pos.stage < 2 and pos.stage >= 1 and p.price >= avg * c.tp2_mult:
+                    if self._sell(pos, p, pos.tokens_bought * c.tp2_frac, "TP2_4x", now):
+                        pos.stage = 2
                 if pos.stage == 2 and pos.tokens > 0 and p.price <= pos.peak * (1 - c.trail_pct):
                     self._sell(pos, p, pos.tokens, "TRAIL_25%", now)
                 elif pos.stage < 2 and age > c.time_stop_s and pos.tokens > 0:

@@ -1,0 +1,54 @@
+name: Live smoke test (read-only, paper)
+
+on:
+  workflow_dispatch:
+    inputs:
+      minutes:
+        description: "Minutes of live collection (max 15)"
+        default: "12"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Preflight (are the live sources reachable from this runner?)
+        id: pre
+        continue-on-error: true
+        run: python scripts/preflight.py
+      - name: Live collector + paper (frozen momentum-v1)
+        if: steps.pre.outcome == 'success'
+        env:
+          MINUTES_IN: ${{ inputs.minutes }}
+        run: |
+          m="$MINUTES_IN"
+          case "$m" in (''|*[!0-9]*) m=12;; esac
+          [ "$m" -gt 15 ] && m=15
+          python run.py --collect --minutes "$m"
+      - name: Report
+        if: always()
+        run: python scripts/report.py >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload logs and state
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-logs
+          path: |
+            logs/
+            state/
+          if-no-files-found: warn
+      - name: Fail visibly if BLOCAT
+        if: steps.pre.outcome == 'failure'
+        run: |
+          echo "BLOCAT: a mandatory live source is unreachable from this runner. See Summary."
+          exit 1

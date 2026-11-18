@@ -13,7 +13,7 @@ from .config import Config
 from .live import LiveFeed
 
 
-def evaluate(cfg, scanner, rug, p):
+def evaluate(cfg, scanner, rug, p, skip_sell=False):
     sig = scanner.signals(p)
     uf = scanner.universe_fail(p)
     if uf:
@@ -23,9 +23,11 @@ def evaluate(cfg, scanner, rug, p):
     if p.price_1h_ago and p.price / p.price_1h_ago >= cfg.no_chase_mult and \
             not (p.pullback_pct is not None and p.pullback_pct >= cfg.pullback_min):
         return "REJECT", "no-chase: +300% in 1h without pullback", sig
-    ok, why = rug.check(p)
+    ok, why = rug.check(p, skip_sell=skip_sell)
     if not ok:
         return "REJECT", "RUGCHECK " + why, sig
+    if skip_sell:
+        return "CANDIDATE", "passes all non-sell checks; sell simulation decides next", sig
     return "ALERT_ONLY", "passes all checks", sig
 
 

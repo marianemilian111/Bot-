@@ -10,13 +10,17 @@ from .dashboard import render, write_state
 
 
 class Bot:
-    def __init__(self, cfg: Config, feed, now: datetime, logdir="logs"):
+    def __init__(self, cfg: Config, feed, now: datetime, logdir="logs", sell_checker=None):
         os.makedirs(logdir, exist_ok=True)
         self.cfg, self.feed = cfg, feed
         self.log = Logger(os.path.join(logdir, f"night_{now:%Y%m%d_%H%M}.log"))
         self.eq = Equity(cfg.start_balance, now, self.log)
         self.scanner, self.rug, self.sizer = Scanner(cfg), RugCheck(cfg), Sizer(cfg)
         self.ex = Executor(cfg, self.log, self.eq)
+        self.sell_checker = sell_checker
+        self.entries_enabled = True
+        if sell_checker is not None:
+            self.ex.sell_gate = sell_checker.fresh
         self.seen = set()          # (addr, reason) already logged as FILTERED
         self.traded = set()        # one entry per pair
         self.log.log(now, "INFO", f"start balance=${cfg.start_balance:,.2f}")
@@ -29,6 +33,9 @@ class Bot:
 
     def tick(self, now: datetime):
         c = self.cfg
+        if hasattr(self.feed, "pin"):
+            for a in self.ex.positions:
+                self.feed.pin(a)
         self.feed.step(now)
         pairs = {p.addr: p for p in self.feed.snapshot()}
         for a in self.ex.positions:                    # keep marking held pairs
@@ -46,14 +53,24 @@ class Bot:
             if f.universe_fail:
                 self._filtered(now, p, f.signals, f.universe_fail)
                 continue
-            if self.eq.paused:
-                continue                                  # already logged as PAUSE
+            if self.eq.paused or not self.entries_enabled:
+                continue                                  # PAUSE already logged / entries closed for this run
             if len(self.ex.positions) >= c.max_open:
                 continue
             if p.price_1h_ago and p.price / p.price_1h_ago >= c.no_chase_mult and \
                     not (p.pullback_pct is not None and p.pullback_pct >= c.pullback_min):
                 self._filtered(now, p, f.signals, "no-chase: +300% in 1h without pullback")
                 continue
+            if self.sell_checker is not None:
+                ok, why = self.rug.check(p, skip_sell=True)
+                if ok:
+                    st = self.sell_checker.check(p)
+                    p.honeypot = {"OK": False, "FAIL": True}.get(st)     # UNKNOWN stays None -> rejected
+                    if st != "OK":
+                        why = f"SELL_SIMULATION={st} ({self.sell_checker.last_detail.get(p.addr, '')})"
+                        self.rug.failed += 1
+                        self._filtered(now, p, f.signals, "RUGCHECK " + why)
+                        continue
             ok, why = self.rug.check(p)
             if not ok:
                 self._filtered(now, p, f.signals, "RUGCHECK FAIL " + why)
