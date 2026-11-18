@@ -32,6 +32,7 @@ class Pair:
     dev_sold: bool = False
     lp_pulled: bool = False
     pair_addr: Optional[str] = None
+    liquidity_source: Optional[str] = None   # dexscreener | pump_curve_rpc | None (unknown)
     sell_holder: Optional[tuple] = None   # (owner, raw_amount) public holder used for the sell simulation
 
 

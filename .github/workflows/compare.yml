@@ -39,7 +39,7 @@ jobs:
       - name: Summary
         if: always()
         run: |
-          python scripts/compare.py >> "$GITHUB_STEP_SUMMARY"
+          python scripts/compare.py | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Upload logs and state
         if: always()
         uses: actions/upload-artifact@v4

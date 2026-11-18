@@ -37,10 +37,10 @@ jobs:
           python run.py --collect --minutes "$m"
       - name: Paper dashboard (from the bot's own state and logs)
         if: always()
-        run: python scripts/dashboard.py >> "$GITHUB_STEP_SUMMARY"
+        run: python scripts/dashboard.py | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Report
         if: always()
-        run: python scripts/report.py >> "$GITHUB_STEP_SUMMARY"
+        run: python scripts/report.py | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Upload logs and state
         if: always()
         uses: actions/upload-artifact@v4

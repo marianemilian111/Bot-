@@ -2,7 +2,9 @@
 Anything the APIs do not give us is left as None, and RugCheck/Scanner treat None as FAIL,
 so missing data can never produce an entry. Smart-money / KOL signals need a wallet-tracking
 source (e.g. Helius webhooks) and stay off until you plug one into `wallet_hook`."""
+import base64
 import json
+import struct
 import time
 import urllib.request
 from collections import defaultdict, deque
@@ -14,6 +16,9 @@ from .models import Pair
 
 DS = "https://api.dexscreener.com"
 RC = "https://api.rugcheck.xyz/v1/tokens/{}/report"
+RPC = "https://api.mainnet-beta.solana.com"
+PUMP_PROGRAM = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+SEC_TTL, SEC_RETRY, CURVE_TTL = 300, 60, 60
 SOURCES = {"pumpfun": "pump.fun", "pumpswap": "pump.fun", "raydium": "raydium", "meteora": "meteora"}
 
 
@@ -24,8 +29,14 @@ def _get(url: str, timeout=10):
 
 
 class LiveFeed:
-    def __init__(self, cfg: Config, wallet_hook: Optional[Callable[[str], tuple]] = None):
+    def __init__(self, cfg: Config, wallet_hook: Optional[Callable[[str], tuple]] = None, gate_cfgs=None):
         self.cfg = cfg
+        # fetch security data for any pair that could pass the LOOSEST variant's floors (data coverage, not a threshold)
+        gates = list(gate_cfgs or [cfg])
+        self.gate_vol = min(c.min_vol5m for c in gates)
+        self.gate_liq = min(c.min_liq for c in gates)
+        self.curve: Dict[str, tuple] = {}       # pair addr -> (fetched_at, liquidity_usd or None)
+        self.decimals: Dict[str, Optional[int]] = {}
         self.wallet_hook = wallet_hook          # addr -> (smart_buyers_10m, kol_bought)
         self.cache: Dict[str, Pair] = {}
         self.sec: Dict[str, dict] = {}
@@ -50,9 +61,41 @@ class LiveFeed:
                 pass
         self.watch = list(dict.fromkeys(addrs + self.watch))[:200]
 
+    def _rpc(self, method, params):
+        req = urllib.request.Request(RPC, data=json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params}).encode(),
+                                     headers={"User-Agent": "dexbot/0.1", "Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=10) as r:
+            return json.load(r).get("result")
+
+    def _curve_liquidity(self, r: dict) -> Optional[float]:
+        """pump.fun bonding curve (DexScreener gives liquidity=null): read the curve account over RPC.
+        Liquidity = 2 x real quote reserves in USD (same two-sided convention as an AMM pool). Any doubt -> None (UNKNOWN)."""
+        pa, q = r.get("pairAddress"), (r.get("quoteToken") or {}).get("address")
+        hit = self.curve.get(pa)
+        if hit and time.time() - hit[0] < CURVE_TTL:
+            return hit[1]
+        val = None
+        try:
+            v = (self._rpc("getAccountInfo", [pa, {"encoding": "base64"}]) or {}).get("value")
+            if v and v.get("owner") == PUMP_PROGRAM:
+                raw = base64.b64decode(v["data"][0])
+                if len(raw) >= 49 and raw[48] == 0:                  # complete == 0: still on the curve
+                    real_quote = struct.unpack_from("<Q", raw, 32)[0]
+                    if q not in self.decimals:
+                        self.decimals[q] = ((self._rpc("getTokenSupply", [q]) or {}).get("value") or {}).get("decimals")
+                    dec = self.decimals[q]
+                    pu, pn = float(r.get("priceUsd") or 0), float(r.get("priceNative") or 0)
+                    if dec is not None and pu > 0 and pn > 0:
+                        val = 2 * real_quote / 10 ** dec * (pu / pn)    # priceUsd / priceNative = USD price of the quote token
+        except Exception:
+            val = None
+        self.curve[pa] = (time.time(), val)
+        return val
+
     def _security(self, mint: str) -> dict:
-        if mint in self.sec:
-            return self.sec[mint]
+        hit = self.sec.get(mint)
+        if hit and time.time() - hit[0] < (SEC_TTL if hit[1] else SEC_RETRY):
+            return hit[1]
         out = {}
         try:
             r = _get(RC.format(mint))
@@ -76,7 +119,7 @@ class LiveFeed:
             out["honeypot"] = None   # SELL_SIMULATION unavailable. A quote (SELL_QUOTE) is not a simulation. UNKNOWN = reject
         except Exception:
             pass
-        self.sec[mint] = out
+        self.sec[mint] = (time.time(), out)
         return out
 
     def step(self, now: datetime):
@@ -103,8 +146,12 @@ class LiveFeed:
         v = r.get("volume") or {}
         ch1 = (r.get("priceChange") or {}).get("h1")
         liq = (r.get("liquidity") or {}).get("usd")      # None stays None (unknown)
-        # only spend a RugCheck call on pairs that could pass the volume floor
-        s = self._security(a) if (v.get("m5") or 0) >= self.cfg.min_vol5m and (liq is None or liq >= self.cfg.min_liq) else {}
+        liq_src = "dexscreener" if liq is not None else None
+        if liq is None and r.get("dexId") == "pumpfun":
+            liq = self._curve_liquidity(r)
+            liq_src = "pump_curve_rpc" if liq is not None else None
+        # only spend a RugCheck call on pairs that could pass the loosest variant's floors
+        s = self._security(a) if (v.get("m5") or 0) >= self.gate_vol and (liq is None or liq >= self.gate_liq) else {}
         h = s.get("holders")
         if h:
             self.holder_hist[a].append((time.time(), h))
@@ -114,7 +161,7 @@ class LiveFeed:
             addr=a, pair_addr=r.get("pairAddress"), symbol=r["baseToken"].get("symbol", "?"),
             source=SOURCES.get(r.get("dexId", ""), r.get("dexId", "?")),
             age_s=time.time() - r["pairCreatedAt"] / 1000, price=price,
-            liquidity=liq, vol5m=v.get("m5") or 0,
+            liquidity=liq, liquidity_source=liq_src, vol5m=v.get("m5") or 0,
             vol_avg5m_1h=v.get("h1", 0) / 12, buys5m=m5.get("buys", 0), sells5m=m5.get("sells", 0),
             holders=h, holders_10m=old[-1] if old else None,
             price_1h_ago=price / (1 + ch1 / 100) if ch1 is not None else None,
@@ -123,6 +170,20 @@ class LiveFeed:
             dev_pct=s.get("dev_pct"), top10_pct=s.get("top10_pct"), bundled=s.get("bundled"),
             sell_holder=s.get("sell_holder"), lp_status=s.get("lp_status"), mint_frozen=s.get("mint_frozen"),
             mint_auth_open=s.get("mint_auth_open"), honeypot=s.get("honeypot"))
+
+    def refresh(self, addr: str) -> Optional[Pair]:
+        """Fresh quote for one token, used for the modelled entry (not the price seen at signal time)."""
+        try:
+            rows = _get(f"{DS}/latest/dex/tokens/{addr}").get("pairs") or []
+        except Exception:
+            return None
+        rows = [r for r in rows if r.get("chainId") == "solana" and r.get("pairCreatedAt") and r["baseToken"]["address"] == addr]
+        if not rows:
+            return None
+        r = max(rows, key=lambda r: (r.get("liquidity") or {}).get("usd") or 0)
+        p = self._to_pair(addr, r)
+        self.cache[addr] = p
+        return p
 
     def snapshot(self) -> List[Pair]:
         return list(self.cache.values())

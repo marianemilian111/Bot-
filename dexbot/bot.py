@@ -1,3 +1,4 @@
+import dataclasses
 import os
 import sys
 import time
@@ -81,6 +82,15 @@ class Bot:
             if usd <= 0:
                 self._filtered(now, p, f.signals, "SIZER " + note)
                 continue
+            if hasattr(self.feed, "refresh"):            # model the entry at a fresh price, not the signal-time price
+                t_sig = time.time()
+                q = self.feed.refresh(p.addr)
+                if q is None or not q.price or q.liquidity is None or q.liquidity < c.min_liq:
+                    self._filtered(now, p, f.signals, "entry price refresh UNKNOWN or liquidity below floor at entry")
+                    continue
+                self.log.log(now, "INFO", f"{p.symbol} entry repriced: signal {p.price:.8g} -> entry basis {q.price:.8g} "
+                                          f"({(q.price / p.price - 1) * 100:+.2f}%), refresh {time.time() - t_sig:.1f}s after signal")
+                p = dataclasses.replace(p, price=q.price, liquidity=q.liquidity)
             self.traded.add(p.addr)
             self.ex.enter(p, usd, f.signals, now)
 

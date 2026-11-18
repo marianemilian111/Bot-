@@ -70,7 +70,8 @@ def _decision(bot, checker, p, verdict, why):
 def run_collector(base_cfg: Config, minutes: float, variants=(V1,), interval_s: int = 30, state_dir="state",
                   out_dir="logs", no_entry_last_min: float = 0):
     os.makedirs(out_dir, exist_ok=True)
-    feed, checker = LiveFeed(base_cfg), SellChecker()      # one feed and one sell-simulation cache shared by all variants
+    checker = SellChecker()                                  # one feed and one sell-simulation cache shared by all variants
+    feed = LiveFeed(base_cfg, gate_cfgs=[make(v, base_cfg.start_balance) for v in variants])
     now = datetime.now()
     bots = {}
     for vid in variants:
@@ -111,7 +112,7 @@ def run_collector(base_cfg: Config, minutes: float, variants=(V1,), interval_s: 
                 out.write(json.dumps({
                     "variant": vid, "ts": datetime.now(timezone.utc).isoformat(timespec="seconds"), "mint": p.addr,
                     "pair": p.pair_addr, "source": p.source, "age_s": round(p.age_s), "price": p.price,
-                    "liquidity": p.liquidity, "vol5m": p.vol5m, "vol_avg5m_1h": p.vol_avg5m_1h, "buys5m": p.buys5m,
+                    "liquidity": p.liquidity, "liquidity_source": p.liquidity_source, "vol5m": p.vol5m, "vol_avg5m_1h": p.vol_avg5m_1h, "buys5m": p.buys5m,
                     "sells5m": p.sells5m, "holders": p.holders, "holders_10m": p.holders_10m, "signals": sig,
                     "verdict": verdict, "reason": why}) + "\n")
             save_state(b, b.state_path)
