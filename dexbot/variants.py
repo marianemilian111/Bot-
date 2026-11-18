@@ -66,3 +66,52 @@ def make(variant: str, start_balance: float = 1000.0) -> Config:     # noqa: F81
 
 
 FROZEN[V3] = "afaf71d4a6d592db"
+
+
+# ---- v5 (paper only, separate): v1 universe and safety, ONE change - at least 1 Momentum signal instead of 2 -
+#      executed exactly like v3 ($50 in 2 x $25 sized quotes, sell simulation of the exact amount, same exits and costs).
+#      Chosen from diagnostic data (runs 44303696774 + 44312261755): the only pair that passed liquidity, volume and
+#      holders in those runs was stopped solely by "signals >= 2". Validation uses new data only (docs/PREREG_V5.md).
+V5 = "momentum-v5-1signal"
+V5B = "random-baseline-v5"
+LABELS[V5] = "Momentum v5: v1 universe, >= 1 signal ($50 positions)"
+LABELS[V5B] = "Random baseline v5 (same candidates, size, exits)"
+V5_RULES = {
+    "min_age_s": 0, "max_age_s": 6 * 3600, "position_usd": 50.0, "start_balance": 250.0, "entry_parts": 2,
+    "min_signals": 1, "changed_vs_v1": "min_signals 2 -> 1 (only change); execution as v3",
+    "discovery": "LiveFeed: DexScreener profiles + boosts latest/top, GeckoTerminal new/trending (discovery only, never a signal)",
+    "fills": "jupiter quote at size + net fee", "net_fee_usd": 0.02,
+    "exit_fill": "only a passing sell simulation at size; FAIL -> $0 imputed; UNKNOWN -> retry next cycle",
+    "baseline": "paired: one random draw among same-cycle pairs passing universe+safety, per Momentum entry",
+    "baseline_seed": 20261119, "stale_data_s": 120,
+}
+
+
+def make_v5(start_balance: float = 250.0) -> Config:
+    return replace(Config(start_balance=start_balance), min_signals=1)
+
+
+def fingerprint_v5(cfg) -> str:
+    import hashlib
+    import json
+    from .frozen import fingerprint
+    return hashlib.sha256((fingerprint(cfg, V5) + json.dumps(V5_RULES, sort_keys=True)).encode()).hexdigest()[:16]
+
+
+def assert_v5(cfg) -> str:
+    fp = fingerprint_v5(cfg)
+    if fp != FROZEN[V5]:
+        raise SystemExit(f"{V5}: rules fingerprint {fp} != frozen {FROZEN[V5]}; a changed rule needs a new pre-registration")
+    return fp
+
+
+_make_prev = make
+
+
+def make(variant: str, start_balance: float = 1000.0) -> Config:     # noqa: F811
+    if variant in (V5, V5B):
+        return make_v5(start_balance)
+    return _make_prev(variant, start_balance)
+
+
+FROZEN[V5] = "d9d4191e906de84d"

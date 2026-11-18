@@ -1,0 +1,49 @@
+name: Collect v5 paper data (pre-registered, multi-day)
+
+# NOT ACTIVE until approved and pushed. Paper only: no wallet, no keys, no orders.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"          # every 6 h; one 350-min job per slot
+
+permissions:
+  contents: write                   # only to commit state/logs to the data branch paper-data-v5
+
+concurrency:
+  group: collect-v5
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        run: python -m unittest discover -s tests
+      - name: Restore state from paper-data-v5 (if it exists)
+        run: |
+          git fetch origin paper-data-v5 && git checkout origin/paper-data-v5 -- state logs || echo "first run: empty state"
+      - name: Preflight
+        id: pre
+        continue-on-error: true
+        run: python scripts/preflight.py
+      - name: Paper collection v5 (345 min, resumes balances and positions)
+        if: steps.pre.outcome == 'success'
+        run: python run.py --v5 --resume --minutes 345 --early-stop-min 9999
+      - name: Report (job log + Summary)
+        if: always()
+        run: python scripts/v3_report.py logs/v5_meta.json | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Save state and logs to paper-data-v5
+        if: always()
+        run: |
+          git config user.name "paper-collector"
+          git config user.email "paper-collector@users.noreply.github.com"
+          mkdir -p /tmp/keep && cp -r state logs /tmp/keep/
+          git fetch origin paper-data-v5 && git checkout -B paper-data-v5 origin/paper-data-v5 || git checkout --orphan paper-data-v5
+          git rm -rq --cached . || true
+          rm -rf state logs && cp -r /tmp/keep/state /tmp/keep/logs .
+          git add -f state logs && git commit -qm "v5 paper data $(date -u +%FT%TZ)" && git push origin paper-data-v5

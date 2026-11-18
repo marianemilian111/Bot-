@@ -35,11 +35,13 @@ MAJOR_SYMBOLS = {"SOL", "WSOL", "USDC", "USDT", "PYUSD", "USDS", "TTWO", "CBBTC"
 
 
 class V3Scanner(Scanner):
+    rules = V3_RULES
+
     def universe_fail(self, p):
-        if p.age_s <= V3_RULES["min_age_s"]:
+        if self.rules["min_age_s"] and p.age_s <= self.rules["min_age_s"]:
             return "younger than 6h (v3 window is 6-72h)"
         if p.age_s > self.cfg.max_age_s:
-            return "older than 72h"
+            return f"older than {self.cfg.max_age_s // 3600}h"
         return super().universe_fail(dataclasses.replace(p, age_s=0))   # remaining v1 checks, age already handled
 
 
@@ -172,9 +174,10 @@ class SizedEntryChecker:
         return "UNKNOWN"
 
 
-def _wire(bot, cfg):
+def _wire(bot, cfg, rules=V3_RULES):
     bot.scanner = V3Scanner(cfg)
-    bot.sizer = FixedSizer(V3_RULES["position_usd"], cfg.max_open)
+    bot.scanner.rules = rules
+    bot.sizer = FixedSizer(rules["position_usd"], cfg.max_open)
     ex = SizedExecutor(cfg, bot.log, bot.eq)
     bot.ex = ex
     return bot
@@ -229,19 +232,27 @@ def _gt(path):
         return json.load(r).get("data") or []
 
 
-def run_v3(minutes, early_stop_min=20, interval_s=30, out_dir="logs", state_dir="state"):
-    cfg = make(V3, V3_RULES["start_balance"])
-    fp = assert_v3(cfg)
+def run_v3(minutes, early_stop_min=20, interval_s=30, out_dir="logs", state_dir="state", spec=None, resume=False):
+    spec = spec or {"id": V3, "baseline": V3B, "rules": V3_RULES, "cfg": make(V3, V3_RULES["start_balance"]),
+                    "assert": assert_v3, "feed": V3Feed, "meta": "v3_meta.json"}
+    V3_, V3B_, R = spec["id"], spec["baseline"], spec["rules"]
+    cfg = spec["cfg"]
+    fp = spec["assert"](cfg)
     os.makedirs(out_dir, exist_ok=True)
     now = datetime.now()
-    feed = V3Feed(cfg)
-    mom = _wire(Bot(cfg, feed, now, logdir=out_dir, sell_checker=SizedEntryChecker(V3_RULES["position_usd"]), tag=V3, strategy_id=V3), cfg)
-    base = _wire(Bot(cfg, feed, now, logdir=out_dir, sell_checker=SizedEntryChecker(V3_RULES["position_usd"]), tag=V3B, strategy_id=V3B), cfg)
+    feed = spec["feed"](cfg)
+    mom = _wire(Bot(cfg, feed, now, logdir=out_dir, sell_checker=SizedEntryChecker(R["position_usd"]), tag=V3_, strategy_id=V3_), cfg, R)
+    base = _wire(Bot(cfg, feed, now, logdir=out_dir, sell_checker=SizedEntryChecker(R["position_usd"]), tag=V3B_, strategy_id=V3B_), cfg, R)
+    if resume:                                             # multi-day collection: continue balances, positions, trades
+        from .collector import load_state
+        for b in (mom, base):
+            load_state(b, os.path.join(state_dir, f"paper_state_{b.strategy_id}.json"))
     base.entries_enabled = False                           # the baseline only enters when Momentum does (paired draw)
-    rng = random.Random(V3_RULES["baseline_seed"])
-    for b, name in ((mom, V3), (base, V3B)):
-        b.log.log(now, "INFO", f"strategy={name} fingerprint={fp} rules={json.dumps(V3_RULES, sort_keys=True)} (PAPER ONLY)")
+    rng = random.Random(R["baseline_seed"] + (int(time.time()) if resume else 0))   # resumed runs: fresh but logged seed
+    for b, name in ((mom, V3_), (base, V3B_)):
+        b.log.log(now, "INFO", f"strategy={name} fingerprint={fp} rules={json.dumps(R, sort_keys=True)} resumed={resume} (PAPER ONLY)")
     scanner, rug = V3Scanner(cfg), RugCheck(cfg)
+    scanner.rules = R
     jpath = os.path.join(out_dir, f"v3_collect_{now:%Y%m%d_%H%M%S}.jsonl")
     out = open(jpath, "a", buffering=1)
     evaluable, cycles, stop_reason, draws = set(), 0, None, []
@@ -271,7 +282,7 @@ def run_v3(minutes, early_stop_min=20, interval_s=30, out_dir="logs", state_dir=
                 evaluable.add(p.addr)
                 eligible.append(p)
             verdict, why = _decision(mom, mom.sell_checker, p, verdict, why)
-            out.write(json.dumps({"variant": V3, "ts": datetime.now(timezone.utc).isoformat(timespec="seconds"), "mint": p.addr,
+            out.write(json.dumps({"variant": V3_, "ts": datetime.now(timezone.utc).isoformat(timespec="seconds"), "mint": p.addr,
                                   "pair": p.pair_addr, "dex": p.source, "age_h": round(p.age_s / 3600, 2), "price": p.price,
                                   "liquidity": p.liquidity, "vol5m": p.vol5m, "holders": p.holders, "signals": sig,
                                   "disc": feed.sources(p.addr), "verdict": verdict, "reason": why}) + "\n")
@@ -296,7 +307,7 @@ def run_v3(minutes, early_stop_min=20, interval_s=30, out_dir="logs", state_dir=
                     continue
                 base.traded.add(p.addr)
                 done = base.ex.enter(dataclasses.replace(p, price=q.price, liquidity=q.liquidity or p.liquidity),
-                                     V3_RULES["position_usd"], ["RANDOM"], now)
+                                     R["position_usd"], ["RANDOM"], now)
                 break
             if not done:
                 base.log.log(now, "INFO", f"baseline: no entry for Momentum entry {addr[:8]} ({len(pool)} eligible in this cycle)")
@@ -313,12 +324,21 @@ def run_v3(minutes, early_stop_min=20, interval_s=30, out_dir="logs", state_dir=
         save_state(b, os.path.join(state_dir, f"paper_state_{b.strategy_id}.json"))
         b.log.close()
     out.close()
-    json.dump({"strategy": V3, "baseline": V3B, "fingerprint": fp, "rules": V3_RULES, "cycles": cycles,
+    json.dump({"strategy": V3_, "baseline": V3B_, "fingerprint": fp, "rules": R, "cycles": cycles,
                "minutes_planned": minutes, "minutes_run": round((time.time() - t_start) / 60, 1), "stop": stop_reason,
                "sha": os.environ.get("GITHUB_SHA"), "run_id": os.environ.get("GITHUB_RUN_ID"), "jsonl": os.path.basename(jpath),
-               "pools_discovered": len(feed.v3_pools), "evaluable_pairs": len(evaluable),
+               "pools_discovered": len(getattr(feed, "v3_pools", None) or getattr(feed, "watch", [])), "evaluable_pairs": len(evaluable),
                "entry_simulations": mom.sell_checker.entry, "baseline_draws": draws, "baseline_entry_simulations": base.sell_checker.entry,
                "discovery_errors": {k: dict(v) for k, v in feed.disc_errors.items()},
-               "logs": {V3: os.path.basename(mom.log.path), V3B: os.path.basename(base.log.path)}},
-              open(os.path.join(out_dir, "v3_meta.json"), "w"), indent=1)
+               "logs": {V3_: os.path.basename(mom.log.path), V3B_: os.path.basename(base.log.path)}},
+              open(os.path.join(out_dir, spec["meta"]), "w"), indent=1)
     return mom, base
+
+
+def run_v5(minutes, early_stop_min=20, resume=False, **kw):
+    """v5 = v1 universe/safety with >= 1 signal, executed like v3. Same runner, separate ids, state, logs and meta."""
+    from .live import LiveFeed
+    from .variants import V5, V5B, V5_RULES, assert_v5
+    spec = {"id": V5, "baseline": V5B, "rules": V5_RULES, "cfg": make(V5, V5_RULES["start_balance"]), "assert": assert_v5,
+            "feed": lambda cfg: LiveFeed(cfg, gate_cfgs=[cfg]), "meta": "v5_meta.json"}
+    return run_v3(minutes, early_stop_min=early_stop_min, spec=spec, resume=resume, **kw)

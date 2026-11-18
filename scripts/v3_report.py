@@ -22,14 +22,17 @@ if os.path.exists(pf):
     if d["blocked"]:
         o += [f"**BLOCAT** - unreachable from this runner: {', '.join(d['blocked'])}. No test was run, nothing synthetic used."]
         print("\n".join(o)); sys.exit(0)
-if not os.path.exists("logs/v3_meta.json"):
-    o += ["**No result**: logs/v3_meta.json missing (the run did not complete). PnL: N/A"]
+META = sys.argv[1] if len(sys.argv) > 1 else "logs/v3_meta.json"
+if not os.path.exists(META):
+    o += [f"**No result**: {META} missing (the run did not complete). PnL: N/A"]
     print("\n".join(o)); sys.exit(0)
-m = json.load(open("logs/v3_meta.json"))
+m = json.load(open(META))
+V3, V3B = m["strategy"], m["baseline"]                    # works for v3 and v5 (ids come from the run itself)
+o[0] = f"# Paper test {V3} vs {V3B} (LIVE data, PAPER ONLY, no wallet, no orders)"
 o += [f"Run `{m.get('run_id')}` | commit `{(m.get('sha') or '?')[:8]}` | fingerprint `{m['fingerprint']}` | "
       f"{m['minutes_run']} of {m['minutes_planned']} min | {m['cycles']} cycles", "",
       f"Rules fixed before the run: {clean(json.dumps(m['rules'], sort_keys=True), 900)}", "",
-      f"Migrated pools discovered in the window (deduped): **{m['pools_discovered']}** | evaluable pairs (universe + safety, "
+      f"Pools (v3) or tokens (v5) discovered: **{m['pools_discovered']}** | evaluable pairs (universe + safety, "
       f"before sell simulation): **{m['evaluable_pairs']}** | discovery errors: {m['discovery_errors'] or 'none'}", ""]
 if m.get("stop"):
     o += [f"**{m['stop']}**", ""]
