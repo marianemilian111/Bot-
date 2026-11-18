@@ -10,7 +10,7 @@ class Pair:
     source: str                 # pump.fun | raydium | meteora
     age_s: float                # since launch / migration
     price: float
-    liquidity: float
+    liquidity: Optional[float]   # None = unknown (DexScreener gives null for pump.fun curves)
     vol5m: float
     vol_avg5m_1h: float         # average 5m volume over the last hour
     buys5m: int

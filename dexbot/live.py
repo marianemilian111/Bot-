@@ -63,7 +63,7 @@ class LiveFeed:
             out["dev_pct"] = creator / supply * 100 if creator is not None and supply else None
             risks = [x.get("name", "").lower() for x in r.get("risks") or []]
             out["bundled"] = any("bundl" in x or "snip" in x for x in risks)
-            out["honeypot"] = None   # needs a real sell simulation (e.g. Jupiter quote); unknown = FAIL
+            out["honeypot"] = None   # SELL_SIMULATION unavailable. A quote (SELL_QUOTE) is not a simulation. UNKNOWN = reject
         except Exception:
             pass
         self.sec[mint] = out
@@ -92,7 +92,9 @@ class LiveFeed:
         m5 = (r.get("txns") or {}).get("m5") or {}
         v = r.get("volume") or {}
         ch1 = (r.get("priceChange") or {}).get("h1")
-        s = self._security(a) if (r.get("liquidity") or {}).get("usd", 0) >= self.cfg.min_liq else {}
+        liq = (r.get("liquidity") or {}).get("usd")      # None stays None (unknown)
+        # only spend a RugCheck call on pairs that could pass the volume floor
+        s = self._security(a) if (v.get("m5") or 0) >= self.cfg.min_vol5m and (liq is None or liq >= self.cfg.min_liq) else {}
         h = s.get("holders")
         if h:
             self.holder_hist[a].append((time.time(), h))
@@ -102,7 +104,7 @@ class LiveFeed:
             addr=a, symbol=r["baseToken"].get("symbol", "?"),
             source=SOURCES.get(r.get("dexId", ""), r.get("dexId", "?")),
             age_s=time.time() - r["pairCreatedAt"] / 1000, price=price,
-            liquidity=(r.get("liquidity") or {}).get("usd", 0), vol5m=v.get("m5", 0),
+            liquidity=liq, vol5m=v.get("m5") or 0,
             vol_avg5m_1h=v.get("h1", 0) / 12, buys5m=m5.get("buys", 0), sells5m=m5.get("sells", 0),
             holders=h, holders_10m=old[-1] if old else None,
             price_1h_ago=price / (1 + ch1 / 100) if ch1 is not None else None,

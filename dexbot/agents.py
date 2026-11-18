@@ -36,6 +36,8 @@ class Scanner:
         c = self.cfg
         if p.age_s > c.max_age_s:
             return "older than 6h"
+        if p.liquidity is None:
+            return "liquidity UNKNOWN (source gives none)"
         if p.liquidity < c.min_liq:
             return f"liquidity ${p.liquidity:,.0f} < ${c.min_liq:,.0f}"
         if p.vol5m < c.min_vol5m:
@@ -84,7 +86,7 @@ class RugCheck:
             (p.top10_pct is not None and p.top10_pct < c.top10_max_pct, f"top10 holders {p.top10_pct}% (need <{c.top10_max_pct}%)"),
             (p.bundled is False, f"bundled launch ({p.bundled})"),
             (p.lp_status in ("burned", "locked_30d"), f"LP {p.lp_status} (need burned/locked 30d+)"),
-            (p.honeypot is False, f"honeypot sell-sim ({p.honeypot})"),
+            (p.honeypot is False, "SELL_SIMULATION=" + ("FAIL (honeypot)" if p.honeypot else "UNKNOWN (a SELL_QUOTE is not a simulation)")),
             (p.mint_frozen is False, "frozen mint"),
             (p.mint_auth_open is False, "open mint authority"),
         ]
