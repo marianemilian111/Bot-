@@ -31,6 +31,7 @@ class Pair:
     honeypot: Optional[bool] = None     # result of the sell simulation
     dev_sold: bool = False
     lp_pulled: bool = False
+    pair_addr: Optional[str] = None
 
 
 @dataclass

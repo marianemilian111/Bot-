@@ -101,7 +101,7 @@ class LiveFeed:
         old = [x for t, x in self.holder_hist[a] if time.time() - t >= 600]
         sm, kol = self.wallet_hook(a) if self.wallet_hook else (0, False)
         return Pair(
-            addr=a, symbol=r["baseToken"].get("symbol", "?"),
+            addr=a, pair_addr=r.get("pairAddress"), symbol=r["baseToken"].get("symbol", "?"),
             source=SOURCES.get(r.get("dexId", ""), r.get("dexId", "?")),
             age_s=time.time() - r["pairCreatedAt"] / 1000, price=price,
             liquidity=liq, vol5m=v.get("m5") or 0,
