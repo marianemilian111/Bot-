@@ -73,6 +73,11 @@ jobs:
         run: |
           { echo "Data branch: $DATA_BRANCH"; echo '```'; python scripts/v5_gate.py; echo '```'; } | tee -a "$GITHUB_STEP_SUMMARY" || true
           python scripts/v3_report.py logs/v5_meta.json | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: v6 capture strategy - shadow report (reporting only; reads the v5 data, changes nothing)
+        if: always()
+        run: |
+          git show a0d2350:scripts/v6_shadow.py > /tmp/v6_shadow.py 2>/dev/null || git fetch -q origin a0d2350 && git show a0d2350:scripts/v6_shadow.py > /tmp/v6_shadow.py
+          { echo '## v6 (pre-registered in docs/PREREG_V6.md, evaluated on the v5 data)'; echo '```'; python /tmp/v6_shadow.py . ; echo '```'; } | tee -a "$GITHUB_STEP_SUMMARY" || true
       - name: Save state and logs to the data branch
         if: always()
         run: |
