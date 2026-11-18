@@ -17,7 +17,8 @@ from .execsim import buy_quote, sell_simulation
 from .live import GT, LiveFeed
 from .signals_free import WalletBuyWatch, load_wallets
 from .v3 import SizedExecutor
-from .v6 import DevLpWatch, SessionEquity, V6RugCheck, V6Scanner, WalletSignals, pullback_from_candles, recap, session_of
+from .v6 import (DevLpWatch, SessionEquity, V6RugCheck, V6Scanner, WalletSignals, lp_burned_onchain, pullback_from_candles,
+                 recap, session_of)
 
 V6, V6B = "capture-v6", "random-baseline-v6"
 
@@ -57,10 +58,24 @@ class V6Feed(LiveFeed):
 
     def __init__(self, cfg, wallet_hook=None):
         super().__init__(cfg, wallet_hook=wallet_hook, gate_cfgs=[cfg])
-        self._pb = {}
+        self._pb, self._lp = {}, {}
+
+    def rpc(self, method, params):
+        from .sellsim import RPC, http_json
+        s, r = http_json(RPC, {"jsonrpc": "2.0", "id": 1, "method": method, "params": params})
+        if s != 200 or not isinstance(r, dict) or "result" not in r:
+            raise RuntimeError(f"rpc {method} http={s}")
+        return r["result"]
 
     def _to_pair(self, a, r):
         p = super()._to_pair(a, r)
+        lp_mint = (p.lp_mint_by_market or {}).get(p.pair_addr) if p.pair_addr else None
+        if lp_mint:                                           # LP burn read on chain for the traded pool (cached)
+            hit = self._lp.get(lp_mint)
+            if not hit or time.time() - hit[0] > (600 if hit[1] is not None else 60):
+                hit = (time.time(), lp_burned_onchain(self.rpc, lp_mint))
+                self._lp[lp_mint] = hit
+            p.lp_burned = hit[1]
         if p.price_1h_ago and p.price / p.price_1h_ago >= self.cfg.no_chase_mult and p.pair_addr:
             hit = self._pb.get(p.pair_addr)
             if not hit or time.time() - hit[0] > 60:
@@ -142,6 +157,9 @@ def run_v6(cfg, rules, fp, minutes, interval_s=30, out_dir="logs", state_dir="st
         for a in list(feed.cache):                               # exit triggers for held positions (not fills)
             if a in mom.ex.positions or a in base.ex.positions:
                 watch.apply(feed.cache[a])
+        while watch.events:
+            kind, mint, info = watch.events.pop(0)
+            mom.log.log(now, kind, f"mint={mint} {info}")
         for b in (mom, base):
             try:
                 b.tick(now, step=False)
@@ -165,7 +183,7 @@ def run_v6(cfg, rules, fp, minutes, interval_s=30, out_dir="logs", state_dir="st
                                   "buys5m": p.buys5m, "sells5m": p.sells5m, "holders": p.holders, "holders_10m": p.holders_10m,
                                   "price_1h_ago": p.price_1h_ago, "pullback": p.pullback_pct, "smart_buyers_10m": p.smart_buyers_10m,
                                   "kol_bought": p.kol_bought, "dev_pct": p.dev_pct, "top10_pct_raw": p.top10_pct,
-                                  "bundled": p.bundled, "lp_traded_pool": (p.lp_by_market or {}).get(p.pair_addr),
+                                  "bundled": p.bundled, "lp_traded_pool": (p.lp_by_market or {}).get(p.pair_addr), "lp_burned": p.lp_burned,
                                   "mint_frozen": p.mint_frozen, "mint_auth_open": p.mint_auth_open, "signals": sig,
                                   "verdict": verdict, "reason": why}) + "\n")
         for addr in sorted(set(mom.traded) - before):            # paired random baseline

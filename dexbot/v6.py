@@ -38,13 +38,26 @@ def session_of(t: datetime) -> Optional[str]:
 
 
 def lp_traded_pool(p: Pair):
-    """(ok, reason). Uses only the pool being traded."""
+    """(ok, reason). Screenshot rule: LP burned, or locked >= 30 days. Only the TRADED pool counts (D8).
+    Burned = the traded pool's LP mint has on-chain supply 0 (read over RPC, `p.lp_burned`). A locked percentage does
+    not prove a 30-day lock and RugCheck lockers carry no usable dates, so anything not verified burned fails."""
+    if p.lp_burned is True:
+        return True, "LP_BURNED: traded pool LP mint supply = 0 on chain"
     pct = (p.lp_by_market or {}).get(p.pair_addr) if p.pair_addr else None
-    if pct is None:
-        return False, "LP UNKNOWN for the traded pool"
-    if pct < 95:
-        return False, f"LP of the traded pool only {pct:.1f}% locked/burned"
-    return True, f"traded pool LP {pct:.0f}% locked/burned (lock duration not verifiable)"
+    if p.lp_burned is False:
+        return False, f"LP not burned (traded pool LP supply > 0, {0 if pct is None else pct:.1f}% reported locked; 30-day lock not verifiable)"
+    return False, "LP UNKNOWN for the traded pool (burn not verified)"
+
+
+def lp_burned_onchain(rpc, lp_mint) -> Optional[bool]:
+    """True if the LP mint's supply is 0, False if > 0, None if unknown (RPC error / no mint)."""
+    if not lp_mint or lp_mint == "11111111111111111111111111111111":
+        return None
+    try:
+        v = (rpc("getTokenSupply", [lp_mint]) or {}).get("value") or {}
+        return int(v["amount"]) == 0
+    except Exception:
+        return None
 
 
 def vol_avg_5m(p: Pair) -> float:
@@ -75,7 +88,7 @@ class V6Scanner(Scanner):
         if not p.dex_id or not p.dex_id.startswith(ALLOWED_DEX):
             return f"DEX {p.dex_id} not in pump.fun/Raydium/Meteora"
         ok, why = lp_traded_pool(p)
-        lp_status = "burned" if ok else ("unlocked" if (p.lp_by_market or {}).get(p.pair_addr) is not None else None)
+        lp_status = "burned" if ok else ("unlocked" if p.lp_burned is False else None)
         r = super().universe_fail(Pair(**{**p.__dict__, "lp_status": lp_status}))
         if r and r.startswith("LP"):
             return why
@@ -112,10 +125,13 @@ class WalletSignals:
 
 
 class DevLpWatch:
-    """Exit triggers for held positions. rpc(method, params) is the approved Solana RPC (stubbed in tests)."""
+    """Exit triggers for held positions (rpc = the approved Solana RPC; stubbed in tests).
+    DEV_SELL fires only when a creator transaction is confirmed as a SELL swap of this mint (signature + mint). A balance
+    drop alone is logged as DEV_BALANCE_DROP (could be a transfer) and does not trigger an exit. LP pull: entries require
+    the traded pool's LP to be burned on chain, so it cannot be withdrawn; a liquidity drop >= 50 % is only logged."""
 
     def __init__(self, rpc):
-        self.rpc, self.entry = rpc, {}
+        self.rpc, self.entry, self.events = rpc, {}, []
 
     def creator_balance(self, creator: str, mint: str) -> Optional[float]:
         try:
@@ -124,8 +140,26 @@ class DevLpWatch:
         except Exception:
             return None
 
+    def confirmed_dev_sell(self, creator: str, mint: str, since: float):
+        from .signals_free import parse_sell
+        try:
+            sigs = self.rpc("getSignaturesForAddress", [creator, {"limit": 10}]) or []
+        except Exception:
+            return None
+        for s_ in sigs:
+            if (s_.get("blockTime") or 0) < since or s_.get("err") is not None:
+                continue
+            try:
+                tx = self.rpc("getTransaction", [s_["signature"], {"encoding": "jsonParsed", "maxSupportedTransactionVersion": 0}])
+            except Exception:
+                continue
+            if tx and parse_sell(tx, creator, mint):
+                return s_["signature"]
+        return None
+
     def on_entry(self, p: Pair):
-        self.entry[p.addr] = {"liq": p.liquidity, "dev": self.creator_balance(p.creator, p.addr) if p.creator else None}
+        self.entry[p.addr] = {"liq": p.liquidity, "t": time.time(),
+                              "dev": self.creator_balance(p.creator, p.addr) if p.creator else None, "warned": set()}
 
     def apply(self, p: Pair) -> Pair:
         e = self.entry.get(p.addr)
@@ -134,9 +168,16 @@ class DevLpWatch:
         if e["dev"] is not None and p.creator:
             now_bal = self.creator_balance(p.creator, p.addr)
             if now_bal is not None and now_bal < e["dev"] - 1e-9:
-                p.dev_sold = True
-        if e["liq"] and p.liquidity is not None and p.liquidity < 0.5 * e["liq"]:
-            p.lp_pulled = True                                   # proxy: liquidity halved since entry
+                sig = self.confirmed_dev_sell(p.creator, p.addr, e["t"])
+                if sig:
+                    p.dev_sold = True
+                    self.events.append(("DEV_SELL", p.addr, sig))
+                elif "drop" not in e["warned"]:
+                    e["warned"].add("drop")
+                    self.events.append(("DEV_BALANCE_DROP", p.addr, "no confirmed sell swap; no exit"))
+        if e["liq"] and p.liquidity is not None and p.liquidity < 0.5 * e["liq"] and "liq" not in e["warned"]:
+            e["warned"].add("liq")
+            self.events.append(("LIQ_DROP_50", p.addr, "warning only; LP burned at entry, not an LP pull"))
         return p
 
 

@@ -187,6 +187,31 @@ def parse_buy(tx: dict, wallet: str):
     return {"mint": mint, "token_amount": amt, "paid_sol": total_sol, "swap_time": tx.get("blockTime")}
 
 
+def parse_sell(tx: dict, wallet: str, mint: str):
+    """Confirmed swap SELL of `mint` by `wallet`: no error, the wallet's `mint` balance went down AND it received SOL
+    (beyond the fee) or a quote token. A plain transfer out (nothing received) is not a sell."""
+    meta = tx.get("meta") or {}
+    if meta.get("err") is not None:
+        return None
+    keys = [k["pubkey"] if isinstance(k, dict) else k for k in tx["transaction"]["message"]["accountKeys"]]
+    sol_got = 0.0
+    if wallet in keys:
+        i = keys.index(wallet)
+        sol_got = (meta["postBalances"][i] - meta["preBalances"][i] + (meta.get("fee") or 0)) / 1e9
+    def bal(lst):
+        out = {}
+        for b in lst or []:
+            if b.get("owner") == wallet:
+                out[b["mint"]] = out.get(b["mint"], 0) + float(b["uiTokenAmount"]["uiAmount"] or 0)
+        return out
+    pre, post = bal(meta.get("preTokenBalances")), bal(meta.get("postTokenBalances"))
+    d_mint = post.get(mint, 0) - pre.get(mint, 0)
+    got_quote = any(post.get(m, 0) - pre.get(m, 0) > 0 for m in set(pre) | set(post) if m != mint)
+    if d_mint < 0 and (sol_got > 0.0001 or got_quote):
+        return {"mint": mint, "token_amount": -d_mint, "sol_received": max(sol_got, 0), "time": tx.get("blockTime")}
+    return None
+
+
 class WalletBuyWatch:
     """Polls documented public wallets over the approved RPC. Never trades; emits WALLET_BUY events only."""
 

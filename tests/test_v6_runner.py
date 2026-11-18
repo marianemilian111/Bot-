@@ -21,7 +21,7 @@ class Feed:
         return Pair(addr="M", symbol="TOK", source="pump.fun", dex_id="pumpswap", pair_addr="POOL", age_s=3600, price=price,
                     liquidity=60_000, vol5m=40_000, vol_avg5m_1h=5_000, buys5m=80, sells5m=20, holders=900, holders_10m=890,
                     price_1h_ago=0.9, pullback_pct=0, dev_pct=1, top10_pct=20, bundled=False, lp_status="burned",
-                    lp_by_market={"POOL": 100.0}, mint_frozen=False, mint_auth_open=False, honeypot=None,
+                    lp_by_market={"POOL": 100.0}, lp_burned=True, mint_frozen=False, mint_auth_open=False, honeypot=None,
                     sell_holders=[("H", 10 ** 15)], creator=None, fetched_at=time.time())
 
     def step(self, now):
