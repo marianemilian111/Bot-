@@ -1,0 +1,128 @@
+import os
+import sys
+import time
+from collections import defaultdict
+from datetime import datetime, timedelta
+
+from .agents import Equity, Executor, Logger, RugCheck, Scanner, Sizer
+from .config import Config
+from .dashboard import render, write_state
+
+
+class Bot:
+    def __init__(self, cfg: Config, feed, now: datetime, logdir="logs"):
+        os.makedirs(logdir, exist_ok=True)
+        self.cfg, self.feed = cfg, feed
+        self.log = Logger(os.path.join(logdir, f"night_{now:%Y%m%d_%H%M}.log"))
+        self.eq = Equity(cfg.start_balance, now, self.log)
+        self.scanner, self.rug, self.sizer = Scanner(cfg), RugCheck(cfg), Sizer(cfg)
+        self.ex = Executor(cfg, self.log, self.eq)
+        self.seen = set()          # (addr, reason) already logged as FILTERED
+        self.traded = set()        # one entry per pair
+        self.log.log(now, "INFO", f"start balance=${cfg.start_balance:,.2f}")
+
+    def _filtered(self, now, p, signals, reason):
+        key = (p.addr, reason.split(" ")[0])
+        if key not in self.seen:
+            self.seen.add(key)
+            self.log.log(now, "FILTERED", f"{p.symbol} ({p.source}) signals={'+'.join(signals)} reason: {reason}")
+
+    def tick(self, now: datetime):
+        c = self.cfg
+        self.feed.step(now)
+        pairs = {p.addr: p for p in self.feed.snapshot()}
+        for a in self.ex.positions:                    # keep marking held pairs
+            if a not in pairs and self.feed.get(a):
+                pairs[a] = self.feed.get(a)
+        self.ex.manage(pairs, now)
+        equity = self.eq.cash + self.ex.value({a: p.price for a, p in pairs.items()})
+        self.eq.check_drawdown(now, equity, c.dd_limit)
+        self.eq.mark(now, equity)
+
+        for f in self.scanner.scan(list(pairs.values())):
+            p = f.pair
+            if p.addr in self.traded or p.addr in self.ex.positions:
+                continue
+            if f.universe_fail:
+                self._filtered(now, p, f.signals, f.universe_fail)
+                continue
+            if self.eq.paused:
+                continue                                  # already logged as PAUSE
+            if len(self.ex.positions) >= c.max_open:
+                continue
+            if p.price_1h_ago and p.price / p.price_1h_ago >= c.no_chase_mult and \
+                    not (p.pullback_pct is not None and p.pullback_pct >= c.pullback_min):
+                self._filtered(now, p, f.signals, "no-chase: +300% in 1h without pullback")
+                continue
+            ok, why = self.rug.check(p)
+            if not ok:
+                self._filtered(now, p, f.signals, "RUGCHECK FAIL " + why)
+                continue
+            avail = self.eq.cash - self.ex.reserved()
+            usd, note = self.sizer.size(equity, avail, len(f.signals), len(self.ex.positions), self.eq.loss_streak)
+            if usd <= 0:
+                self._filtered(now, p, f.signals, "SIZER " + note)
+                continue
+            self.traded.add(p.addr)
+            self.ex.enter(p, usd, f.signals, now)
+
+    def recap(self, now: datetime, pairs) -> str:
+        self.ex.close_all({p.addr: p for p in pairs}, now, "RECAP_CLOSE")
+        tr, end = self.ex.trades, self.eq.cash
+        by = defaultdict(float)
+        for t in tr:
+            by[t.symbol] += t.pnl
+        top3 = sorted(by.items(), key=lambda kv: -kv[1])[:3]
+        lines = ["", "═══════════ 07:00 RECAP ═══════════",
+                 f"Start balance : ${self.eq.start:,.2f}",
+                 f"End balance   : ${end:,.2f}  ({(end / self.eq.start - 1) * 100:+.1f}%)",
+                 f"Total trades  : {len(tr)}  (W {self.eq.wins} / L {self.eq.losses})"]
+        if tr:
+            b, w = max(tr, key=lambda t: t.pnl), min(tr, key=lambda t: t.pnl)
+            lines += [f"Best trade    : {b.symbol} {b.pnl:+,.2f} ({b.pnl_pct:+.1f}%)",
+                      f"Worst trade   : {w.symbol} {w.pnl:+,.2f} ({w.pnl_pct:+.1f}%)",
+                      "Top 3 coins   : " + ", ".join(f"{s} {v:+,.2f}" for s, v in top3)]
+        else:
+            lines.append("No trades taken.")
+        out = "\n".join(lines)
+        self.log.log(now, "RECAP", out.replace("\n", " | "))
+        return out
+
+
+def next_recap(now: datetime, hhmm: str) -> datetime:
+    h, m = map(int, hhmm.split(":"))
+    t = now.replace(hour=h, minute=m, second=0, microsecond=0)
+    return t if t > now else t + timedelta(days=1)
+
+
+def run(cfg: Config, feed_factory, mode: str, start: datetime, realtime: bool,
+        dash_every_s: int = 600, quiet=False):
+    feed = feed_factory(start)
+    bot = Bot(cfg, feed, start)
+    now, end = start, next_recap(start, cfg.recap_at)
+    last_dash = None
+    tty = sys.stdout.isatty()
+    while now < end:
+        bot.tick(now)
+        if last_dash is None or (now - last_dash).total_seconds() >= dash_every_s:
+            last_dash = now
+            txt = render(bot, now, mode)
+            write_state(bot, now, "state.json")
+            open("dashboard.txt", "w").write(txt)
+            if not quiet:
+                print(("\033[2J\033[H" if tty else "\n") + txt, flush=True)
+        if realtime:
+            time.sleep(cfg.tick_s)
+            now = datetime.now()
+        else:
+            now += timedelta(seconds=cfg.tick_s)
+    pairs = feed.snapshot()
+    for a in bot.ex.positions:
+        if feed.get(a):
+            pairs.append(feed.get(a))
+    print(bot.recap(now, pairs))
+    write_state(bot, now, "state.json")
+    open("dashboard.txt", "w").write(render(bot, now, mode))
+    print(f"\nFull night log: {bot.log.path}")
+    bot.log.close()
+    return bot

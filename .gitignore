@@ -1,0 +1,4 @@
+logs/
+state.json
+dashboard.txt
+__pycache__/
