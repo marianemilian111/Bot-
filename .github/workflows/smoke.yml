@@ -35,6 +35,9 @@ jobs:
           case "$m" in (''|*[!0-9]*) m=12;; esac
           [ "$m" -gt 15 ] && m=15
           python run.py --collect --minutes "$m"
+      - name: Paper dashboard (from the bot's own state and logs)
+        if: always()
+        run: python scripts/dashboard.py >> "$GITHUB_STEP_SUMMARY"
       - name: Report
         if: always()
         run: python scripts/report.py >> "$GITHUB_STEP_SUMMARY"
