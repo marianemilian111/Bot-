@@ -1,0 +1,23 @@
+{
+ "strategy": "capture-v6",
+ "saved": "2026-11-18T21:49:36.627198",
+ "start": 70.0,
+ "cash": 70.0,
+ "wins": 0,
+ "losses": 0,
+ "loss_streak": 0,
+ "day": "2026-11-18",
+ "peak": 70.0,
+ "paused": false,
+ "curve": [
+  [
+   "2026-11-18T21:43:36.625216",
+   70.0
+  ]
+ ],
+ "positions": {},
+ "pending": {},
+ "trades": [],
+ "failed_exits": 0,
+ "traded": []
+}
