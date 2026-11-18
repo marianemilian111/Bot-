@@ -1,4 +1,4 @@
-# Pre-registration - capture-v6, INDEPENDENT paper test (not started: needs its own approval)
+# Pre-registration - capture-v6, INDEPENDENT paper test (conditionally approved 2026-11-18: paper only, paper-data-v6, cost 0, <= 14 + 14 days)
 
 Code: branch `work/v6-capture` (`dexbot/v6.py`, `dexbot/v6_runner.py`, `scripts/v6_gate.py`), rules fingerprint
 `c717981470d4b5b7` (`V6_RULES` in `dexbot/variants.py`; checked at start, any change aborts). v5 is not touched.
@@ -16,7 +16,7 @@ supply 31,379.58 held by the creator = unlocked, masked in v5 by a $0.03 locked 
 dev < 5 % (creator address); top 10 < 35 % raw (AMM included); bundle proxy; sell simulation PASS; >= 2 of
 VOL_SPIKE / BUY_RATIO / HOLDER_GROWTH / SMART_MONEY / KOL (wallet signals UNKNOWN without a verified list);
 no chase with a 10 % pullback from the 1 h high; entries 23:00-07:00 Europe/Bucharest; equity sizer 20/30/40 %, x0.5 after
-2 losses, compounding, max 2 open; exits 2x/4x/trailing 25 %, -12 %, 25 min, DEV_SELL, LP_PULLED (proxy); 30 % session
+2 losses, compounding, max 2 open; exits 2x/4x/trailing 25 %, -12 %, 25 min, DEV_SELL (confirmed swap); 30 % session
 drawdown pause; 07:00 recap. Exit triggers: DEV_SELL only when a creator transaction is a confirmed SELL swap of the
 mint (a balance drop alone is logged DEV_BALANCE_DROP, no exit); LP pull cannot happen with burned LP (a >= 50 %
 liquidity drop is logged LIQ_DROP_50, no exit). NEVERIFICAT LIVE: smart money / KOL (no verified wallet list ->
