@@ -1,6 +1,6 @@
 # Pre-registration - momentum-v5-1signal (PAPER ONLY)
 
-Fixed BEFORE any validation result exists. Code: branch `work/e2e-audit` (local), rules fingerprint `d9d4191e906de84d`
+Fixed BEFORE any validation result exists. Code frozen at commit `445c884` (branch `work/e2e-audit`, local, not pushed), rules fingerprint `d9d4191e906de84d`
 (checked at start of every run; any change aborts). v1 `e1d925460ea02be4`, v2 `25db7812f99c7f4d`, v3 `afaf71d4a6d592db` untouched.
 
 ## Why this variant (diagnostic data only - never reused for validation)
