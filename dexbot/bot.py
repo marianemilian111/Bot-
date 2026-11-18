@@ -22,6 +22,7 @@ class Bot:
         self.entries_enabled = True
         if sell_checker is not None:
             self.ex.sell_gate = sell_checker.fresh
+            self.ex.sell_detail = lambda p: sell_checker.last_detail.get(p.addr, "")
         self.seen = set()          # (addr, reason) already logged as FILTERED
         self.traded = set()        # one entry per pair
         self.log.log(now, "INFO", f"start balance=${cfg.start_balance:,.2f}")
@@ -89,7 +90,7 @@ class Bot:
                     self._filtered(now, p, f.signals, "entry price refresh UNKNOWN or liquidity below floor at entry")
                     continue
                 self.log.log(now, "INFO", f"{p.symbol} entry repriced: signal {p.price:.8g} -> entry basis {q.price:.8g} "
-                                          f"({(q.price / p.price - 1) * 100:+.2f}%), refresh {time.time() - t_sig:.1f}s after signal")
+                                          f"({(q.price / p.price - 1) * 100:+.2f}%), price refresh took {time.time() - t_sig:.1f}s (after the sell simulation)")
                 p = dataclasses.replace(p, price=q.price, liquidity=q.liquidity)
             self.traded.add(p.addr)
             self.ex.enter(p, usd, f.signals, now)

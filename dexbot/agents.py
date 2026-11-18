@@ -139,6 +139,7 @@ class Executor:
         self.sell_gate = None          # optional: Pair -> "OK" | "FAIL" | "UNKNOWN" (sell simulation at exit time)
         self.failed_exits = 0
         self._deferred = set()
+        self.sell_detail = lambda p: ""      # optional: why the exit-time sell simulation said what it said
 
     # slippage from constant-product depth: buying $x into a pool with liq/2 in quote
     def slip(self, usd: float, liq: float) -> float:
@@ -183,14 +184,14 @@ class Executor:
             if st == "UNKNOWN":                       # cannot verify the sale: do not invent a fill
                 if (pos.addr, why) not in self._deferred:
                     self._deferred.add((pos.addr, why))
-                    self.log.log(now, "EXIT_DEFERRED", f"{p.symbol} {why}: SELL_SIMULATION=UNKNOWN, retry next tick")
+                    self.log.log(now, "EXIT_DEFERRED", f"{p.symbol} {why}: SELL_SIMULATION=UNKNOWN ({self.sell_detail(p)}), retry next tick")
                 return False
             if st == "FAIL":                          # sale blocked: written off, counted as a loss
                 pos.tokens -= tokens
                 pos.reasons.append("EXIT_FAILED")
                 self.failed_exits += 1
-                self.log.log(now, "EXIT_FAILED", f"{p.symbol} {why}: sell simulation failed, "
-                                                 f"{tokens / pos.tokens_bought:.0%} written off (proceeds $0)")
+                self.log.log(now, "EXIT_FAILED", f"{p.symbol} {why}: sell simulation failed ({self.sell_detail(p)}) at price "
+                                                 f"{p.price:.8g}, {tokens / pos.tokens_bought:.0%} written off (proceeds $0)")
                 return True
         usd_val = tokens * p.price
         sl = min(self.slip(usd_val, p.liquidity), 0.5)
