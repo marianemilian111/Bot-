@@ -3,7 +3,7 @@ name: Collect v6 capture paper data (independent, pre-registered)
 # Paper only: no wallet, no keys, no orders. Separate from v5. Resume verified on paper-data-v6-test (runs 44404310078, 44405962769).
 on:
   schedule:
-    - cron: "47 */6 * * *"          # every 6 h on paper-data-v6 (validation); the v6 gate stops collection by itself
+    - cron: "47 */6 * * *"          # every 6 h on paper-data-v6b (clean validation); the v6 gate stops collection by itself
   workflow_dispatch:
     inputs:
       minutes:
@@ -11,19 +11,19 @@ on:
         default: "345"
         type: string
       data_branch:
-        description: "Branch holding state/logs (paper-data-v6 = validation; anything else = test)"
-        default: "paper-data-v6"
+        description: "Branch holding state/logs (paper-data-v6b = clean validation; paper-data-v6 = diagnostic only)"
+        default: "paper-data-v6b"
         type: string
 
 permissions:
   contents: write                   # only to commit state/logs to the data branch
 
 concurrency:
-  group: collect-v6-${{ inputs.data_branch || 'paper-data-v6' }}
+  group: collect-v6-${{ inputs.data_branch || 'paper-data-v6b' }}
   cancel-in-progress: false
 
 env:
-  DATA_BRANCH: ${{ inputs.data_branch || 'paper-data-v6' }}
+  DATA_BRANCH: ${{ inputs.data_branch || 'paper-data-v6b' }}
   MINUTES_IN: ${{ inputs.minutes || '345' }}
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ef5a17ecc255c31c1d26fb69e7079f3cb143c176   # FROZEN v6 code: 7132899 + infra fix only (fingerprint c717981470d4b5b7)
+          ref: e556be0b01c31341bc0bb7738fbb90b30409661b   # FROZEN v6 code for the clean window (amendment B; fingerprint c717981470d4b5b7)
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
