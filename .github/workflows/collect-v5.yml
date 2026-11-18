@@ -1,7 +1,9 @@
 name: Collect v5 paper data (pre-registered, multi-day)
 
-# Paper only: no wallet, no keys, no orders. Schedule is enabled only after a persistence check on a test data branch.
+# Paper only: no wallet, no keys, no orders. Persistence verified on paper-data-v5-test (runs 44390805217, 44392451443).
 on:
+  schedule:
+    - cron: "17 */6 * * *"          # every 6 h; validation data branch paper-data-v5; the gate stops collection by itself
   workflow_dispatch:
     inputs:
       minutes:
