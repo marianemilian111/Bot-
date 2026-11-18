@@ -77,3 +77,14 @@ class T(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Classify(unittest.TestCase):
+    def test_classes(self):
+        from dexbot.execsim import classify
+        self.assertEqual(classify("UNKNOWN", "SELL_QUOTE", "http=429 Too Many Requests"), "RATE_LIMIT_OR_TIMEOUT")
+        self.assertEqual(classify("UNKNOWN", "SELL_QUOTE", "http=None URLError timed out"), "RATE_LIMIT_OR_TIMEOUT")
+        self.assertEqual(classify("FAIL", "SELL_QUOTE", "http=400 COULD_NOT_FIND_ANY_ROUTE"), "NO_ROUTE")
+        self.assertEqual(classify("FAIL", "simulateTransaction", "err={'InstructionError': [3, {'Custom': 6001}]}"), "EXECUTION_LIMIT")
+        self.assertEqual(classify("FAIL", "simulateTransaction", "err={'InstructionError': [2, 'InvalidAccountData']}"), "SIMULATION_ERROR")
+        self.assertEqual(classify("UNKNOWN", "holder lookup", "no public holder with >= 1 tokens"), "NO_HOLDER")

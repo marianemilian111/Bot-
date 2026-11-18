@@ -80,3 +80,24 @@ def sell_simulation(mint, holders, tokens):
         return {"status": "FAIL", "stage": "simulateTransaction", "detail": f"err={str(v['err'])[:100]} {' '.join(logs)[:120]}"}
     return {"status": "OK", "stage": "simulateTransaction", "detail": "err=null",
             "proceeds_usd": int(q["outAmount"]) / 1e9 * su - NET_FEE_USD, "quoted_impact": float(q.get("priceImpactPct") or 0)}
+
+
+def classify(status, stage, detail):
+    """Error class for reporting only (accounting unchanged): RATE_LIMIT_OR_TIMEOUT | NO_ROUTE | EXECUTION_LIMIT |
+    SIMULATION_ERROR | NO_HOLDER | PRICE_DATA | OTHER. A FAIL is never labelled 'honeypot' or 'realised loss'."""
+    if status == "OK":
+        return "OK"
+    d = f"{stage} {detail}".lower()
+    if "http=429" in d or "http=none" in d or "timed out" in d or "timeout" in d or "urlerror" in d or "http=5" in d:
+        return "RATE_LIMIT_OR_TIMEOUT"
+    if "route" in d:
+        return "NO_ROUTE"
+    if "6001" in d or "0x1771" in d or "slippage" in d or "cap" in d:
+        return "EXECUTION_LIMIT"
+    if "simulatetransaction" in d:
+        return "SIMULATION_ERROR"
+    if "holder" in d:
+        return "NO_HOLDER"
+    if "price/decimals" in d or "sol_usd" in d:
+        return "PRICE_DATA"
+    return "OTHER"

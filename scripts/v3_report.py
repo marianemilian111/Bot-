@@ -46,7 +46,10 @@ for v in (V3, V3B):
         lost=sum(t.get("written_off", 0) for t in tr) if tr else 0.0,
         failed=st.get("failed_exits", 0), deferred=sum(" EXIT_DEFERRED " in l for l in lines),
         open=len(op), open_cost=sum(p["cost"] for p in op.values()), open_val=sum(p["tokens"] * p["last_price"] for p in op.values()),
-        wins=st["wins"], losses=st["losses"], lines=lines, curve=[x for _, x in st["curve"]])
+        wins=st["wins"], losses=st["losses"], lines=lines, curve=[x for _, x in st["curve"]],
+        proceeds=sum(t["proceeds"] for t in tr) if tr else None,
+        cats=collections.Counter((("exit " if (" EXIT_FAILED " in l or " EXIT_DEFERRED " in l) else "entry ") +
+                                  re.search(r"cat=(\w+)", l).group(1)) for l in lines if "cat=" in l))
 
 def f(x):
     return "N/A" if x is None else f"{x:+,.2f}"
@@ -54,8 +57,9 @@ def f(x):
 o += ["## Result", "", f"| | {LABELS[V3]} | {LABELS[V3B]} |", "|---|---|---|"]
 row = lambda name, fn: o.append(f"| {name} | {fn(res[V3])} | {fn(res[V3B])} |")
 row("Closed positions (wins / losses)", lambda r: f"{r['closed']} ({r['wins']} / {r['losses']})")
+row("Simulated proceeds received (all sales)", lambda r: "N/A" if r["proceeds"] is None else f"${r['proceeds']:,.2f}")
 row("PnL of executed simulated sales", lambda r: f(r["sold"]))
-row("Cost written off by failed exits", lambda r: f(-r["lost"]) if r["closed"] else "N/A")
+row("IMPUTED loss from the $0 rule after FAIL (separate)", lambda r: f(-r["lost"]) if r["closed"] else "N/A")
 row("**Net PnL after costs (closed)**", lambda r: f"**{f(r['net'])}**")
 row("Net PnL without the best trade", lambda r: f(r["net"] - r["best"]) if r["closed"] else "N/A")
 row("Failed exits / deferred exits", lambda r: f"{r['failed']} / {r['deferred']}")
@@ -67,16 +71,34 @@ def dd(c):
     return f"{d:.1%}"
 row("Max drawdown (equity marks)", lambda r: dd(r["curve"]))
 a, b = res[V3], res[V3B]
-if a["closed"] and b["closed"]:
+dr = m.get("baseline_draws", [])
+multi = sum(1 for d in dr if d["eligible_options"] > 1)
+o += ["", f"Baseline draws (one per Momentum entry, same cycle, same size and costs): {len(dr)}; moments with more than one "
+      f"eligible candidate: **{multi}**; moments with exactly one: {sum(1 for d in dr if d['eligible_options'] == 1)}; with none: "
+      f"{sum(1 for d in dr if d['eligible_options'] == 0)}."]
+if a["closed"] and b["closed"] and multi > 0:
     o += ["", f"Momentum minus baseline (closed trades): {a['net'] - b['net']:+,.2f}. With fewer than 30 closed trades each this "
           "says nothing about skill (INSUFICIENT)."]
 else:
-    o += ["", "Comparison with the random baseline: **NETESTABIL** (no closed trades on at least one side). "
-          "Momentum is not claimed to beat it."]
+    why = ("no closed trades on at least one side" if not (a["closed"] and b["closed"])
+           else "the baseline never had more than one eligible option")
+    o += ["", f"Comparison with the random baseline: **NETESTABIL** ({why}). Momentum is not claimed to beat it."]
 n = a["closed"]
 o += ["", f"Verdict: **{'INSUFICIENT' if n < 30 else 'see criteria'}** ({n} closed Momentum trades; validation needs >= 30 over >= 7 days "
       "of new data, positive net PnL, above the baseline, drawdown < 30 %, no trade > 30 % of net profit). "
       "Paper PnL is not realised money.", ""]
+o += ["", "## FAIL / UNKNOWN by class (reporting only; accounting unchanged)", "",
+      "| Class | Momentum | Baseline |", "|---|---|---|"]
+keys = sorted(set(a["cats"]) | set(b["cats"]))
+o += [f"| {k} | {a['cats'].get(k, 0)} | {b['cats'].get(k, 0)} |" for k in keys] or ["| none | 0 | 0 |"]
+o += ["", "Classes: RATE_LIMIT_OR_TIMEOUT (429/timeout/5xx), NO_ROUTE, SIMULATION_ERROR (transaction failed in simulation), "
+      "EXECUTION_LIMIT (slippage tolerance / 2.5 % cap), NO_HOLDER, PRICE_DATA. A FAIL is not a honeypot verdict and an imputed "
+      "loss is not a realised loss.", ""]
+if not a["closed"]:
+    es = m.get("entry_simulations", {})
+    o += [f"PnL: N/A for Momentum. Flow: pools discovered {m['pools_discovered']} -> evaluable pairs {m['evaluable_pairs']} -> "
+          f"entry sell simulations OK/FAIL/UNKNOWN {es.get('OK', 0)}/{es.get('FAIL', 0)}/{es.get('UNKNOWN', 0)} -> "
+          f"entries {sum(' ENTER ' in l for l in a['lines'])} -> closed 0.", ""]
 for v in (V3, V3B):
     ex = [l for l in res[v]["lines"] if re.search(r" (ENTER|EXIT|EXIT_FAILED|EXIT_DEFERRED) ", l)]
     o += [f"### Execution detail - {LABELS[v]}", "```"] + [clean(l, 330) for l in ex[-30:]] + (["(none)"] if not ex else []) + ["```", ""]

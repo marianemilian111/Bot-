@@ -27,7 +27,7 @@ from .agents import Executor, RugCheck, Scanner
 from .alert import evaluate
 from .bot import Bot
 from .collector import _decision, save_state
-from .execsim import NET_FEE_USD, buy_quote, sell_simulation
+from .execsim import NET_FEE_USD, buy_quote, classify, sell_simulation
 from .live import CURVE_DEX, GT, LiveFeed
 from .variants import V3, V3B, V3_RULES, assert_v3, make
 
@@ -66,12 +66,13 @@ class SizedExecutor(Executor):
     def _buy(self, pos, p, usd, tag, now):
         q = buy_quote(p.addr, usd)
         if q["status"] != "OK":
-            self.log.log(now, "FILTERED", f"{p.symbol} mint={p.addr} {tag}: {q['stage']} {q['status']} ({q['detail']})")
+            self.log.log(now, "FILTERED", f"{p.symbol} mint={p.addr} {tag}: {q['stage']} {q['status']} "
+                                          f"cat={classify(q['status'], q['stage'], q['detail'])} ({q['detail']})")
             return False
         move = q["fill_px"] / p.price - 1 if p.price else float("nan")
         if move > self.cfg.max_slippage:
-            self.log.log(now, "FILTERED", f"{p.symbol} mint={p.addr} {tag}: quoted fill {move:+.2%} vs price after detection "
-                                          f"> {self.cfg.max_slippage:.1%} cap")
+            self.log.log(now, "FILTERED", f"{p.symbol} mint={p.addr} {tag}: cat=EXECUTION_LIMIT quoted fill {move:+.2%} vs "
+                                          f"price after detection > {self.cfg.max_slippage:.1%} cap")
             return False
         self.eq.cash -= usd
         pos.cost += usd
@@ -81,7 +82,7 @@ class SizedExecutor(Executor):
         pos.peak = max(pos.peak, p.price)
         self.log.log(now, "ENTER", f"{p.symbol} mint={p.addr} {tag} size=${usd:,.2f} price_after_detection={p.price:.8g} "
                                    f"quote_fill={q['fill_px']:.8g} ({move:+.2%}, quoted impact {q['quoted_impact']:.2%}) "
-                                   f"tokens={q['tokens']:,.0f} delay={self._delay():.1f}s net_fee=${NET_FEE_USD} "
+                                   f"tokens={q['tokens']:,.0f} (own quote for this ${usd:,.2f} tranche) delay={self._delay():.1f}s net_fee=${NET_FEE_USD} "
                                    f"signals={'+'.join(pos.signals)}")
         return True
 
@@ -93,8 +94,9 @@ class SizedExecutor(Executor):
         if r["status"] == "UNKNOWN":
             if (pos.addr, why, r["stage"]) not in self._deferred:
                 self._deferred.add((pos.addr, why, r["stage"]))
-                self.log.log(now, "EXIT_DEFERRED", f"{p.symbol} mint={p.addr} {why}: SELL_SIMULATION=UNKNOWN at stage "
-                                                   f"{r['stage']} ({r['detail']}) price={p.price:.8g}; retried next cycle, no fill")
+                self.log.log(now, "EXIT_DEFERRED", f"{p.symbol} mint={p.addr} {why}: SELL_SIMULATION=UNKNOWN "
+                                                   f"cat={classify('UNKNOWN', r['stage'], r['detail'])} stage={r['stage']} "
+                                                   f"({r['detail']}) tokens={tokens:,.0f} price={p.price:.8g}; retried next cycle, no fill")
             return False
         if r["status"] == "FAIL":
             lost = pos.avg_entry * tokens
@@ -102,8 +104,10 @@ class SizedExecutor(Executor):
             pos.tokens -= tokens
             pos.reasons.append("EXIT_FAILED")
             self.failed_exits += 1
-            self.log.log(now, "EXIT_FAILED", f"{p.symbol} mint={p.addr} {why}: SELL_SIMULATION=FAIL at stage {r['stage']} "
-                                             f"({r['detail']}) price={p.price:.8g}; written off ${lost:,.2f} (proceeds $0)")
+            self.log.log(now, "EXIT_FAILED", f"{p.symbol} mint={p.addr} {why}: SELL_SIMULATION=FAIL "
+                                             f"cat={classify('FAIL', r['stage'], r['detail'])} stage={r['stage']} ({r['detail']}) "
+                                             f"tokens={tokens:,.0f} price={p.price:.8g} value_at_price=${tokens * p.price:,.2f}; "
+                                             f"IMPUTED loss ${lost:,.2f} by the $0 rule (not a realised loss, not proof of a honeypot)")
             return True
         got = r["proceeds_usd"]
         part_cost = pos.avg_entry * tokens
@@ -112,7 +116,7 @@ class SizedExecutor(Executor):
         self.eq.cash += got
         pos.reasons.append(why)
         mtm = tokens * p.price
-        self.log.log(now, "EXIT", f"{p.symbol} mint={p.addr} {why} sold={tokens / pos.tokens_bought:.0%} "
+        self.log.log(now, "EXIT", f"{p.symbol} mint={p.addr} {why} sold={tokens / pos.tokens_bought:.0%} tokens={tokens:,.0f} (quoted and simulated exactly) "
                                   f"price_at_decision={p.price:.8g} value_at_price=${mtm:,.2f} simulated_proceeds=${got:,.2f} "
                                   f"({(got / mtm - 1) * 100 if mtm else float('nan'):+.2f}% vs price, quoted impact "
                                   f"{r['quoted_impact']:.2%}) delay={self._delay():.1f}s pnl={got - part_cost:+,.2f}")
@@ -133,10 +137,11 @@ class SizedEntryChecker:
             return hit[1]
         q = buy_quote(p.addr, self.usd)
         if q["status"] != "OK":
-            st, det = q["status"], f"stage {q['stage']}: {q['detail']}"
+            st, det = q["status"], f"cat={classify(q['status'], q['stage'], q['detail'])} stage {q['stage']}: {q['detail']}"
         else:
             r = sell_simulation(p.addr, p.sell_holders, q["tokens"])
-            st, det = r["status"], f"stage {r['stage']}: {r['detail']} (for {q['tokens']:,.0f} tokens = ${self.usd:,.0f})"
+            st, det = r["status"], (f"cat={classify(r['status'], r['stage'], r['detail'])} stage {r['stage']}: {r['detail']} "
+                                    f"(for {q['tokens']:,.0f} tokens = ${self.usd:,.0f})")
         self.entry[st] += 1
         self.cache[p.addr] = (time.time(), st)
         self.last_detail[p.addr] = det
@@ -218,7 +223,7 @@ def run_v3(minutes, early_stop_min=20, interval_s=30, out_dir="logs", state_dir=
     scanner, rug = V3Scanner(cfg), RugCheck(cfg)
     jpath = os.path.join(out_dir, f"v3_collect_{now:%Y%m%d_%H%M%S}.jsonl")
     out = open(jpath, "a", buffering=1)
-    evaluable, cycles, stop_reason = set(), 0, None
+    evaluable, cycles, stop_reason, draws = set(), 0, None, []
     t_start = time.time()
     end = t_start + minutes * 60
     while time.time() < end:
@@ -250,6 +255,9 @@ def run_v3(minutes, early_stop_min=20, interval_s=30, out_dir="logs", state_dir=
                                   "disc": feed.sources(p.addr), "verdict": verdict, "reason": why}) + "\n")
         for addr in sorted(set(mom.traded) - before):       # paired random draw for the baseline
             pool = [p for p in eligible if p.addr not in base.traded and p.addr not in base.ex.positions]
+            draws.append({"ts": now.isoformat(timespec="seconds"), "momentum_entry": addr, "eligible_options": len(pool),
+                          "includes_momentum_pick": any(p.addr == addr for p in pool)})
+            base.log.log(now, "DRAW", f"baseline draw for Momentum entry {addr[:8]}: {len(pool)} eligible option(s) in this cycle")
             rng.shuffle(pool)
             done = False
             for p in pool[:3]:
@@ -287,7 +295,7 @@ def run_v3(minutes, early_stop_min=20, interval_s=30, out_dir="logs", state_dir=
                "minutes_planned": minutes, "minutes_run": round((time.time() - t_start) / 60, 1), "stop": stop_reason,
                "sha": os.environ.get("GITHUB_SHA"), "run_id": os.environ.get("GITHUB_RUN_ID"), "jsonl": os.path.basename(jpath),
                "pools_discovered": len(feed.v3_pools), "evaluable_pairs": len(evaluable),
-               "entry_simulations": mom.sell_checker.entry, "baseline_entry_simulations": base.sell_checker.entry,
+               "entry_simulations": mom.sell_checker.entry, "baseline_draws": draws, "baseline_entry_simulations": base.sell_checker.entry,
                "discovery_errors": {k: dict(v) for k, v in feed.disc_errors.items()},
                "logs": {V3: os.path.basename(mom.log.path), V3B: os.path.basename(base.log.path)}},
               open(os.path.join(out_dir, "v3_meta.json"), "w"), indent=1)
