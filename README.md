@@ -22,3 +22,26 @@ Outputs: `logs/night_*.log` (every ENTER / EXIT / FILTERED / PAUSE line), `dashb
 * Interpretations I chose: time stop applies until the runner stage (after 4x the 25% trail governs);
   size tier 20/30/40% by 2/3/4+ signals; "pullback" = >=10% off the 1h high; daily peak resets at midnight;
   one entry per pair; open positions at 07:00 are closed at market for the recap.
+
+## Project status: STOPPED (paper-only, no entries possible on real data)
+
+Single read-only test on real data (DexScreener + RugCheck, one snapshot, 2026-11-18, ~30 pairs):
+
+| | |
+|---|---|
+| Solana pairs observed | 30 (14 pump.fun, 12 pumpswap, 4 meteora); 29 aged <= 6h |
+| Above the $25k 5m-volume threshold | 0 |
+| Fully evaluated end to end | 0 |
+| Passed all filters | 0 |
+| SELL_SIMULATION | **unavailable** - no authorized sell-simulation source; a sell quote (SELL_QUOTE) is not a simulation, so the check stays UNKNOWN and the pair is rejected |
+| LP lock state | **unverified** - the `lpLockedPct` field of the RugCheck report was never confirmed on a real response |
+| Liquidity | DexScreener returns null for 14/30 (pump.fun curves) -> UNKNOWN -> rejected |
+| Smart-money / KOL signals | unavailable, not counted |
+
+Also unconfirmed: whether RugCheck `topHolders` includes the pool/curve account (the top "holder" was 26-45% in the samples),
+which would overstate top-10 concentration. One snapshot is a tiny, unrepresentative sample; no conclusion about the strategy follows.
+No overnight run was started. Nothing in `--sim` output is evidence of profit.
+
+Thresholds were not changed. Resume only with (1) an authorized method of simulating the sell, and
+(2) data collected across several time windows, with filters frozen before looking at results.
+No wallet, real executor, paid subscription or new dashboard was added.
