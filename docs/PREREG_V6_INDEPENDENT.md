@@ -41,3 +41,8 @@ this document, every 6 h, 345 min per job. Duration: up to 14 days for validatio
 stopping itself at the gate verdict. Cost: $0 (public repository, GitHub-hosted runners; earlier runs billed 0 ms).
 Risk: two collectors share the public APIs (GeckoTerminal ~30 calls/min per IP, Jupiter keyless 0.5 RPS); throttling is
 logged, never filled in.
+
+## Known limitation found in the preflight (before any validation data; rules unchanged)
+Meteora DAMM v2 pools have no LP mint (RugCheck `mintLP` = system address; example pool 9v8KHSTe..., run 44404310078),
+so an on-chain burn cannot be verified -> LP UNKNOWN -> not eligible. In practice v6 can only enter pump.fun / PumpSwap
+and Raydium pools whose LP mint supply is 0. Reported as a coverage limit, not relaxed.
