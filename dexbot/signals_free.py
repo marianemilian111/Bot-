@@ -37,16 +37,22 @@ class Migration:
     mint: str
     amm_pool: str
     amm_dex: str
+    curve_pool: str
     curve_dex: str
-    migrated_at: float                           # AMM pool creation time (DexScreener pairCreatedAt)
+    amm_created_at: float                        # DexScreener pairCreatedAt of the AMM pool (what the v3 age rule uses)
     detected_at: float
     source: str
+    status: str = "MIGRATION_CANDIDATE"          # MIGRATION only when the curve is verified complete on-chain
+    migrated_at: Optional[float] = None          # only if an exact on-chain time is verified (not implemented -> stays None)
+    migration_time_estimate: Optional[float] = None   # AMM pool creation time, labelled as an estimate
+    curve_last_tx_at: Optional[float] = None     # informational: the curve can still receive transactions after migration
+    verify_note: str = ""
 
     def age_h(self, now=None):
-        return ((now or time.time()) - self.migrated_at) / 3600
+        return ((now or time.time()) - self.amm_created_at) / 3600
 
     def eligible_for_v3(self, now=None):
-        return self.age_h(now) >= 6.0            # v3 minimum age; never earlier
+        return self.age_h(now) >= 6.0            # v3 minimum pool age; never earlier, verified or not
 
 
 @dataclass
@@ -71,7 +77,7 @@ class MigrationWatch:
     seen: Dict[str, Migration] = field(default_factory=dict)
     errors: Dict[str, int] = field(default_factory=dict)
 
-    def poll(self, gt_fetch=None, ds_fetch=None) -> List[Migration]:
+    def poll(self, gt_fetch=None, ds_fetch=None, verify=None) -> List[Migration]:
         now = time.time()
         try:
             data = (gt_fetch or _gt_new)()
@@ -95,10 +101,43 @@ class MigrationWatch:
             a = min(amm, key=lambda p: p["pairCreatedAt"])
             if a["pairAddress"] in self.seen:
                 continue
-            m = Migration(mint, a["pairAddress"], a["dexId"], curve[0]["dexId"], a["pairCreatedAt"] / 1000, now, "gt_new_pools+ds_token_pairs")
+            c = curve[0]
+            m = Migration(mint, a["pairAddress"], a["dexId"], c.get("pairAddress", ""), c["dexId"], a["pairCreatedAt"] / 1000, now,
+                          "gt_new_pools+ds_token_pairs")
+            (verify or verify_pump_curve)(m)
             self.seen[a["pairAddress"]] = m
             new.append(m)
         return new
+
+
+def verify_pump_curve(m: Migration, rpc=None):
+    """pump.fun only: the curve account (DexScreener pairAddress of the pumpfun pool) must be owned by the pump program
+    with complete == 1 -> MIGRATION (verified that it migrated). The exact time is not verified: it is reported as an
+    estimate (AMM pool creation), because the curve can receive transactions after migrating (seen live on BUCKZ).
+    Anything else stays a MIGRATION_CANDIDATE with the reason."""
+    import base64
+    rpc = rpc or _rpc
+    if m.curve_dex != "pumpfun" or not m.curve_pool:
+        m.verify_note = f"no on-chain check for curve type {m.curve_dex}"
+        return m
+    try:
+        v = (rpc("getAccountInfo", [m.curve_pool, {"encoding": "base64"}]) or {}).get("value")
+        if not v or v.get("owner") != "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P":
+            m.verify_note = "curve account missing or not owned by the pump program"
+            return m
+        raw = base64.b64decode(v["data"][0])
+        if len(raw) < 49 or raw[48] != 1:
+            m.verify_note = "curve not complete (complete flag != 1)"
+            return m
+        sig = rpc("getSignaturesForAddress", [m.curve_pool, {"limit": 1}]) or []
+        m.curve_last_tx_at = float(sig[0]["blockTime"]) if sig and sig[0].get("blockTime") else None
+        m.status = "MIGRATION"
+        m.migration_time_estimate = m.amm_created_at
+        m.verify_note = ("pump curve complete=1 (migration verified); exact migration time NOT verified - estimate = AMM pool "
+                         "creation; the curve's last transaction is informational only")
+    except Exception as e:
+        m.verify_note = f"verification error {type(e).__name__}"
+    return m
 
 
 def _gt_new():
@@ -202,4 +241,4 @@ def _rpc(method, params):
 
 
 def to_json(ev):
-    return json.dumps({"type": "MIGRATION" if isinstance(ev, Migration) else "WALLET_BUY", **asdict(ev)})
+    return json.dumps({"type": ev.status if isinstance(ev, Migration) else "WALLET_BUY", **asdict(ev)})
