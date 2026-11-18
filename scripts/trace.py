@@ -18,7 +18,7 @@ EXT = {"gt_new_pools", "gt_trending_pools", "ds_boosts_top"}
 BASE = {"ds_profiles", "ds_boosts_latest"}
 meta = json.load(open("logs/run_meta.json"))
 rows = [json.loads(l) for l in open(os.path.join("logs", meta["jsonl"]))]
-norm = lambda r: re.sub(r"[\$\d][\d,\.]*", "N", r)[:70]
+norm = lambda r: (re.sub(r"[\$\d][\d,\.]*", "N", r) if not r.startswith("signals") else r)[:70]
 
 
 def stage(detail):

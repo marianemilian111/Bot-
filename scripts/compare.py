@@ -18,7 +18,7 @@ def clean(s, n=14, extra=""):
 
 
 def norm(r):
-    return re.sub(r"[\$\d][\d,\.]*", "N", r)[:80]
+    return (re.sub(r"[\$\d][\d,\.]*", "N", r) if not r.startswith("signals") else r)[:80]
 
 
 pf = "logs/preflight.json"

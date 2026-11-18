@@ -56,3 +56,19 @@ class T(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SignalGate(unittest.TestCase):
+    def test_v2_needs_exactly_one_signal_v1_two(self):
+        from dexbot.agents import RugCheck, Scanner
+        from dexbot.alert import evaluate
+        from dexbot.models import Pair
+        p = Pair(addr="A", symbol="T", source="x", age_s=600, price=1, liquidity=50_000, vol5m=30_000, vol_avg5m_1h=29_000,
+                 buys5m=80, sells5m=20, holders=500, holders_10m=490, price_1h_ago=1, pullback_pct=0, dev_pct=1, top10_pct=20,
+                 bundled=False, lp_status="burned", mint_frozen=False, mint_auth_open=False, honeypot=None)
+        self.assertEqual(Scanner(make(V1)).signals(p), ["BUY_RATIO"])            # exactly one signal
+        self.assertEqual(len(Scanner(make(V2)).scan([p])), 1)                     # v2 flags it
+        self.assertEqual(len(Scanner(make(V1)).scan([p])), 0)                     # v1 does not
+        c2, c1 = make(V2), make(V1)
+        self.assertEqual(evaluate(c2, Scanner(c2), RugCheck(c2), p, skip_sell=True)[0], "CANDIDATE")
+        self.assertEqual(evaluate(c1, Scanner(c1), RugCheck(c1), p, skip_sell=True)[1], "signals 1 < 2")

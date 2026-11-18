@@ -1,0 +1,59 @@
+name: Paper test v3 - migrated pools vs random baseline (manual, one run)
+
+on:
+  workflow_dispatch:
+    inputs:
+      minutes:
+        description: "Maximum minutes (stops early after 20 min if no evaluable candidate). 20-120."
+        default: "90"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v3-test
+  cancel-in-progress: false
+
+jobs:
+  v3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 135
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Preflight (stop early if a mandatory source is unreachable)
+        id: pre
+        continue-on-error: true
+        run: python scripts/preflight.py
+      - name: Paper test v3 (LIVE data, paper only)
+        if: steps.pre.outcome == 'success'
+        env:
+          MINUTES_IN: ${{ inputs.minutes }}
+        run: |
+          m="$MINUTES_IN"
+          case "$m" in (''|*[!0-9]*) m=90;; esac
+          [ "$m" -gt 120 ] && m=120
+          [ "$m" -lt 20 ] && m=20
+          python run.py --v3 --minutes "$m" --early-stop-min 20
+      - name: Report (job log + Summary)
+        if: always()
+        run: python scripts/v3_report.py | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Upload logs and state
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v3-logs
+          path: |
+            logs/
+            state/
+          if-no-files-found: warn
+      - name: Fail visibly if BLOCAT
+        if: steps.pre.outcome == 'failure'
+        run: |
+          echo "BLOCAT: a mandatory live source is unreachable from this runner. See Summary."
+          exit 1

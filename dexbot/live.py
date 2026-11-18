@@ -172,6 +172,8 @@ class LiveFeed:
             risks = [x.get("name", "").lower() for x in r.get("risks") or []]
             out["bundled"] = any("bundl" in x or "snip" in x for x in risks)
             pools = {m.get("pubkey") for m in r.get("markets") or []}
+            out["sell_holders"] = sorted([(h["owner"], h["amount"]) for h in tops if h.get("owner") not in pools
+                                          and not h.get("insider") and h.get("amount", 0) > 0], key=lambda x: -x[1])[:20]
             for h in tops:
                 if h.get("owner") not in pools and not h.get("insider") and h.get("amount", 0) >= 10 ** 8:
                     out["sell_holder"] = (h["owner"], h["amount"])     # public holder for the sell simulation
@@ -228,7 +230,7 @@ class LiveFeed:
             pullback_pct=None,           # unknown -> no-chase rule stays strict
             smart_buyers_10m=sm, kol_bought=kol,
             dev_pct=s.get("dev_pct"), top10_pct=s.get("top10_pct"), bundled=s.get("bundled"),
-            sell_holder=s.get("sell_holder"), lp_status=s.get("lp_status"), mint_frozen=s.get("mint_frozen"),
+            sell_holder=s.get("sell_holder"), sell_holders=s.get("sell_holders"), lp_status=s.get("lp_status"), mint_frozen=s.get("mint_frozen"),
             mint_auth_open=s.get("mint_auth_open"), honeypot=s.get("honeypot"))
 
     def refresh(self, addr: str) -> Optional[Pair]:
