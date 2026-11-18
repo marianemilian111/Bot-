@@ -67,7 +67,10 @@ class SellChecker:
     """Caches entry-time results for 5 minutes; exit-time checks are always fresh."""
 
     def __init__(self, ttl=300):
-        self.ttl, self.cache, self.stats = ttl, {}, {"OK": 0, "FAIL": 0, "UNKNOWN": 0}
+        self.ttl, self.cache = ttl, {}
+        self.stats = {"OK": 0, "FAIL": 0, "UNKNOWN": 0}                 # all simulations
+        self.entry = {"OK": 0, "FAIL": 0, "UNKNOWN": 0}                 # on candidate pairs before an entry
+        self.exit = {"OK": 0, "FAIL": 0, "UNKNOWN": 0}                  # at exit time for held positions
         self.last_detail = {}
 
     def check(self, p):
@@ -79,6 +82,7 @@ class SellChecker:
     def fresh(self, p, store=False):
         st, detail = simulate_sell(p.addr, p.sell_holder)
         self.stats[st] += 1
+        (self.entry if store else self.exit)[st] += 1
         self.last_detail[p.addr] = detail
         if store:
             self.cache[p.addr] = (time.time(), st)

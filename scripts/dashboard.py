@@ -19,7 +19,7 @@ TAG = " (DEMO)" if DEMO else ""
 
 def clean(s, n=14, extra=""):
     """Untrusted text (token symbols): keep it inert inside Markdown tables."""
-    return re.sub(r"[^A-Za-z0-9_.$%-" + extra + "]", "", str(s))[:n] or "?"
+    return re.sub(r"[^A-Za-z0-9_.$%" + extra + "-]", "", str(s))[:n] or "?"
 
 
 def newest(pat):
@@ -48,9 +48,9 @@ def demo_data():
 def load():
     if DEMO:
         return demo_data()
-    sp = "state/paper_state.json"
+    sp = "state/paper_state_momentum-v1.json" if os.path.exists("state/paper_state_momentum-v1.json") else "state/paper_state.json"
     st = json.load(open(sp)) if os.path.exists(sp) else None
-    lg = newest("logs/night_*.log")
+    lg = newest("logs/night_momentum-v1_*.log") or newest("logs/night_*.log")
     lines = open(lg).read().splitlines() if lg else []
     return st, lines
 

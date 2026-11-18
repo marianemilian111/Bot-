@@ -1,0 +1,56 @@
+name: Paper compare v1 vs v2 (read-only, manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      minutes:
+        description: "Minutes of live paper run (5-60)"
+        default: "30"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Preflight (live sources reachable from this runner?)
+        id: pre
+        continue-on-error: true
+        run: python scripts/preflight.py
+      - name: Live paper run, v1 and v2 on the same feed
+        if: steps.pre.outcome == 'success'
+        env:
+          MINUTES_IN: ${{ inputs.minutes }}
+        run: |
+          m="$MINUTES_IN"
+          case "$m" in (''|*[!0-9]*) m=30;; esac
+          [ "$m" -gt 60 ] && m=60
+          [ "$m" -lt 5 ] && m=5
+          python run.py --collect --variants momentum-v1,momentum-v2-explore --minutes "$m" --no-entry-last-min 5
+      - name: Summary
+        if: always()
+        run: |
+          python scripts/compare.py >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload logs and state
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compare-logs
+          path: |
+            logs/
+            state/
+          if-no-files-found: warn
+      - name: Fail visibly if BLOCAT
+        if: steps.pre.outcome == 'failure'
+        run: |
+          echo "BLOCAT: a mandatory live source is unreachable from this runner. See Summary."
+          exit 1

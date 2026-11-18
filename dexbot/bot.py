@@ -10,10 +10,10 @@ from .dashboard import render, write_state
 
 
 class Bot:
-    def __init__(self, cfg: Config, feed, now: datetime, logdir="logs", sell_checker=None):
+    def __init__(self, cfg: Config, feed, now: datetime, logdir="logs", sell_checker=None, tag="", strategy_id="momentum-v1"):
         os.makedirs(logdir, exist_ok=True)
-        self.cfg, self.feed = cfg, feed
-        self.log = Logger(os.path.join(logdir, f"night_{now:%Y%m%d_%H%M}.log"))
+        self.cfg, self.feed, self.strategy_id = cfg, feed, strategy_id
+        self.log = Logger(os.path.join(logdir, f"night_{tag + '_' if tag else ''}{now:%Y%m%d_%H%M%S}.log"))
         self.eq = Equity(cfg.start_balance, now, self.log)
         self.scanner, self.rug, self.sizer = Scanner(cfg), RugCheck(cfg), Sizer(cfg)
         self.ex = Executor(cfg, self.log, self.eq)
@@ -31,12 +31,13 @@ class Bot:
             self.seen.add(key)
             self.log.log(now, "FILTERED", f"{p.symbol} ({p.source}) signals={'+'.join(signals)} reason: {reason}")
 
-    def tick(self, now: datetime):
+    def tick(self, now: datetime, step: bool = True):
         c = self.cfg
         if hasattr(self.feed, "pin"):
             for a in self.ex.positions:
                 self.feed.pin(a)
-        self.feed.step(now)
+        if step:
+            self.feed.step(now)
         pairs = {p.addr: p for p in self.feed.snapshot()}
         for a in self.ex.positions:                    # keep marking held pairs
             if a not in pairs and self.feed.get(a):

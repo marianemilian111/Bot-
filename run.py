@@ -14,6 +14,7 @@ g.add_argument("--live", action="store_true")
 g.add_argument("--collect", action="store_true", help="read-only collector + paper trading of the frozen momentum strategy")
 g.add_argument("--alert-only", action="store_true", help="live data, alerts/rejections only, no orders, no paper entries")
 ap.add_argument("--minutes", type=float, default=15)
+ap.add_argument("--variants", default="momentum-v1", help="comma list: momentum-v1,momentum-v2-explore")
 ap.add_argument("--no-entry-last-min", type=float, default=0)
 ap.add_argument("--balance", type=float, default=1000.0)
 ap.add_argument("--seed", type=int, default=7)
@@ -29,7 +30,7 @@ if a.sim:
     run(cfg, lambda t: SimFeed(cfg, t, seed=a.seed), "SIM/PAPER", start, realtime=False, quiet=a.quiet)
 elif a.collect:
     from dexbot.collector import run_collector
-    run_collector(cfg, a.minutes, no_entry_last_min=a.no_entry_last_min)
+    run_collector(cfg, a.minutes, variants=tuple(a.variants.split(",")), no_entry_last_min=a.no_entry_last_min)
 elif a.alert_only:
     from dexbot.alert import run_alert_only
     run_alert_only(cfg, a.minutes)
