@@ -36,3 +36,15 @@ plus execution and risk tests passed, and no unresolved critical defect. Never f
 | next runs | code pinned at ef5a17e = 7132899 + infra fix only, same fingerprint | yes |
 
 v5 note: the same -100 % case costs v5 that cycle (caught, logged ERROR) - a data gap to read in the v5 diagnostic; v5 code unchanged.
+
+## Check 7132899 -> ef5a17e (read-only, 2026-11-18 ~22:30 UTC)
+| Item | Result |
+|---|---|
+| Code changed | `dexbot/live.py`: `price_1h_ago` is None when priceChange.h1 <= -100 (was a division by zero); `dexbot/v6_runner.py`: a failed feed step is logged (ERROR) and the cycle skipped instead of ending the run. Rest: workflow file, docs, tests |
+| Unchanged (git diff empty) | `dexbot/variants.py` (V6_RULES), `scripts/v6_gate.py` (criteria), `dexbot/v6.py` (screenshot rules), `dexbot/execsim.py` (quotes / sell simulation), `dexbot/agents.py` (sizer, exits, equity), `dexbot/bot.py` |
+| Effective fingerprint | ef5a17e: frozen == computed == `c717981470d4b5b7` (same as 7132899) |
+| Screenshot rules / execution / pre-registered criteria | not changed. Only effect: a pair with a -100 % 1 h change now gets "1 h price unknown" (no-chase rule not applicable - such a pair cannot be +300 %) instead of crashing the run |
+| Run 44407410908 in the sample of run 44410378519? | NO. Data branch `paper-data-v6` (commit d190224) holds no `logs/runs/*.json` for it; the gate run on that branch returns `VALIDATION / COLLECT / "no run yet"`, so the window starts at the first run with a meta file and its coverage counts 0 |
+| Carried state | its saved state equals a fresh v6 state: cash 70.0, 0 trades, 0 positions, 0 pending, traded [] (Momentum and baseline). Resuming from it is identical to a clean start; no trade, balance or coverage from it enters any window |
+| Its files | `logs/night_*_20261118_220154.log`, `logs/v6_collect_20261118_220154.jsonl` stay on the branch as diagnostics only; the gate reads state trades + `logs/runs/`, the report reads the latest run's own meta / jsonl |
+| Verdict | PASS - collection and conditional replication continue unchanged |
