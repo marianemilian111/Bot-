@@ -1,0 +1,63 @@
+{
+ "strategy": "random-baseline-v6",
+ "saved": "2026-11-19T05:46:12.441071",
+ "start": 70.0,
+ "cash": 68.99007243058,
+ "wins": 0,
+ "losses": 1,
+ "loss_streak": 1,
+ "day": "2026-11-19",
+ "peak": 68.99007243058,
+ "paused": false,
+ "curve": [
+  [
+   "2026-11-19T00:00:49.112440",
+   70.0
+  ],
+  [
+   "2026-11-19T01:00:58.165310",
+   69.104390749314
+  ],
+  [
+   "2026-11-19T01:01:58.165548",
+   68.99007243058
+  ],
+  [
+   "2026-11-19T02:01:58.180565",
+   68.99007243058
+  ],
+  [
+   "2026-11-19T03:01:58.194968",
+   68.99007243058
+  ],
+  [
+   "2026-11-19T04:01:58.208828",
+   68.99007243058
+  ],
+  [
+   "2026-11-19T05:02:09.613730",
+   68.99007243058
+  ]
+ ],
+ "positions": {},
+ "pending": {},
+ "trades": [
+  {
+   "symbol": "GTASZN",
+   "opened": "2026-11-19T00:55:58.164016",
+   "closed": "2026-11-19T01:01:58.165548",
+   "cost": 7.0,
+   "proceeds": 5.990072430580001,
+   "reasons": [
+    "HARD_STOP"
+   ],
+   "written_off": 0.0,
+   "addr": "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump"
+  }
+ ],
+ "failed_exits": 0,
+ "traded": [
+  "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump",
+  "EkTfN4Pb7K3NXzxsbzkn3AA4MGbsdTniFJ3G2RsVpump"
+ ]
+}
