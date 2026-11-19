@@ -1,0 +1,71 @@
+name: Breakout probe (paper only, one run, 110 min)
+
+# PAPER ONLY. Read-only public APIs (DexScreener, GeckoTerminal, RugCheck, Jupiter lite quotes, Solana public RPC
+# simulateTransaction with sigVerify false). No wallet, no keys, no signing, no orders. Manual only, no schedule.
+# Rules 375b78f, criteria docs/BREAKOUT_CRITERIA.md, code pinned at fde01f7. Does not read or write any v5/v6/v6b branch.
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write                   # only to commit probe files to paper-data-breakout-probe
+
+concurrency:
+  group: probe-breakout
+  cancel-in-progress: false
+
+env:
+  DATA_BRANCH: paper-data-breakout-probe
+  OUT: probe
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 125
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: fde01f700cd673c5b9b259d9209b71cb0bc28191   # FROZEN probe code (work/breakout)
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Offline tests
+        run: python -m unittest tests.test_breakout tests.test_breakout_probe
+      - name: Refuse to reuse an existing probe branch (one run only)
+        run: |
+          if git ls-remote --exit-code origin "refs/heads/$DATA_BRANCH" >/dev/null; then echo "$DATA_BRANCH exists: probe already ran"; exit 1; fi
+      - name: Snapshot helper (commits probe/ to the data branch through a git worktree)
+        run: |
+          cat > /tmp/save.sh <<'SH'
+          save() {
+            [ -d "$OUT" ] || return 0
+            wt="$(mktemp -d)/wt"; git branch -D "$DATA_BRANCH" >/dev/null 2>&1 || true
+            if git fetch -q origin "$DATA_BRANCH" 2>/dev/null; then git worktree add -q -f -B "$DATA_BRANCH" "$wt" FETCH_HEAD
+            else git worktree add -q -f --orphan -b "$DATA_BRANCH" "$wt"; fi || { echo "snapshot not saved"; return 0; }
+            rm -rf "$wt/$OUT"; cp -r "$OUT" "$wt/"
+            ( cd "$wt" && git add -A "$OUT" && git -c user.name=paper-probe -c user.email=paper-probe@users.noreply.github.com \
+                commit -qm "probe $1 $(date -u +%FT%TZ) run $GITHUB_RUN_ID" && git push -q origin "$DATA_BRANCH" ) || echo "snapshot not saved"
+            git worktree remove -f "$wt" || true
+          }
+          SH
+      - name: Probe (110 min) with a snapshot to the data branch every 5 min
+        run: |
+          . /tmp/save.sh
+          python scripts/breakout_probe.py --out "$OUT" --minutes 110 --max-buy 60 --max-sell 120 --max-tracked 60 > probe_stdout.txt 2>&1 &
+          pid=$!
+          while kill -0 $pid 2>/dev/null; do sleep 300; save snapshot; done
+          wait $pid; echo "probe exit=$?"; mkdir -p "$OUT"; cp probe_stdout.txt "$OUT/" || true
+      - name: Final save + status (INCOMPLET if the probe did not finish)
+        if: always()
+        run: |
+          . /tmp/save.sh
+          mkdir -p "$OUT"
+          python - <<'PY'
+          import json, os
+          m = json.load(open("probe/meta.json")) if os.path.exists("probe/meta.json") else {}
+          st = "COMPLET" if m.get("ended_utc") and os.path.exists("probe/result.json") else "INCOMPLET"
+          json.dump({"status": st, "run_id": os.environ.get("GITHUB_RUN_ID")}, open("probe/status.json", "w"))
+          print(st)
+          PY
+          [ -f probe/result.json ] && tee -a "$GITHUB_STEP_SUMMARY" < probe/result.json || true
+          save final
