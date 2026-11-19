@@ -1,0 +1,150 @@
+{
+ "observations": 1536,
+ "mints": 28,
+ "span_utc": [
+  "2026-11-19T01:39:35.417596+00:00",
+  "2026-11-19T03:29:16.477712+00:00"
+ ],
+ "verdict": "SEMNALE, DAR FARA COTATII SUFICIENTE (nicio pozitie inchisa; PnL inchis N/A)",
+ "probe_gate": "BLOCAT: simularile de vanzare raspund UNKNOWN prea des",
+ "validation": {
+  "immediate": "INSUFICIENT (0 < 30 closed)",
+  "retest": "INSUFICIENT (0 < 30 closed)"
+ },
+ "results": [
+  {
+   "variant": "immediate",
+   "latency_s": 0,
+   "signals": 10,
+   "entries": 3,
+   "closed": 0,
+   "net_pnl": "N/A",
+   "net_without_best": "N/A",
+   "open": 3,
+   "failed_exits": 0,
+   "imputed": 0.0,
+   "exit_attempts_without_quote": 207,
+   "entries_skipped_no_buy_quote": 0,
+   "signals_while_position_open": 7,
+   "signals_after_entry_cutoff": 0,
+   "sell_attempts": 207,
+   "sell_known_rate": 0.0,
+   "metrics": {
+    "closed": 0,
+    "net": null
+   }
+  },
+  {
+   "variant": "immediate",
+   "latency_s": 30,
+   "signals": 10,
+   "entries": 3,
+   "closed": 0,
+   "net_pnl": "N/A",
+   "net_without_best": "N/A",
+   "open": 3,
+   "failed_exits": 0,
+   "imputed": 0.0,
+   "exit_attempts_without_quote": 209,
+   "entries_skipped_no_buy_quote": 0,
+   "signals_while_position_open": 7,
+   "signals_after_entry_cutoff": 0,
+   "sell_attempts": 209,
+   "sell_known_rate": 0.0,
+   "metrics": {
+    "closed": 0,
+    "net": null
+   }
+  },
+  {
+   "variant": "immediate",
+   "latency_s": 60,
+   "signals": 10,
+   "entries": 3,
+   "closed": 0,
+   "net_pnl": "N/A",
+   "net_without_best": "N/A",
+   "open": 3,
+   "failed_exits": 0,
+   "imputed": 0.0,
+   "exit_attempts_without_quote": 106,
+   "entries_skipped_no_buy_quote": 0,
+   "signals_while_position_open": 7,
+   "signals_after_entry_cutoff": 0,
+   "sell_attempts": 106,
+   "sell_known_rate": 0.0,
+   "metrics": {
+    "closed": 0,
+    "net": null
+   }
+  },
+  {
+   "variant": "retest",
+   "latency_s": 0,
+   "signals": 2,
+   "entries": 2,
+   "closed": 0,
+   "net_pnl": "N/A",
+   "net_without_best": "N/A",
+   "open": 2,
+   "failed_exits": 0,
+   "imputed": 0.0,
+   "exit_attempts_without_quote": 160,
+   "entries_skipped_no_buy_quote": 0,
+   "signals_while_position_open": 0,
+   "signals_after_entry_cutoff": 0,
+   "sell_attempts": 160,
+   "sell_known_rate": 0.0,
+   "metrics": {
+    "closed": 0,
+    "net": null
+   }
+  },
+  {
+   "variant": "retest",
+   "latency_s": 30,
+   "signals": 2,
+   "entries": 2,
+   "closed": 0,
+   "net_pnl": "N/A",
+   "net_without_best": "N/A",
+   "open": 2,
+   "failed_exits": 0,
+   "imputed": 0.0,
+   "exit_attempts_without_quote": 157,
+   "entries_skipped_no_buy_quote": 0,
+   "signals_while_position_open": 0,
+   "signals_after_entry_cutoff": 0,
+   "sell_attempts": 157,
+   "sell_known_rate": 0.0,
+   "metrics": {
+    "closed": 0,
+    "net": null
+   }
+  },
+  {
+   "variant": "retest",
+   "latency_s": 60,
+   "signals": 2,
+   "entries": 2,
+   "closed": 0,
+   "net_pnl": "N/A",
+   "net_without_best": "N/A",
+   "open": 2,
+   "failed_exits": 0,
+   "imputed": 0.0,
+   "exit_attempts_without_quote": 79,
+   "entries_skipped_no_buy_quote": 0,
+   "signals_while_position_open": 0,
+   "signals_after_entry_cutoff": 0,
+   "sell_attempts": 79,
+   "sell_known_rate": 0.0,
+   "metrics": {
+    "closed": 0,
+    "net": null
+   }
+  }
+ ],
+ "missing_fields": []
+}
+
