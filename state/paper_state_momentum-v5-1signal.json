@@ -1,0 +1,79 @@
+{
+ "strategy": "momentum-v5-1signal",
+ "saved": "2026-11-19T02:29:06.440105",
+ "start": 250.0,
+ "cash": 180.6925292155,
+ "wins": 0,
+ "losses": 1,
+ "loss_streak": 1,
+ "day": "2026-11-19",
+ "peak": 232.8285521284432,
+ "paused": false,
+ "curve": [
+  [
+   "2026-11-18T20:43:51.641808",
+   250.0
+  ],
+  [
+   "2026-11-18T21:44:16.126965",
+   250.0
+  ],
+  [
+   "2026-11-18T22:51:00.593912",
+   250.0
+  ],
+  [
+   "2026-11-18T23:51:05.404779",
+   280.9881528782342
+  ],
+  [
+   "2026-11-18T23:52:05.405007",
+   230.6925292155
+  ],
+  [
+   "2026-11-19T01:28:36.424764",
+   230.6925292155
+  ]
+ ],
+ "positions": {
+  "64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump": {
+   "addr": "64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump",
+   "symbol": "FNDR",
+   "opened": "2026-11-19T02:09:06.434892",
+   "planned_usd": 50.0,
+   "signals": [
+    "HOLDER_GROWTH"
+   ],
+   "tokens": 133272.042211,
+   "tokens_bought": 133272.042211,
+   "cost": 50.0,
+   "proceeds": 0.0,
+   "parts_done": 2,
+   "stage": 0,
+   "peak": 0.0003912,
+   "last_price": 0.000378,
+   "reasons": [],
+   "written_off": 0.0
+  }
+ },
+ "pending": {},
+ "trades": [
+  {
+   "symbol": "PAPA",
+   "opened": "2026-11-18T23:49:05.404303",
+   "closed": "2026-11-18T23:52:05.405007",
+   "cost": 50.0,
+   "proceeds": 30.692529215500002,
+   "reasons": [
+    "HARD_STOP"
+   ],
+   "written_off": 0.0,
+   "addr": "3hdXmQqZHmm7gWWweFKGdkjnxyWQZ2SWVNt1Jty5pump"
+  }
+ ],
+ "failed_exits": 0,
+ "traded": [
+  "3hdXmQqZHmm7gWWweFKGdkjnxyWQZ2SWVNt1Jty5pump",
+  "64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump"
+ ]
+}

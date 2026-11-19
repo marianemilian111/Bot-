@@ -1,0 +1,79 @@
+{
+ "strategy": "random-baseline-v5",
+ "saved": "2026-11-19T02:29:06.440662",
+ "start": 250.0,
+ "cash": 178.14124331284,
+ "wins": 0,
+ "losses": 2,
+ "loss_streak": 2,
+ "day": "2026-11-19",
+ "peak": 230.526774899824,
+ "paused": false,
+ "curve": [
+  [
+   "2026-11-18T20:43:51.641808",
+   250.0
+  ],
+  [
+   "2026-11-18T21:44:16.126965",
+   250.0
+  ],
+  [
+   "2026-11-18T22:45:00.592516",
+   250.0
+  ],
+  [
+   "2026-11-18T23:45:05.403375",
+   250.0
+  ],
+  [
+   "2026-11-18T23:52:05.405007",
+   228.14124331284
+  ],
+  [
+   "2026-11-19T00:52:06.416215",
+   228.14124331284
+  ],
+  [
+   "2026-11-19T01:52:06.430613",
+   228.14124331284
+  ],
+  [
+   "2026-11-19T02:14:36.436282",
+   178.14124331284
+  ]
+ ],
+ "positions": {},
+ "pending": {},
+ "trades": [
+  {
+   "symbol": "PAPA",
+   "opened": "2026-11-18T23:49:05.404303",
+   "closed": "2026-11-18T23:52:05.405007",
+   "cost": 50.0,
+   "proceeds": 28.14124331284,
+   "reasons": [
+    "HARD_STOP"
+   ],
+   "written_off": 0.0,
+   "addr": "3hdXmQqZHmm7gWWweFKGdkjnxyWQZ2SWVNt1Jty5pump"
+  },
+  {
+   "symbol": "FNDR",
+   "opened": "2026-11-19T02:09:06.434892",
+   "closed": "2026-11-19T02:14:36.436282",
+   "cost": 50.0,
+   "proceeds": 0.0,
+   "reasons": [
+    "EXIT_FAILED"
+   ],
+   "written_off": 50.0,
+   "addr": "64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump"
+  }
+ ],
+ "failed_exits": 1,
+ "traded": [
+  "3hdXmQqZHmm7gWWweFKGdkjnxyWQZ2SWVNt1Jty5pump",
+  "64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump"
+ ]
+}
