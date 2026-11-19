@@ -13,5 +13,233 @@
   60
  ],
  "paper_only": true,
- "signing": false
+ "signing": false,
+ "ended_utc": "2026-11-19T16:59:46.892990+00:00",
+ "cycles": {
+  "ok": 206,
+  "partial": 0,
+  "failed": 0
+ },
+ "tracked": 21,
+ "buy_requests": 9,
+ "sell_requests": 15,
+ "quote_events": {},
+ "jupiter_calls_max": 39,
+ "sell_requests_per_position": {
+  "2j5SaS7xy776qCBpyPQbZjyQSAtKiFgrwjfErthnW2ZM|864.736897": 1,
+  "2j5SaS7xy776qCBpyPQbZjyQSAtKiFgrwjfErthnW2ZM|864.121238": 1,
+  "2j5SaS7xy776qCBpyPQbZjyQSAtKiFgrwjfErthnW2ZM|648.552673": 2,
+  "2j5SaS7xy776qCBpyPQbZjyQSAtKiFgrwjfErthnW2ZM|648.090928": 2,
+  "2j5SaS7xy776qCBpyPQbZjyQSAtKiFgrwjfErthnW2ZM|863.735625": 1,
+  "2j5SaS7xy776qCBpyPQbZjyQSAtKiFgrwjfErthnW2ZM|647.801719": 2,
+  "4CxjZyMNoF1p6eXHXHv1TWpS2X47CuUmLwtGe18spump|1351.556573": 1,
+  "4CxjZyMNoF1p6eXHXHv1TWpS2X47CuUmLwtGe18spump|1329.997934": 1,
+  "4CxjZyMNoF1p6eXHXHv1TWpS2X47CuUmLwtGe18spump|1348.269115": 1,
+  "Dfh5DzRgSvvCFDoYc2ciTkMrbDfRKybA4SoFbPmApump|764.849": 1,
+  "Dfh5DzRgSvvCFDoYc2ciTkMrbDfRKybA4SoFbPmApump|761.761204": 1,
+  "Dfh5DzRgSvvCFDoYc2ciTkMrbDfRKybA4SoFbPmApump|762.4483": 1
+ },
+ "live_engine": {
+  "immediate/0": {
+   "decisions": 8,
+   "busy": 5,
+   "window_end": 0,
+   "no_buy_quote": 0,
+   "failed_exits": 4,
+   "exit_no_quote": 0,
+   "exit_fills": 1,
+   "entries": 3,
+   "closed": 3,
+   "net": -28.20792909468,
+   "net_without_best": -28.0,
+   "open": 0,
+   "imputed": 28.0,
+   "pending_exit_attempts": 0,
+   "trades": [
+    {
+     "mint": "4CxjZyMNoF1p6eXHXHv1TWpS2X47CuUmLwtGe18spump",
+     "opened": "2026-11-19T15:27:08.328720+00:00",
+     "closed": "2026-11-19T15:52:15.969842+00:00",
+     "pnl": -14.0,
+     "imputed": 14.0,
+     "exits": [
+      "TIME_STOP:FAIL"
+     ]
+    },
+    {
+     "mint": "2j5SaS7xy776qCBpyPQbZjyQSAtKiFgrwjfErthnW2ZM",
+     "opened": "2026-11-19T15:28:44.185372+00:00",
+     "closed": "2026-11-19T15:53:57.568936+00:00",
+     "pnl": -14.0,
+     "imputed": 14.0,
+     "exits": [
+      "TP1:FAIL",
+      "TP2:FAIL",
+      "TIME_STOP:FAIL"
+     ]
+    },
+    {
+     "mint": "Dfh5DzRgSvvCFDoYc2ciTkMrbDfRKybA4SoFbPmApump",
+     "opened": "2026-11-19T15:53:59.936430+00:00",
+     "closed": "2026-11-19T16:19:03.292537+00:00",
+     "pnl": -0.20792909468000076,
+     "imputed": 0.0,
+     "exits": [
+      "TIME_STOP"
+     ]
+    }
+   ]
+  },
+  "immediate/30": {
+   "decisions": 8,
+   "busy": 5,
+   "window_end": 0,
+   "no_buy_quote": 0,
+   "failed_exits": 4,
+   "exit_no_quote": 0,
+   "exit_fills": 1,
+   "entries": 3,
+   "closed": 3,
+   "net": -28.26320758723,
+   "net_without_best": -28.0,
+   "open": 0,
+   "imputed": 28.0,
+   "pending_exit_attempts": 0,
+   "trades": [
+    {
+     "mint": "4CxjZyMNoF1p6eXHXHv1TWpS2X47CuUmLwtGe18spump",
+     "opened": "2026-11-19T15:27:38.614722+00:00",
+     "closed": "2026-11-19T15:53:20.063295+00:00",
+     "pnl": -14.0,
+     "imputed": 14.000000000000002,
+     "exits": [
+      "TIME_STOP:FAIL"
+     ]
+    },
+    {
+     "mint": "2j5SaS7xy776qCBpyPQbZjyQSAtKiFgrwjfErthnW2ZM",
+     "opened": "2026-11-19T15:29:14.422195+00:00",
+     "closed": "2026-11-19T15:55:04.044529+00:00",
+     "pnl": -14.0,
+     "imputed": 14.0,
+     "exits": [
+      "TP1:FAIL",
+      "TP2:FAIL",
+      "TIME_STOP:FAIL"
+     ]
+    },
+    {
+     "mint": "Dfh5DzRgSvvCFDoYc2ciTkMrbDfRKybA4SoFbPmApump",
+     "opened": "2026-11-19T15:54:33.863421+00:00",
+     "closed": "2026-11-19T16:20:09.655286+00:00",
+     "pnl": -0.26320758722999926,
+     "imputed": 0.0,
+     "exits": [
+      "TIME_STOP"
+     ]
+    }
+   ]
+  },
+  "immediate/60": {
+   "decisions": 8,
+   "busy": 5,
+   "window_end": 0,
+   "no_buy_quote": 0,
+   "failed_exits": 4,
+   "exit_no_quote": 0,
+   "exit_fills": 1,
+   "entries": 3,
+   "closed": 3,
+   "net": -28.2994203833,
+   "net_without_best": -28.0,
+   "open": 0,
+   "imputed": 28.0,
+   "pending_exit_attempts": 0,
+   "trades": [
+    {
+     "mint": "4CxjZyMNoF1p6eXHXHv1TWpS2X47CuUmLwtGe18spump",
+     "opened": "2026-11-19T15:28:10.960945+00:00",
+     "closed": "2026-11-19T15:54:26.821112+00:00",
+     "pnl": -14.0,
+     "imputed": 14.000000000000002,
+     "exits": [
+      "TIME_STOP:FAIL"
+     ]
+    },
+    {
+     "mint": "2j5SaS7xy776qCBpyPQbZjyQSAtKiFgrwjfErthnW2ZM",
+     "opened": "2026-11-19T15:29:43.985640+00:00",
+     "closed": "2026-11-19T15:56:10.104818+00:00",
+     "pnl": -14.0,
+     "imputed": 14.0,
+     "exits": [
+      "TP1:FAIL",
+      "TP2:FAIL",
+      "TIME_STOP:FAIL"
+     ]
+    },
+    {
+     "mint": "Dfh5DzRgSvvCFDoYc2ciTkMrbDfRKybA4SoFbPmApump",
+     "opened": "2026-11-19T15:54:58.960520+00:00",
+     "closed": "2026-11-19T16:21:17.148050+00:00",
+     "pnl": -0.2994203832999993,
+     "imputed": 0.0,
+     "exits": [
+      "TIME_STOP"
+     ]
+    }
+   ]
+  },
+  "retest/0": {
+   "decisions": 0,
+   "busy": 0,
+   "window_end": 0,
+   "no_buy_quote": 0,
+   "failed_exits": 0,
+   "exit_no_quote": 0,
+   "exit_fills": 0,
+   "entries": 0,
+   "closed": 0,
+   "net": null,
+   "net_without_best": null,
+   "open": 0,
+   "imputed": 0,
+   "pending_exit_attempts": 0,
+   "trades": []
+  },
+  "retest/30": {
+   "decisions": 0,
+   "busy": 0,
+   "window_end": 0,
+   "no_buy_quote": 0,
+   "failed_exits": 0,
+   "exit_no_quote": 0,
+   "exit_fills": 0,
+   "entries": 0,
+   "closed": 0,
+   "net": null,
+   "net_without_best": null,
+   "open": 0,
+   "imputed": 0,
+   "pending_exit_attempts": 0,
+   "trades": []
+  },
+  "retest/60": {
+   "decisions": 0,
+   "busy": 0,
+   "window_end": 0,
+   "no_buy_quote": 0,
+   "failed_exits": 0,
+   "exit_no_quote": 0,
+   "exit_fills": 0,
+   "entries": 0,
+   "closed": 0,
+   "net": null,
+   "net_without_best": null,
+   "open": 0,
+   "imputed": 0,
+   "pending_exit_attempts": 0,
+   "trades": []
+  }
+ }
 }
