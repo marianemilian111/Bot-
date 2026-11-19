@@ -118,7 +118,8 @@ class Engine:
         self.done: List[Pos] = []
         self.pbuy: Dict[str, datetime] = {}                  # mint -> due
         self.psell: Dict[str, tuple] = {}                    # mint -> (due, qty, why)
-        self.n = {"decisions": 0, "busy": 0, "window_end": 0, "no_buy_quote": 0, "failed_exits": 0, "exit_no_quote": 0}
+        self.n = {"decisions": 0, "busy": 0, "window_end": 0, "no_buy_quote": 0, "failed_exits": 0, "exit_no_quote": 0,
+                  "exit_fills": 0}
 
     def on_decision(self, d):
         self.n["decisions"] += 1
@@ -170,18 +171,19 @@ class Engine:
             if s is None:
                 self.n["exit_no_quote"] += 1                  # not sold; re-triggered by the next observation
                 continue
-            _, usd_out, status = s
+            usd_out, status = s[1], s[2]
             if status == "FAIL":
                 p.imputed += p.cost * qty / p.tokens
                 self.n["failed_exits"] += 1
                 p.reasons.append(why + ":FAIL")
             else:
                 p.proceeds += usd_out - r["net_fee_usd"]
+                self.n["exit_fills"] += 1
                 p.reasons.append(why)
             p.sold_tokens += qty
             p.stage = max(p.stage, {"TP1": 1, "TP2": 2}.get(why, p.stage))
             if p.tokens - p.sold_tokens <= 1e-9 * p.tokens:
-                p.closed = due
+                p.closed = s[0]
                 self.done.append(p)
                 del self.open[mint]
 
@@ -192,7 +194,9 @@ class Engine:
                 "net_without_best": (net - max(p.proceeds - p.cost for p in done)) if done else None,
                 "open": len(self.open), "imputed": sum(p.imputed for p in done + list(self.open.values())),
                 "pending_exit_attempts": self.n["exit_no_quote"], "failed_exits": self.n["failed_exits"],
-                "skipped": [None] * self.n["no_buy_quote"]}
+                "skipped": [None] * self.n["no_buy_quote"],
+                "trades": [{"mint": p.mint, "opened": p.opened.isoformat(), "closed": p.closed.isoformat(),
+                            "pnl": p.proceeds - p.cost, "imputed": p.imputed, "exits": p.reasons} for p in done]}
 
 
 def backtest(obs: List[Obs], decisions: List[dict], quotes, latency_s: int, r=RULES, entry_cutoff=None):
@@ -231,6 +235,12 @@ class LiveQuotes(RecordedQuotes):
         with open(self.path, "a") as f:
             f.write(json.dumps(rec) + "\n")
 
+    def _missing(self, side, mint, due, now, reason, **kw):
+        self.events[f"{side}_{reason}"] += 1
+        self._log({"kind": f"{side}_missing", "ts": now.isoformat(), "due": due.isoformat(), "mint": mint,
+                   "reason": reason, **kw})
+        return None
+
     def _now(self, now):
         return self.clock() if self.clock else now
 
@@ -240,20 +250,18 @@ class LiveQuotes(RecordedQuotes):
             return hit
         now = self._now(now)
         if (now - due).total_seconds() > tol_s:
-            self.events["buy_too_late"] += 1
-            return None
+            return self._missing("buy", mint, due, now, "too_late", usd_in=usd)
         if self.used_buy >= self.max_buy:
-            self.events["buy_cap"] += 1
-            return None
+            return self._missing("buy", mint, due, now, "request_cap", usd_in=usd)
         self.used_buy += 1
         q = self.buy_fn(mint, usd)
         if q.get("status") != "OK":
             self.events["buy_" + q.get("status", "UNKNOWN")] += 1
-            self._log({"kind": "buy_error", "ts": now.isoformat(), "mint": mint, "usd_in": usd,
+            self._log({"kind": "buy_error", "ts": now.isoformat(), "due": due.isoformat(), "mint": mint, "usd_in": usd,
                        "status": q.get("status"), "stage": q.get("stage"), "detail": str(q.get("detail"))[:200]})
             return None
         self.buys[mint].append((now, usd, q["tokens"]))
-        self._log({"kind": "buy", "ts": now.isoformat(), "mint": mint, "usd_in": usd, "tokens_out": q["tokens"],
+        self._log({"kind": "buy", "ts": now.isoformat(), "due": due.isoformat(), "mint": mint, "usd_in": usd, "tokens_out": q["tokens"],
                    "quoted_impact": q.get("quoted_impact")})
         return now, q["tokens"]
 
@@ -263,11 +271,9 @@ class LiveQuotes(RecordedQuotes):
             return hit
         now = self._now(now)
         if (now - due).total_seconds() > tol_s:
-            self.events["sell_too_late"] += 1
-            return None
+            return self._missing("sell", mint, due, now, "too_late", amount_in=tokens)
         if self.used_sell >= self.max_sell:
-            self.events["sell_cap"] += 1
-            return None
+            return self._missing("sell", mint, due, now, "request_cap", amount_in=tokens)
         self.used_sell += 1
         r = self.sell_fn(mint, self.holders_fn(mint), tokens)
         st = r.get("status")
@@ -279,10 +285,10 @@ class LiveQuotes(RecordedQuotes):
             rec = (now, tokens, None, "FAIL")
         else:
             self.events["sell_UNKNOWN"] += 1
-            self._log({"kind": "sell_error", "ts": now.isoformat(), "mint": mint, "amount_in": tokens, "status": st,
+            self._log({"kind": "sell_error", "ts": now.isoformat(), "due": due.isoformat(), "mint": mint, "amount_in": tokens, "status": st,
                        "stage": r.get("stage"), "detail": str(r.get("detail"))[:200]})
             return None
         self.sells[mint].append(rec)
-        self._log({"kind": "sell", "ts": now.isoformat(), "mint": mint, "amount_in": tokens, "usd_out": rec[2],
+        self._log({"kind": "sell", "ts": now.isoformat(), "due": due.isoformat(), "mint": mint, "amount_in": tokens, "usd_out": rec[2],
                    "status": rec[3], "stage": r.get("stage"), "detail": str(r.get("detail"))[:200]})
         return now, rec[2], rec[3]

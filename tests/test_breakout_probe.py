@@ -15,6 +15,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 T0 = datetime(2026, 11, 19, 10, 0, tzinfo=timezone.utc)
 
 
+def jl(path):
+    with open(path) as f:
+        return [json.loads(x) for x in f if x.strip()]
+
+
 class Clock:
     def __init__(self):
         self.t = T0
@@ -81,7 +86,7 @@ def run_probe(prices, buy_ok=True, sell_status="OK", max_buy=60, max_sell=120, m
         if not os.path.exists(os.path.join(d, f)):
             open(os.path.join(d, f), "w").close()
     out = subprocess.run([sys.executable, os.path.join(ROOT, "scripts", "breakout_compare.py"), "--entry-cutoff",
-                          meta["entry_cutoff_utc"], "--quotes", os.path.join(d, "quotes.jsonl"), os.path.join(d, "obs.jsonl")],
+                          meta["entry_cutoff_utc"], "--cycles", os.path.join(d, "cycles.jsonl"), "--quotes", os.path.join(d, "quotes.jsonl"), os.path.join(d, "obs.jsonl")],
                          capture_output=True, text=True)
     return meta, json.loads(out.stdout), calls, d
 
@@ -103,10 +108,17 @@ class Probe(unittest.TestCase):
         self.assertTrue(all(c[1] == "A" and c[2] == 14.0 for c in calls["buy"]))      # only for the signalled pool
         self.assertTrue(all(abs(c[2] - 13.98) < 1e-9 for c in calls["sell"]))        # exact held amount
         self.assertLessEqual(len(calls["buy"]), 3)                                   # t+0, t+30, t+60 at most
+        self.assertTrue(res["probe_gate"].startswith("BLOCAT: semnale fara suficiente"))  # 1 entry < 2
+        self.assertTrue(all(v.startswith("INSUFICIENT") for v in res["validation"].values()))
+        q = jl(os.path.join(d, "quotes.jsonl"))
+        self.assertTrue(all("due" in x and "ts" in x for x in q))
+        cyc = jl(os.path.join(d, "cycles.jsonl"))
+        self.assertTrue(cyc and all(x["feed"] == "ok" for x in cyc))
 
     def test_zero_signals_no_quote_requests(self):
         meta, res, calls, _ = run_probe(FLAT * 3)
         self.assertEqual(res["verdict"], "ZERO SEMNALE ELIGIBILE")
+        self.assertTrue(res["probe_gate"].startswith("STOP STRATEGIE"))
         self.assertEqual((calls["buy"], calls["sell"], meta["tracked"]), ([], [], 1))  # B never tracked
 
     def test_signals_without_quotes(self):
@@ -126,8 +138,10 @@ class Probe(unittest.TestCase):
         self.assertEqual((imm0["closed"], imm0["failed_exits"], imm0["net_pnl"]), (1, 1, -14.0))
 
     def test_buy_cap(self):
-        meta, res, calls, _ = run_probe(FLAT + UP + DOWN, max_buy=1)
+        meta, res, calls, d = run_probe(FLAT + UP + DOWN, max_buy=1)
         self.assertEqual(len(calls["buy"]), 1)
+        q = jl(os.path.join(d, "quotes.jsonl"))
+        self.assertTrue(any(x["kind"] == "buy_missing" and x["reason"] == "request_cap" for x in q))
 
     def test_no_entry_after_cutoff(self):
         meta, res, calls, _ = run_probe(FLAT + UP + DOWN, minutes=20)          # whole run is after the cutoff
@@ -137,3 +151,37 @@ class Probe(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+import breakout_compare as bc  # noqa: E402
+
+
+def trades(pnls):
+    return [{"pnl": x, "closed": f"2026-11-19T10:{i:02d}:00+00:00"} for i, x in enumerate(pnls)]
+
+
+class Criteria(unittest.TestCase):
+    def test_metrics_best_trade_and_drawdown(self):
+        m = bc.metrics({"trades": trades([-3, 10, -2, 1]), "failed_exits": 0, "exit_fills": 4})
+        self.assertEqual((m["net"], m["best"], m["net_without_best"], m["max_drawdown"]), (6, 10, -4, 3))
+        self.assertAlmostEqual(m["best_share"], 10 / 6, places=3)
+
+    def test_one_lucky_trade_does_not_pass(self):
+        m = bc.metrics({"trades": trades([40] + [-1] * 29), "exit_fills": 30})
+        v = bc.evaluate_validation({("immediate", 30): m, ("immediate", 60): m})
+        self.assertIn("net without best", v["immediate"])
+        self.assertIn("best trade share", v["immediate"])
+
+    def test_consistent_edge_passes_and_losing_is_rejected(self):
+        win = bc.metrics({"trades": trades([1.0, 0.5] * 15), "exit_fills": 30})
+        self.assertEqual(bc.evaluate_validation({("retest", 30): win, ("retest", 60): win})["retest"], "PASS")
+        lose = bc.metrics({"trades": trades([-0.5] * 30), "exit_fills": 30})
+        self.assertTrue(bc.evaluate_validation({("retest", 30): lose, ("retest", 60): lose})["retest"].startswith("RESPINSA"))
+
+    def test_failed_exits_reject_even_with_profit(self):
+        m = bc.metrics({"trades": trades([1.0, 0.5] * 15), "exit_fills": 27, "failed_exits": 3})
+        self.assertIn("failed exits", bc.evaluate_validation({("immediate", 30): m, ("immediate", 60): m})["immediate"])
+
+    def test_no_closes_is_insufficient_and_na(self):
+        self.assertEqual(bc.metrics({"trades": []})["net"], None)
+        self.assertTrue(bc.evaluate_validation({})["immediate"].startswith("INSUFICIENT"))

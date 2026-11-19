@@ -36,7 +36,8 @@ def eligible_pool(p):
     return (p.liquidity or 0) >= RULES["min_liq"] and (p.vol5m or 0) >= RULES["min_vol5m"] and (p.price or 0) > 0
 
 
-def run(out, minutes, max_buy, max_sell, max_tracked, feed, buy_fn, sell_fn, clock=None, sleep=time.sleep, cycle_s=30):
+def run(out, minutes, max_buy, max_sell, max_tracked, feed, buy_fn, sell_fn, clock=None, sleep=time.sleep, cycle_s=30,
+        discover=None):
     clock = clock or (lambda: datetime.now(timezone.utc))
     os.makedirs(out, exist_ok=True)
     start = clock()
@@ -63,12 +64,21 @@ def run(out, minutes, max_buy, max_sell, max_tracked, feed, buy_fn, sell_fn, clo
 
     while clock() < end:
         t0 = clock()
+        if discover:
+            try:
+                discover(feed)
+            except Exception:
+                pass
         try:
             feed.step(t0)
             st = getattr(feed, "step_status", {}) or {}
-            cycles["ok" if not st.get("failed") else ("failed" if st.get("failed") == st.get("chunks") else "partial")] += 1
-        except Exception:
-            cycles["failed"] += 1
+            cyc = "ok" if not st.get("failed") else ("failed" if st.get("failed") == st.get("chunks") else "partial")
+        except Exception as e:
+            st, cyc = {"error": type(e).__name__}, "failed"
+        cycles[cyc] += 1
+        with open(os.path.join(out, "cycles.jsonl"), "a") as f:
+            f.write(json.dumps({"ts": t0.isoformat(), "feed": cyc, "chunks": st.get("chunks"), "failed_chunks": st.get("failed"),
+                                "error": st.get("error"), "tracked": len(tracked)}) + "\n")
         for p in feed.snapshot():
             if p.addr not in tracked and len(tracked) < max_tracked and eligible_pool(p):
                 tracked.append(p.addr)
@@ -81,7 +91,7 @@ def run(out, minutes, max_buy, max_sell, max_tracked, feed, buy_fn, sell_fn, clo
             o = Obs(datetime.fromtimestamp(p.fetched_at, timezone.utc), m, float(p.price), float(p.vol5m or 0), p.liquidity)
             with open(os.path.join(out, "obs.jsonl"), "a") as f:
                 f.write(json.dumps({"ts": o.ts.isoformat(), "mint": m, "price": o.price, "vol5m": o.vol5m,
-                                    "liquidity": o.liquidity}) + "\n")
+                                    "liquidity": o.liquidity, "cycle_ts": t0.isoformat(), "cycle_feed": cyc}) + "\n")
             for v, det in dets.items():
                 d = det.feed(o)
                 if d:
@@ -106,6 +116,28 @@ def run(out, minutes, max_buy, max_sell, max_tracked, feed, buy_fn, sell_fn, clo
     return meta
 
 
+NOT_TARGETS = {"So11111111111111111111111111111111111111112",          # SOL is what we pay with
+               "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",          # USDC
+               "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"}          # USDT
+
+
+def gt_top_discovery(every_s=120):
+    """Discovery only (not a signal): GeckoTerminal Solana pools with the highest 24 h volume, so selection starts
+    from pools likely to pass the thresholds. DexScreener observations decide eligibility; SOL/USDC/USDT excluded
+    (cannot be bought with SOL / no breakout meaning)."""
+    last = {"t": 0.0}
+
+    def run_(feed):
+        if time.time() - last["t"] < every_s:
+            return
+        last["t"] = time.time()
+        for pool, mint, dex, ts in feed._gt_pools("pools?page=1&sort=h24_volume_usd_desc") or []:
+            if mint not in NOT_TARGETS and mint not in feed.watch:
+                feed.watch.insert(0, mint)
+                feed.disc_src[mint].add("gt_top_volume")
+    return run_
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
@@ -119,11 +151,13 @@ def main():
     from dexbot.live import LiveFeed
     cfg = Config()
     cfg.max_age_s = 10 ** 9                     # breakout rules have no age limit (discovery only)
-    run(a.out, a.minutes, a.max_buy, a.max_sell, a.max_tracked, LiveFeed(cfg), buy_quote, sell_simulation)
+    run(a.out, a.minutes, a.max_buy, a.max_sell, a.max_tracked, LiveFeed(cfg), buy_quote, sell_simulation,
+        discover=gt_top_discovery())
     here = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(a.out, "meta.json")) as f:
         m = json.load(f)
     args = [sys.executable, os.path.join(here, "breakout_compare.py"), "--entry-cutoff", m["entry_cutoff_utc"],
+            "--cycles", os.path.join(a.out, "cycles.jsonl"),
             "--quotes", os.path.join(a.out, "quotes.jsonl"), os.path.join(a.out, "obs.jsonl")]
     if not os.path.exists(os.path.join(a.out, "obs.jsonl")):
         open(os.path.join(a.out, "obs.jsonl"), "w").close()
