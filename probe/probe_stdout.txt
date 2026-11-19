@@ -1,0 +1,174 @@
+{
+ "observations": 1413,
+ "mints": 21,
+ "span_utc": [
+  "2026-11-19T15:07:44.223528+00:00",
+  "2026-11-19T16:57:29.538825+00:00"
+ ],
+ "verdict": "POZITII INCHISE - PnL net dupa costuri pe varianta/latenta in tabel",
+ "probe_gate": "CONTINUA PAPER: oportunitati tranzactionabile; edge nedemonstrat (cere validare separata)",
+ "validation": {
+  "immediate": "INSUFICIENT (3 < 30 closed)",
+  "retest": "INSUFICIENT (0 < 30 closed)"
+ },
+ "results": [
+  {
+   "variant": "immediate",
+   "latency_s": 0,
+   "signals": 8,
+   "entries": 3,
+   "closed": 3,
+   "net_pnl": -28.2079,
+   "net_without_best": -28.0,
+   "open": 0,
+   "failed_exits": 4,
+   "imputed": 28.0,
+   "exit_attempts_without_quote": 0,
+   "entries_skipped_no_buy_quote": 0,
+   "signals_while_position_open": 5,
+   "signals_after_entry_cutoff": 0,
+   "sell_attempts": 5,
+   "sell_known_rate": 1.0,
+   "metrics": {
+    "closed": 3,
+    "net": -28.20792909468,
+    "net_pct_capital": -40.3,
+    "best": -0.2079,
+    "net_without_best": -28.0,
+    "best_share": null,
+    "max_drawdown": 28.2079,
+    "t": -2.05,
+    "failed_exit_rate": 0.8,
+    "exit_no_quote_rate": 0.0
+   }
+  },
+  {
+   "variant": "immediate",
+   "latency_s": 30,
+   "signals": 8,
+   "entries": 3,
+   "closed": 3,
+   "net_pnl": -28.2632,
+   "net_without_best": -28.0,
+   "open": 0,
+   "failed_exits": 4,
+   "imputed": 28.0,
+   "exit_attempts_without_quote": 0,
+   "entries_skipped_no_buy_quote": 0,
+   "signals_while_position_open": 5,
+   "signals_after_entry_cutoff": 0,
+   "sell_attempts": 5,
+   "sell_known_rate": 1.0,
+   "metrics": {
+    "closed": 3,
+    "net": -28.26320758723,
+    "net_pct_capital": -40.38,
+    "best": -0.2632,
+    "net_without_best": -28.0,
+    "best_share": null,
+    "max_drawdown": 28.2632,
+    "t": -2.06,
+    "failed_exit_rate": 0.8,
+    "exit_no_quote_rate": 0.0
+   }
+  },
+  {
+   "variant": "immediate",
+   "latency_s": 60,
+   "signals": 8,
+   "entries": 3,
+   "closed": 3,
+   "net_pnl": -28.2994,
+   "net_without_best": -28.0,
+   "open": 0,
+   "failed_exits": 4,
+   "imputed": 28.0,
+   "exit_attempts_without_quote": 0,
+   "entries_skipped_no_buy_quote": 0,
+   "signals_while_position_open": 5,
+   "signals_after_entry_cutoff": 0,
+   "sell_attempts": 5,
+   "sell_known_rate": 1.0,
+   "metrics": {
+    "closed": 3,
+    "net": -28.2994203833,
+    "net_pct_capital": -40.43,
+    "best": -0.2994,
+    "net_without_best": -28.0,
+    "best_share": null,
+    "max_drawdown": 28.2994,
+    "t": -2.07,
+    "failed_exit_rate": 0.8,
+    "exit_no_quote_rate": 0.0
+   }
+  },
+  {
+   "variant": "retest",
+   "latency_s": 0,
+   "signals": 0,
+   "entries": 0,
+   "closed": 0,
+   "net_pnl": "N/A",
+   "net_without_best": "N/A",
+   "open": 0,
+   "failed_exits": 0,
+   "imputed": 0,
+   "exit_attempts_without_quote": 0,
+   "entries_skipped_no_buy_quote": 0,
+   "signals_while_position_open": 0,
+   "signals_after_entry_cutoff": 0,
+   "sell_attempts": 0,
+   "sell_known_rate": 0.0,
+   "metrics": {
+    "closed": 0,
+    "net": null
+   }
+  },
+  {
+   "variant": "retest",
+   "latency_s": 30,
+   "signals": 0,
+   "entries": 0,
+   "closed": 0,
+   "net_pnl": "N/A",
+   "net_without_best": "N/A",
+   "open": 0,
+   "failed_exits": 0,
+   "imputed": 0,
+   "exit_attempts_without_quote": 0,
+   "entries_skipped_no_buy_quote": 0,
+   "signals_while_position_open": 0,
+   "signals_after_entry_cutoff": 0,
+   "sell_attempts": 0,
+   "sell_known_rate": 0.0,
+   "metrics": {
+    "closed": 0,
+    "net": null
+   }
+  },
+  {
+   "variant": "retest",
+   "latency_s": 60,
+   "signals": 0,
+   "entries": 0,
+   "closed": 0,
+   "net_pnl": "N/A",
+   "net_without_best": "N/A",
+   "open": 0,
+   "failed_exits": 0,
+   "imputed": 0,
+   "exit_attempts_without_quote": 0,
+   "entries_skipped_no_buy_quote": 0,
+   "signals_while_position_open": 0,
+   "signals_after_entry_cutoff": 0,
+   "sell_attempts": 0,
+   "sell_known_rate": 0.0,
+   "metrics": {
+    "closed": 0,
+    "net": null
+   }
+  }
+ ],
+ "missing_fields": []
+}
+
