@@ -45,6 +45,8 @@ def load_quotes(path):
     buys, sells = defaultdict(list), defaultdict(list)
     if path:
         for line in open(path):
+            if not line.strip():
+                continue
             q = json.loads(line)
             if q["kind"] == "buy":
                 buys[q["mint"]].append((ts_of(q["ts"]), float(q["usd_in"]), float(q["tokens_out"])))
@@ -54,32 +56,43 @@ def load_quotes(path):
     return RecordedQuotes(buys, sells)
 
 
-def compare(obs, quotes):
+def compare(obs, quotes, entry_cutoff=None):
     res = []
     for variant in ("immediate", "retest"):
         dec = signals(obs, variant)
         for lat in LATENCIES:
-            r = backtest(obs, dec, quotes, lat)
+            r = backtest(obs, dec, quotes, lat, entry_cutoff=entry_cutoff)
             res.append({"variant": variant, "latency_s": lat, "signals": len(dec), "entries": r["entries"],
                         "closed": r["closed"], "net_pnl": "N/A" if r["net"] is None else round(r["net"], 4),
                         "net_without_best": "N/A" if r["net_without_best"] is None else round(r["net_without_best"], 4),
                         "open": r["open"], "failed_exits": r["failed_exits"], "imputed": round(r["imputed"], 4),
                         "exit_attempts_without_quote": r["pending_exit_attempts"],
-                        "entries_skipped_no_buy_quote": len(r["skipped"])})
+                        "entries_skipped_no_buy_quote": r.get("no_buy_quote", len(r["skipped"])),
+                        "signals_while_position_open": r.get("busy", 0), "signals_after_entry_cutoff": r.get("window_end", 0)})
     return res
+
+
+def verdict(res):
+    """Exactly one of three outcomes, from the replay of recorded files."""
+    if not any(r["signals"] for r in res):
+        return "ZERO SEMNALE ELIGIBILE"
+    if not any(r["closed"] for r in res):
+        return "SEMNALE, DAR FARA COTATII SUFICIENTE (nicio pozitie inchisa; PnL inchis N/A)"
+    return "POZITII INCHISE - PnL net dupa costuri pe varianta/latenta in tabel"
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--quotes")
+    ap.add_argument("--entry-cutoff")
     ap.add_argument("rows", nargs="+")
     a = ap.parse_args()
     obs = load_rows(a.rows)
-    res = compare(obs, load_quotes(a.quotes))
+    res = compare(obs, load_quotes(a.quotes), ts_of(a.entry_cutoff) if a.entry_cutoff else None)
     mints = len({o.mint for o in obs})
     print(json.dumps({"observations": len(obs), "mints": mints,
                       "span_utc": [obs[0].ts.isoformat(), obs[-1].ts.isoformat()] if obs else None,
-                      "results": res,
+                      "verdict": verdict(res), "results": res,
                       "missing_fields": [] if a.quotes else [
                           "recorded BUY quote: tokens_out for usd_in=14.0 per (mint, time >= decision + latency, <= +60 s)",
                           "recorded SELL quote/simulation: usd_out + status for amount_in = exact held tokens per (mint, time >= trigger + latency, <= +60 s)"]},
