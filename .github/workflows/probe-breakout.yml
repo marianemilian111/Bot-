@@ -2,7 +2,7 @@ name: Breakout probe (paper only, one run, 110 min)
 
 # PAPER ONLY. Read-only public APIs (DexScreener, GeckoTerminal, RugCheck, Jupiter lite quotes, Solana public RPC
 # simulateTransaction with sigVerify false). No wallet, no keys, no signing, no orders. Manual only, no schedule.
-# Rules 375b78f, criteria docs/BREAKOUT_CRITERIA.md, code pinned at fde01f7. Does not read or write any v5/v6/v6b branch.
+# Rules 375b78f, criteria docs/BREAKOUT_CRITERIA.md, code pinned at 05ca0c7 (second probe). Does not read or write any v5/v6/v6b branch.
 on:
   workflow_dispatch: {}
 
@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  DATA_BRANCH: paper-data-breakout-probe
+  DATA_BRANCH: paper-data-breakout-probe-2
   OUT: probe
 
 jobs:
@@ -25,12 +25,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: fde01f700cd673c5b9b259d9209b71cb0bc28191   # FROZEN probe code (work/breakout)
+          ref: 05ca0c7e600595cf81a7f4aa37f5634b00a3b8e6   # FROZEN probe code (work/exit-holders: exit holders fix + per-position limits)
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Offline tests
-        run: python -m unittest tests.test_breakout tests.test_breakout_probe
+        run: python -m unittest tests.test_breakout tests.test_breakout_probe tests.test_exit_holders
       - name: Refuse to reuse an existing probe branch (one run only)
         run: |
           if git ls-remote --exit-code origin "refs/heads/$DATA_BRANCH" >/dev/null; then echo "$DATA_BRANCH exists: probe already ran"; exit 1; fi
