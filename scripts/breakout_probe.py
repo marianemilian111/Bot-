@@ -124,6 +124,8 @@ def run(out, minutes, max_buy, max_sell, max_tracked, feed, buy_fn, sell_fn, clo
         sleep(5)
     meta.update(ended_utc=clock().isoformat(), cycles=cycles, tracked=len(tracked), buy_requests=lq.used_buy,
                 sell_requests=lq.used_sell, quote_events=dict(lq.events),
+                jupiter_calls_max=lq.used_buy + 2 * lq.used_sell,   # buy = 1 quote; sell = quote + swap build (0 if no holder)
+                sell_requests_per_position={f"{m}|{a}": v[0] for (m, a), v in lq.pos_req.items()},
                 live_engine={f"{v}/{lat}": {k: x for k, x in e.summary().items() if k != "skipped"} for (v, lat), e in engines.items()})
     _dump(os.path.join(out, "meta.json"), meta)
     return meta

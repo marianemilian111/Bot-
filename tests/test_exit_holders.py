@@ -91,3 +91,64 @@ class LimitedRetries(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TwoPositionsAtExit(unittest.TestCase):
+    """Two pools enter on the same breakout and hit the hard stop together. Pool S: every sell answer UNKNOWN.
+    Pool G: valid sell simulation. G must close; S must stay open and visible; caps hold; UNKNOWN never fills."""
+
+    def test_unknown_position_does_not_block_valid_one(self):
+        import json
+        import subprocess
+        import tempfile
+        from tests.test_breakout_probe import Clock, P   # noqa
+        clk = Clock()
+
+        class Feed:
+            def __init__(self):
+                self.i, self.cache = 0, {}
+
+            def step(self, now):
+                px = 1.0 if self.i < 20 else (1.02 if self.i == 20 else 0.85)
+                vol = 70_000 if self.i >= 20 else 30_000
+                ts = clk().timestamp()
+                self.cache = {m: P(m, px, vol, 50_000, ts, [("holder", 10 ** 15)]) for m in ("S", "G")}
+                self.i += 1
+
+            def snapshot(self):
+                return list(self.cache.values())
+
+            def get(self, a):
+                return self.cache.get(a)
+
+            def pin(self, a):
+                pass
+
+        calls = {"buy": 0, "sell": {"S": 0, "G": 0}}
+
+        def buy_fn(mint, usd):
+            calls["buy"] += 1
+            return {"status": "OK", "tokens": 13.98}
+
+        def sell_fn(mint, holders, tokens):
+            calls["sell"][mint] += 1
+            if mint == "S":
+                return {"status": "UNKNOWN", "stage": "holder lookup", "detail": "no public holder"}
+            return {"status": "OK", "quote_out_lamports": 10 ** 9, "sol_usd": 10.0, "proceeds_usd": 9.98}
+
+        d = tempfile.mkdtemp()
+        meta = breakout_probe.run(d, 110, 60, 120, 60, Feed(), buy_fn, sell_fn, clock=clk, sleep=clk.sleep)
+        out = subprocess.run([sys.executable, os.path.join(ROOT, "scripts", "breakout_compare.py"), "--entry-cutoff",
+                              meta["entry_cutoff_utc"], "--cycles", os.path.join(d, "cycles.jsonl"), "--quotes",
+                              os.path.join(d, "quotes.jsonl"), os.path.join(d, "obs.jsonl")], capture_output=True, text=True)
+        res = json.loads(out.stdout)
+        imm0 = next(r for r in res["results"] if r["variant"] == "immediate" and r["latency_s"] == 0)
+        self.assertEqual((imm0["entries"], imm0["closed"], imm0["open"]), (2, 1, 1))   # G closed, S open and reported
+        self.assertAlmostEqual(imm0["net_pnl"], 10.0 - 0.02 - 14.0, places=6)          # only G's closed PnL
+        self.assertEqual(imm0["failed_exits"], 0)                                       # UNKNOWN is not a failed sale
+        self.assertTrue(all(v <= 8 for v in meta["sell_requests_per_position"].values()))
+        self.assertTrue(any(k.startswith("S|") and v == 8 for k, v in meta["sell_requests_per_position"].items()))
+        self.assertLessEqual(meta["sell_requests"], 120)
+        self.assertLessEqual(meta["buy_requests"], 60)
+        self.assertLessEqual(meta["jupiter_calls_max"], 300)
+        self.assertGreater(calls["sell"]["G"], 0)
