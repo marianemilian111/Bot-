@@ -1,0 +1,55 @@
+{
+ "strategy": "capture-v6",
+ "baseline": "random-baseline-v6",
+ "fingerprint": "c717981470d4b5b7",
+ "rules": {
+  "universe": "age <= 6 h; DEX pumpfun/pumpswap/raydium*/meteora*; liq >= 40k; vol5m >= 25k; holders >= 300; mint+freeze closed; LP of the TRADED pool BURNED, verified on chain (LP mint supply == 0); a lock without verifiable 30-day duration fails (RugCheck lockers carry no usable dates)",
+  "signals": "VOL_SPIKE (avg over existing 5-min windows when < 1 h), BUY_RATIO > 70 % (>= 20 txns), HOLDER_GROWTH >= 10 %/10 min, SMART_MONEY >= 3 tracked wallets in 10 min, KOL bought in 10 min (no wallet list -> UNKNOWN, never counted); >= 2",
+  "rug": "dev < 5 % (creator address), top10 < 35 % raw incl. AMM, bundle proxy, sell simulation of the exact amount PASS",
+  "no_chase": "+300 % in 1 h without >= 10 % pullback from the 1 h high (GeckoTerminal 5 m candles of the traded pool; unknown -> skip)",
+  "sizer": "equity-based 20/30/40 % for 2/3/>=4 signals, x0.5 after 2 losses in a row, compounding, max 2 open, $70 paper",
+  "execution": "2 tranches each with its own Jupiter quote, 2.5 % cap, +$0.02/swap; exits only via passing sell simulation of the exact amount; FAIL -> imputed $0; UNKNOWN -> retry",
+  "exits": "40 % at 2x, 30 % at 4x, 25 % trailing rest, hard stop -12 %, time stop 25 min, DEV_SELL only when a creator transaction is a confirmed SELL swap of the mint (balance drop alone = DEV_BALANCE_DROP log, no exit); LP pull impossible with burned LP (liquidity drop >= 50 % = LIQ_DROP_50 log, no exit)",
+  "session": "entries 23:00-07:00 Europe/Bucharest; 07:00 recap; 30 % drawdown from session peak -> pause entries",
+  "baseline": "paired random draw among same-cycle pairs passing universe + safety, same sizing/exits",
+  "seed": 20261120
+ },
+ "cycles": 677,
+ "resumed": true,
+ "minutes_planned": 345.0,
+ "minutes_run": 345.4,
+ "stop": null,
+ "pools_discovered": 300,
+ "evaluable_pairs": 6,
+ "discovery_errors": {
+  "gt_trending_pools": {
+   "http 429": 1
+  },
+  "gt_new_pools": {
+   "http 429": 2
+  }
+ },
+ "started_utc": "2026-11-18T22:19:41+00:00",
+ "ended_utc": "2026-11-19T04:05:07+00:00",
+ "wallets": "LISTA LIPSA (no wallet with a documented public source)",
+ "sha": "1e562759b1e7e4963f4964e36a8315bb38f8572f",
+ "run_id": "44410378519",
+ "jsonl": "v6_collect_20261118_221941.jsonl",
+ "baseline_draws": [
+  {
+   "ts": "2026-11-19T00:55:39",
+   "momentum_entry": "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump",
+   "eligible_options": 2
+  }
+ ],
+ "recaps": [],
+ "entry_simulations": {
+  "OK": 1,
+  "FAIL": 0,
+  "UNKNOWN": 0
+ },
+ "logs": {
+  "capture-v6": "night_capture-v6_20261118_221941.log",
+  "random-baseline-v6": "night_random-baseline-v6_20261118_221941.log"
+ }
+}
