@@ -1,0 +1,17 @@
+{
+ "code_sha": "fde01f700cd673c5b9b259d9209b71cb0bc28191",
+ "rules_commit": "375b78f",
+ "started_utc": "2026-11-19T01:39:33.108484+00:00",
+ "end_utc": "2026-11-19T03:29:33.108484+00:00",
+ "entry_cutoff_utc": "2026-11-19T03:02:33.108484+00:00",
+ "max_buy_requests": 60,
+ "max_sell_requests": 120,
+ "max_tracked": 60,
+ "latencies_s": [
+  0,
+  30,
+  60
+ ],
+ "paper_only": true,
+ "signing": false
+}
