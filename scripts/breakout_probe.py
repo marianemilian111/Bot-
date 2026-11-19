@@ -32,6 +32,20 @@ def _dump(path, obj):
         json.dump(obj, f, indent=1, default=str)
 
 
+def exit_holders(feed, mint):
+    """Public holders for the exit simulation, read for the held mint whatever its current volume. The old path took
+    them from the observation, which LiveFeed fills only while the pool passes the ENTRY thresholds (vol5m >= $25k) -
+    after a drop the list was None and every exit simulation was UNKNOWN (GTASZN in v6b 01:00:28-01:00:58, Dfh5Dz in
+    probe 44438535268 02:28-02:44). RugCheck is cached by LiveFeed (5 min, 60 s when empty)."""
+    sec = getattr(feed, "_security", None)
+    if sec is not None:
+        h = (sec(mint) or {}).get("sell_holders")
+        if h:
+            return h
+    p = feed.get(mint)
+    return p.sell_holders if p else None
+
+
 def eligible_pool(p):
     return (p.liquidity or 0) >= RULES["min_liq"] and (p.vol5m or 0) >= RULES["min_vol5m"] and (p.price or 0) > 0
 
@@ -51,8 +65,7 @@ def run(out, minutes, max_buy, max_sell, max_tracked, feed, buy_fn, sell_fn, clo
             "entry_cutoff_utc": cutoff.isoformat(), "max_buy_requests": max_buy, "max_sell_requests": max_sell,
             "max_tracked": max_tracked, "latencies_s": list(LATENCIES), "paper_only": True, "signing": False}
     _dump(os.path.join(out, "meta.json"), meta)
-    lq = LiveQuotes(os.path.join(out, "quotes.jsonl"), buy_fn, sell_fn,
-                    lambda m: (feed.get(m).sell_holders if feed.get(m) else None), max_buy, max_sell)
+    lq = LiveQuotes(os.path.join(out, "quotes.jsonl"), buy_fn, sell_fn, lambda m: exit_holders(feed, m), max_buy, max_sell)
     dets = {v: Detector(v) for v in ("immediate", "retest")}
     engines = {(v, lat): Engine(lq, lat, entry_cutoff=cutoff) for v in dets for lat in LATENCIES}
     tracked, last = [], {}

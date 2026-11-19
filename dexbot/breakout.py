@@ -224,8 +224,12 @@ class LiveQuotes(RecordedQuotes):
     Every answer is appended to `path` with its real request time. Read-only: Jupiter quote + unsigned simulateTransaction
     of a public holder (sigVerify false); nothing is signed or sent."""
 
-    def __init__(self, path, buy_fn, sell_fn, holders_fn, max_buy=60, max_sell=120, clock=None):
+    def __init__(self, path, buy_fn, sell_fn, holders_fn, max_buy=60, max_sell=120, clock=None,
+                 per_position_max=8, per_position_gap_s=60):
         super().__init__()
+        # fixed before any comparison: one stuck position may not use the whole sell budget
+        self.per_position_max, self.per_position_gap_s = per_position_max, per_position_gap_s
+        self.pos_req = defaultdict(lambda: [0, None])            # (mint, rounded amount) -> [requests, last request time]
         self.path, self.buy_fn, self.sell_fn, self.holders_fn = path, buy_fn, sell_fn, holders_fn
         self.max_buy, self.max_sell, self.used_buy, self.used_sell = max_buy, max_sell, 0, 0
         self.clock = clock
@@ -274,6 +278,14 @@ class LiveQuotes(RecordedQuotes):
             return self._missing("sell", mint, due, now, "too_late", amount_in=tokens)
         if self.used_sell >= self.max_sell:
             return self._missing("sell", mint, due, now, "request_cap", amount_in=tokens)
+        k = (mint, round(tokens, 6))
+        n, last = self.pos_req[k]
+        if n >= self.per_position_max:
+            return self._missing("sell", mint, due, now, "position_cap", amount_in=tokens)
+        if last is not None and (now - last).total_seconds() < self.per_position_gap_s:
+            self.events["sell_spacing"] += 1                       # not logged per line: expected between retries
+            return None
+        self.pos_req[k] = [n + 1, now]
         self.used_sell += 1
         r = self.sell_fn(mint, self.holders_fn(mint), tokens)
         st = r.get("status")
