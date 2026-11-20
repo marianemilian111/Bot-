@@ -1,13 +1,13 @@
 {
  "strategy": "momentum-v5-1signal",
- "saved": "2026-11-19T13:05:02.690758",
+ "saved": "2026-11-20T02:16:53.067143",
  "start": 250.0,
  "cash": 180.6925292155,
  "wins": 0,
  "losses": 1,
  "loss_streak": 1,
- "day": "2026-11-19",
- "peak": 232.8285521284432,
+ "day": "2026-11-20",
+ "peak": 207.8400442138807,
  "paused": false,
  "curve": [
   [
@@ -41,6 +41,26 @@
   [
    "2026-11-19T09:52:32.649356",
    211.6916062337786
+  ],
+  [
+   "2026-11-19T20:31:32.139825",
+   182.8901851915594
+  ],
+  [
+   "2026-11-19T21:38:32.156326",
+   182.55567236560978
+  ],
+  [
+   "2026-11-19T22:40:32.171906",
+   182.37708782904704
+  ],
+  [
+   "2026-11-20T00:15:32.194760",
+   182.4237330438209
+  ],
+  [
+   "2026-11-20T01:15:53.052446",
+   181.94728549291656
   ]
  ],
  "positions": {
@@ -59,7 +79,7 @@
    "parts_done": 2,
    "stage": 0,
    "peak": 0.0003912,
-   "last_price": 0.000198,
+   "last_price": 9.715e-06,
    "reasons": [],
    "written_off": 0.0
   }
@@ -82,6 +102,7 @@
  "failed_exits": 0,
  "traded": [
   "3hdXmQqZHmm7gWWweFKGdkjnxyWQZ2SWVNt1Jty5pump",
-  "64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump"
+  "64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump",
+  "7bCiddGLe5aM8HE2pigT9jsqkmC1HSPxyXN6GkHEpump"
  ]
 }
