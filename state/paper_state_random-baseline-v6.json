@@ -1,13 +1,13 @@
 {
  "strategy": "random-baseline-v6",
- "saved": "2026-11-19T13:41:43.279665",
+ "saved": "2026-11-20T02:44:19.164831",
  "start": 70.0,
- "cash": 68.99007243058,
- "wins": 0,
+ "cash": 87.921303316294,
+ "wins": 1,
  "losses": 1,
- "loss_streak": 1,
+ "loss_streak": 0,
  "day": "2026-11-19",
- "peak": 68.99007243058,
+ "peak": 88.13245518764063,
  "paused": false,
  "curve": [
   [
@@ -61,6 +61,30 @@
   [
    "2026-11-19T12:56:43.268165",
    68.99007243058
+  ],
+  [
+   "2026-11-19T20:59:19.058150",
+   68.99007243058
+  ],
+  [
+   "2026-11-19T21:48:19.075033",
+   87.921303316294
+  ],
+  [
+   "2026-11-19T22:48:19.093448",
+   87.921303316294
+  ],
+  [
+   "2026-11-19T23:48:19.112035",
+   87.921303316294
+  ],
+  [
+   "2026-11-20T00:48:19.130585",
+   87.921303316294
+  ],
+  [
+   "2026-11-20T01:48:19.147218",
+   87.921303316294
   ]
  ],
  "positions": {},
@@ -77,11 +101,25 @@
    ],
    "written_off": 0.0,
    "addr": "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump"
+  },
+  {
+   "symbol": "FIONA",
+   "opened": "2026-11-19T21:23:19.065523",
+   "closed": "2026-11-19T21:48:19.075033",
+   "cost": 13.798014486116001,
+   "proceeds": 32.729245371830004,
+   "reasons": [
+    "TP1_2x",
+    "TIME_STOP"
+   ],
+   "written_off": 0.0,
+   "addr": "B34nXKzCgsJb9ChLuSHPRpXLE3WFSWyeT8Cqkzzmpump"
   }
  ],
  "failed_exits": 0,
  "traded": [
   "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump",
+  "B34nXKzCgsJb9ChLuSHPRpXLE3WFSWyeT8Cqkzzmpump",
   "EkTfN4Pb7K3NXzxsbzkn3AA4MGbsdTniFJ3G2RsVpump"
  ]
 }
