@@ -19,45 +19,31 @@
   "stale_data_s": 120
  },
  "cycles": 690,
- "started_utc": "2026-11-19T20:31:32+00:00",
- "ended_utc": "2026-11-20T02:16:53+00:00",
+ "started_utc": "2026-11-20T07:09:36+00:00",
+ "ended_utc": "2026-11-20T12:54:47+00:00",
  "resumed": true,
  "minutes_planned": 345.0,
- "minutes_run": 345.3,
+ "minutes_run": 345.2,
  "stop": null,
  "sha": "3c809eaae042455a35f5aa6ec6a0877e51934bbe",
- "run_id": "44609382515",
- "jsonl": "v3_collect_20261119_203132.jsonl",
+ "run_id": "44692787693",
+ "jsonl": "v3_collect_20261120_070936.jsonl",
  "pools_discovered": 300,
- "evaluable_pairs": 12,
+ "evaluable_pairs": 3,
  "entry_simulations": {
-  "OK": 1,
+  "OK": 0,
   "FAIL": 0,
   "UNKNOWN": 0
  },
- "baseline_draws": [
-  {
-   "ts": "2026-11-19T23:13:32",
-   "momentum_entry": "7bCiddGLe5aM8HE2pigT9jsqkmC1HSPxyXN6GkHEpump",
-   "eligible_options": 2,
-   "includes_momentum_pick": true
-  }
- ],
+ "baseline_draws": [],
  "baseline_entry_simulations": {
-  "OK": 1,
-  "FAIL": 1,
+  "OK": 0,
+  "FAIL": 0,
   "UNKNOWN": 0
  },
- "discovery_errors": {
-  "gt_new_pools": {
-   "http 429": 4
-  },
-  "gt_trending_pools": {
-   "http 429": 1
-  }
- },
+ "discovery_errors": {},
  "logs": {
-  "momentum-v5-1signal": "night_momentum-v5-1signal_20261119_203132.log",
-  "random-baseline-v5": "night_random-baseline-v5_20261119_203132.log"
+  "momentum-v5-1signal": "night_momentum-v5-1signal_20261120_070936.log",
+  "random-baseline-v5": "night_random-baseline-v5_20261120_070936.log"
  }
 }
