@@ -1,0 +1,68 @@
+{
+ "strategy": "momentum-v5-1signal",
+ "baseline": "random-baseline-v5",
+ "fingerprint": "d9d4191e906de84d",
+ "rules": {
+  "min_age_s": 0,
+  "max_age_s": 21600,
+  "position_usd": 50.0,
+  "start_balance": 250.0,
+  "entry_parts": 2,
+  "min_signals": 1,
+  "changed_vs_v1": "min_signals 2 -> 1 (only change); execution as v3",
+  "discovery": "LiveFeed: DexScreener profiles + boosts latest/top, GeckoTerminal new/trending (discovery only, never a signal)",
+  "fills": "jupiter quote at size + net fee",
+  "net_fee_usd": 0.02,
+  "exit_fill": "only a passing sell simulation at size; FAIL -> $0 imputed; UNKNOWN -> retry next cycle",
+  "baseline": "paired: one random draw among same-cycle pairs passing universe+safety, per Momentum entry",
+  "baseline_seed": 20261119,
+  "stale_data_s": 120
+ },
+ "cycles": 677,
+ "started_utc": "2026-11-20T20:11:19+00:00",
+ "ended_utc": "2026-11-21T01:56:28+00:00",
+ "resumed": true,
+ "minutes_planned": 345.0,
+ "minutes_run": 345.1,
+ "stop": null,
+ "sha": "3c809eaae042455a35f5aa6ec6a0877e51934bbe",
+ "run_id": "44808843119",
+ "jsonl": "v3_collect_20261120_201119.jsonl",
+ "pools_discovered": 282,
+ "evaluable_pairs": 8,
+ "entry_simulations": {
+  "OK": 3,
+  "FAIL": 3,
+  "UNKNOWN": 0
+ },
+ "baseline_draws": [
+  {
+   "ts": "2026-11-20T20:22:19",
+   "momentum_entry": "7DQQejSWt4bgNmGFFD6QPPUA1YLoMxWhz4roN5CQjE9k",
+   "eligible_options": 1,
+   "includes_momentum_pick": true
+  },
+  {
+   "ts": "2026-11-20T21:54:41",
+   "momentum_entry": "CUfphqswgDK3VP3FX7CiShVCTdGQneFusYRFViABpump",
+   "eligible_options": 1,
+   "includes_momentum_pick": true
+  },
+  {
+   "ts": "2026-11-20T22:44:41",
+   "momentum_entry": "Bz277pFUFjA4uRLBpes2gCchLqJvQUVJ3rRqai6oF9mE",
+   "eligible_options": 1,
+   "includes_momentum_pick": true
+  }
+ ],
+ "baseline_entry_simulations": {
+  "OK": 2,
+  "FAIL": 1,
+  "UNKNOWN": 0
+ },
+ "discovery_errors": {},
+ "logs": {
+  "momentum-v5-1signal": "night_momentum-v5-1signal_20261120_201119.log",
+  "random-baseline-v5": "night_random-baseline-v5_20261120_201119.log"
+ }
+}

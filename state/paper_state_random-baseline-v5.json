@@ -1,12 +1,12 @@
 {
  "strategy": "random-baseline-v5",
- "saved": "2026-11-20T12:54:47.871907",
+ "saved": "2026-11-21T01:56:28.746783",
  "start": 250.0,
  "cash": 178.14124331284,
  "wins": 0,
  "losses": 2,
  "loss_streak": 2,
- "day": "2026-11-20",
+ "day": "2026-11-21",
  "peak": 178.14124331284,
  "paused": false,
  "curve": [
@@ -113,6 +113,30 @@
   [
    "2026-11-20T12:09:47.860611",
    178.14124331284
+  ],
+  [
+   "2026-11-20T20:11:19.763229",
+   178.14124331284
+  ],
+  [
+   "2026-11-20T21:11:40.626358",
+   178.14124331284
+  ],
+  [
+   "2026-11-20T22:11:41.006008",
+   178.14124331284
+  ],
+  [
+   "2026-11-20T23:11:41.653859",
+   178.14124331284
+  ],
+  [
+   "2026-11-21T00:11:41.668680",
+   178.14124331284
+  ],
+  [
+   "2026-11-21T01:11:57.919710",
+   178.14124331284
   ]
  ],
  "positions": {},
@@ -147,6 +171,8 @@
  "traded": [
   "3hdXmQqZHmm7gWWweFKGdkjnxyWQZ2SWVNt1Jty5pump",
   "64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump",
-  "7bCiddGLe5aM8HE2pigT9jsqkmC1HSPxyXN6GkHEpump"
+  "7DQQejSWt4bgNmGFFD6QPPUA1YLoMxWhz4roN5CQjE9k",
+  "7bCiddGLe5aM8HE2pigT9jsqkmC1HSPxyXN6GkHEpump",
+  "Bz277pFUFjA4uRLBpes2gCchLqJvQUVJ3rRqai6oF9mE"
  ]
 }

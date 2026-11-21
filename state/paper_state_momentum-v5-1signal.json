@@ -1,13 +1,13 @@
 {
  "strategy": "momentum-v5-1signal",
- "saved": "2026-11-20T12:54:47.871274",
+ "saved": "2026-11-21T01:56:28.746052",
  "start": 250.0,
- "cash": 180.6925292155,
+ "cash": 158.8906186944,
  "wins": 0,
- "losses": 1,
- "loss_streak": 1,
- "day": "2026-11-20",
- "peak": 207.8400442138807,
+ "losses": 3,
+ "loss_streak": 3,
+ "day": "2026-11-21",
+ "peak": 160.10739243978642,
  "paused": false,
  "curve": [
   [
@@ -69,6 +69,34 @@
   [
    "2026-11-20T09:57:36.890754",
    181.9198314522211
+  ],
+  [
+   "2026-11-20T20:11:19.763229",
+   181.90930296088644
+  ],
+  [
+   "2026-11-20T20:29:19.767684",
+   167.51458316746644
+  ],
+  [
+   "2026-11-20T21:29:40.996370",
+   167.51458316746644
+  ],
+  [
+   "2026-11-20T21:58:41.003031",
+   160.10739243978642
+  ],
+  [
+   "2026-11-20T22:58:41.650711",
+   160.10739243978642
+  ],
+  [
+   "2026-11-20T23:58:41.665255",
+   160.10739243978642
+  ],
+  [
+   "2026-11-21T01:25:27.922860",
+   160.10739243978642
   ]
  ],
  "positions": {
@@ -105,12 +133,39 @@
    ],
    "written_off": 0.0,
    "addr": "3hdXmQqZHmm7gWWweFKGdkjnxyWQZ2SWVNt1Jty5pump"
+  },
+  {
+   "symbol": "DCTY",
+   "opened": "2026-11-20T20:22:19.765874",
+   "closed": "2026-11-20T20:29:19.767684",
+   "cost": 25.0,
+   "proceeds": 10.605280206580002,
+   "reasons": [
+    "HARD_STOP"
+   ],
+   "written_off": 0.0,
+   "addr": "7DQQejSWt4bgNmGFFD6QPPUA1YLoMxWhz4roN5CQjE9k"
+  },
+  {
+   "symbol": "BTC",
+   "opened": "2026-11-20T21:54:41.002069",
+   "closed": "2026-11-20T21:58:41.003031",
+   "cost": 50.0,
+   "proceeds": 42.59280927231999,
+   "reasons": [
+    "HARD_STOP"
+   ],
+   "written_off": 0.0,
+   "addr": "CUfphqswgDK3VP3FX7CiShVCTdGQneFusYRFViABpump"
   }
  ],
  "failed_exits": 0,
  "traded": [
   "3hdXmQqZHmm7gWWweFKGdkjnxyWQZ2SWVNt1Jty5pump",
   "64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump",
-  "7bCiddGLe5aM8HE2pigT9jsqkmC1HSPxyXN6GkHEpump"
+  "7DQQejSWt4bgNmGFFD6QPPUA1YLoMxWhz4roN5CQjE9k",
+  "7bCiddGLe5aM8HE2pigT9jsqkmC1HSPxyXN6GkHEpump",
+  "Bz277pFUFjA4uRLBpes2gCchLqJvQUVJ3rRqai6oF9mE",
+  "CUfphqswgDK3VP3FX7CiShVCTdGQneFusYRFViABpump"
  ]
 }
