@@ -1,13 +1,13 @@
 {
  "strategy": "capture-v6",
- "saved": "2026-11-20T13:31:47.192814",
+ "saved": "2026-11-21T02:29:42.363245",
  "start": 70.0,
- "cash": 69.0159506704,
- "wins": 0,
+ "cash": 95.91057867941001,
+ "wins": 1,
  "losses": 1,
- "loss_streak": 1,
+ "loss_streak": 0,
  "day": "2026-11-19",
- "peak": 69.0159506704,
+ "peak": 104.47447812627182,
  "paused": false,
  "curve": [
   [
@@ -109,6 +109,34 @@
   [
    "2026-11-20T12:46:47.182920",
    69.0159506704
+  ],
+  [
+   "2026-11-20T20:44:38.953471",
+   69.0159506704
+  ],
+  [
+   "2026-11-20T21:44:39.301562",
+   69.0159506704
+  ],
+  [
+   "2026-11-20T22:44:39.313889",
+   69.0159506704
+  ],
+  [
+   "2026-11-20T23:44:39.326064",
+   69.0159506704
+  ],
+  [
+   "2026-11-21T00:44:42.340285",
+   103.98044559748621
+  ],
+  [
+   "2026-11-21T00:47:12.340804",
+   95.91057867941001
+  ],
+  [
+   "2026-11-21T01:47:12.353808",
+   95.91057867941001
   ]
  ],
  "positions": {},
@@ -125,12 +153,27 @@
    ],
    "written_off": 0.0,
    "addr": "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump"
+  },
+  {
+   "symbol": "JENSEN",
+   "opened": "2026-11-21T00:20:58.210742",
+   "closed": "2026-11-21T00:47:12.340804",
+   "cost": 13.803190134080001,
+   "proceeds": 40.697818143090004,
+   "reasons": [
+    "EXIT_FAILED",
+    "TP2_4x",
+    "TRAIL_25%"
+   ],
+   "written_off": 5.5212760536320005,
+   "addr": "DkHsZ1kjd2Fua8sgKE6PhHhyCdXYscbDVN7mAfiGpump"
   }
  ],
- "failed_exits": 0,
+ "failed_exits": 1,
  "traded": [
   "82u71wqQSa4NmD1UTTDwKyh5EUm3xe9pMp4UZXhFpump",
   "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump",
+  "DkHsZ1kjd2Fua8sgKE6PhHhyCdXYscbDVN7mAfiGpump",
   "EkTfN4Pb7K3NXzxsbzkn3AA4MGbsdTniFJ3G2RsVpump"
  ]
 }
