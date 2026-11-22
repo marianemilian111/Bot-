@@ -1,13 +1,13 @@
 {
  "strategy": "random-baseline-v5",
- "saved": "2026-11-21T12:46:04.302856",
+ "saved": "2026-11-22T00:57:02.749002",
  "start": 250.0,
- "cash": 178.14124331284,
- "wins": 0,
+ "cash": 198.84277961124002,
+ "wins": 1,
  "losses": 2,
- "loss_streak": 2,
- "day": "2026-11-21",
- "peak": 178.14124331284,
+ "loss_streak": 0,
+ "day": "2026-11-22",
+ "peak": 198.84277961124002,
  "paused": false,
  "curve": [
   [
@@ -161,6 +161,34 @@
   [
    "2026-11-21T12:01:04.291700",
    178.14124331284
+  ],
+  [
+   "2026-11-21T19:11:46.207514",
+   178.14124331284
+  ],
+  [
+   "2026-11-21T20:11:52.291382",
+   178.14124331284
+  ],
+  [
+   "2026-11-21T21:11:52.305150",
+   178.07692024713825
+  ],
+  [
+   "2026-11-21T22:11:52.318465",
+   178.07692024713825
+  ],
+  [
+   "2026-11-21T23:11:52.332547",
+   178.07692024713825
+  ],
+  [
+   "2026-11-22T00:11:52.344855",
+   178.07692024713825
+  ],
+  [
+   "2026-11-22T00:15:52.345705",
+   198.84277961124002
   ]
  ],
  "positions": {},
@@ -189,10 +217,23 @@
    ],
    "written_off": 50.0,
    "addr": "64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump"
+  },
+  {
+   "symbol": "ANT",
+   "opened": "2026-11-21T20:20:52.293354",
+   "closed": "2026-11-22T00:15:52.345705",
+   "cost": 50.0,
+   "proceeds": 70.70153629840001,
+   "reasons": [
+    "TIME_STOP"
+   ],
+   "written_off": 0.0,
+   "addr": "2PhhxqAAMoXm8nUzug8eRS6jVeeKVrYGH2dPfbLFzKr8"
   }
  ],
  "failed_exits": 1,
  "traded": [
+  "2PhhxqAAMoXm8nUzug8eRS6jVeeKVrYGH2dPfbLFzKr8",
   "3hdXmQqZHmm7gWWweFKGdkjnxyWQZ2SWVNt1Jty5pump",
   "64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump",
   "7DQQejSWt4bgNmGFFD6QPPUA1YLoMxWhz4roN5CQjE9k",

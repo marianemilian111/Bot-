@@ -1,0 +1,395 @@
+2026-11-21 19:11:46 INFO     start balance=$250.00
+2026-11-21 19:11:46 INFO     strategy=momentum-v5-1signal fingerprint=d9d4191e906de84d rules={"baseline": "paired: one random draw among same-cycle pairs passing universe+safety, per Momentum entry", "baseline_seed": 20261119, "changed_vs_v1": "min_signals 2 -> 1 (only change); execution as v3", "discovery": "LiveFeed: DexScreener profiles + boosts latest/top, GeckoTerminal new/trending (discovery only, never a signal)", "entry_parts": 2, "exit_fill": "only a passing sell simulation at size; FAIL -> $0 imputed; UNKNOWN -> retry next cycle", "fills": "jupiter quote at size + net fee", "max_age_s": 21600, "min_age_s": 0, "min_signals": 1, "net_fee_usd": 0.02, "position_usd": 50.0, "stale_data_s": 120, "start_balance": 250.0} resumed=True (PAPER ONLY)
+2026-11-21 19:11:46 FILTERED Anusha (pump.fun) mint=DF7SpmTYrr44c2H3XobdcD3G2NyTyGMhxT2R6T7hpump signals=VOL_SPIKE reason: liquidity $1,731 < $40,000
+2026-11-21 19:11:46 FILTERED Singularity (pump.fun) mint=2DPkAuPQFAKn3mnb6GT8H9oK8qm6NGmf3jMt7wbxpump signals=VOL_SPIKE reason: liquidity $8,029 < $40,000
+2026-11-21 19:12:46 FILTERED ANUSHA (pump.fun) mint=2QoVnWGTAtGTyexnpNgMPFriXzs5Ajw3yy4ckt2B4fCr signals=VOL_SPIKE+BUY_RATIO reason: liquidity $12,138 < $40,000
+2026-11-21 19:14:46 FILTERED OBAMA (pump.fun) mint=7gqk4Ap5iYjnWHtkwygYp8bcAVFSiMo8aMJ1cGvPpump signals=VOL_SPIKE reason: liquidity $10,774 < $40,000
+2026-11-21 19:16:46 FILTERED WELP (pump.fun) mint=7eigtQ7tFq8wJDRbGpmJs7GZ4ZVfNuU9QFLbozZYpump signals=VOL_SPIKE reason: liquidity $61 < $40,000
+2026-11-21 19:17:46 FILTERED RAWDOG (pump.fun) mint=Ddjx79mvSGZSVgpHEqQpJM8q1LmjB5AzsLTDdSSLpump signals=VOL_SPIKE reason: liquidity $2,387 < $40,000
+2026-11-21 19:17:46 FILTERED RAWDOG (meteora) mint=8BB5Y48DifFAxBfASB6yZeqUrSq4yxWSJ73EFZkfxQWy signals=VOL_SPIKE reason: liquidity $32,120 < $40,000
+2026-11-21 19:21:46 FILTERED chego (pump.fun) mint=8xegBRcvNUMYTtxno5DnPLMMHRXQg9RrUVnQwEVppump signals=BUY_RATIO reason: liquidity $13,239 < $40,000
+2026-11-21 19:22:46 FILTERED TRUMP (meteora) mint=Af8DTDb2fmMpRszVC5zJjAdhjWdgofTDeAYDs6PS5Wu4 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $37,180 < $40,000
+2026-11-21 19:22:46 FILTERED FIONA (meteora) mint=57az4pHq5eWz8A7B6eFupuArjC9MW49uX2DR3U3aNGJP signals=VOL_SPIKE reason: liquidity $11,273 < $40,000
+2026-11-21 19:22:46 FILTERED TRUMP (meteora) mint=B2rq8r7HdWCz8QJMVxr48RiaBBtxq8KCgN7BGSisNNeV signals=VOL_SPIKE reason: liquidity $33,232 < $40,000
+2026-11-21 19:27:16 FILTERED TRUMP (meteora) mint=B2rq8r7HdWCz8QJMVxr48RiaBBtxq8KCgN7BGSisNNeV signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-21 19:28:46 FILTERED TRUMP (pump.fun) mint=BnvcKWgxJXELavGiqPoDQMrh9VKQHAm3JNBCHoyZhcVk signals=VOL_SPIKE reason: liquidity $16,878 < $40,000
+2026-11-21 19:28:46 FILTERED BAO (meteora) mint=GnoRTavW2wFVKRuGqt2ZymKnu6tJ42V2WFVS77CvRYXZ signals=VOL_SPIKE reason: liquidity $17,141 < $40,000
+2026-11-21 19:29:16 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:29:46 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:30:16 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:30:46 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:31:16 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:31:46 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:32:16 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:32:46 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:33:16 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:33:46 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:34:16 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:34:46 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:35:16 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:35:46 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:36:16 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:36:46 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:37:16 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:37:46 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:38:16 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:38:46 FILTERED :) (pump.fun) mint=Dtx414D8jurspmB1jqJWsYU66pemoXRjQeXx7TC1pump signals=VOL_SPIKE reason: liquidity $11,832 < $40,000
+2026-11-21 19:38:46 FILTERED CashGoat (pump.fun) mint=BganZwsMszyogAEDsncgHgjt12qXjKD1NV9iZzvVpump signals=VOL_SPIKE reason: liquidity $17,308 < $40,000
+2026-11-21 19:39:46 FILTERED Gazlant (pump.fun) mint=FHh7QrigQK39tF1QT3Z3pmTLC39xpYCRSNqnpA14BAGS signals=VOL_SPIKE+BUY_RATIO reason: 5m volume $8,918 < $25,000
+2026-11-21 19:39:46 FILTERED PICCOLA (pump.fun) mint=JaB8P85aP2sJd5prcmrqHqQXAUS8mp4JSfbM9Yhpump signals=BUY_RATIO reason: liquidity $6,295 < $40,000
+2026-11-21 19:39:46 FILTERED TA (pump.fun) mint=7127pTUNXBNsuFESNzJY9vajmSWqtX3RmCFwvrzGDZPN signals=VOL_SPIKE reason: liquidity $15,692 < $40,000
+2026-11-21 19:41:16 FILTERED RINGS (pump.fun) mint=5iKnBZcgUmpiU8uHmPxhYGSehRjE41ABovtuApaWWDJe signals=BUY_RATIO reason: liquidity UNKNOWN (source gives none)
+2026-11-21 19:44:52 FILTERED ANT (pump.fun) mint=2PhhxqAAMoXm8nUzug8eRS6jVeeKVrYGH2dPfbLFzKr8 signals=VOL_SPIKE reason: holders 98 < 300
+2026-11-21 19:45:52 FILTERED Gazlant (pump.fun) mint=FHh7QrigQK39tF1QT3Z3pmTLC39xpYCRSNqnpA14BAGS signals=BUY_RATIO reason: liquidity $0 < $40,000
+2026-11-21 19:49:52 FILTERED HOUSE (raydium) mint=4Kfos2jUqUxwbDqNAJL16B4C99tdtaMSWZS5XmuSZr6Z signals=VOL_SPIKE reason: RUGCHECK FAIL top10 holders 43.1401738698895% (need <35.0%)
+2026-11-21 19:49:52 FILTERED HOUSE (pump.fun) mint=HywPS13ihqcd6iVeijzadkhjtVyQGuv83eYat3mfw39Y signals=VOL_SPIKE reason: liquidity $14,174 < $40,000
+2026-11-21 19:49:52 FILTERED HOUSE (meteora) mint=AVuQfu4FPL3ffdchhQ8K6Q1ATxsAnTZevmZLRsbF7njF signals=VOL_SPIKE reason: liquidity $34,318 < $40,000
+2026-11-21 19:53:52 FILTERED SANTINU (pump.fun) mint=BCTwG3LDhNcthcK374aWQfAzLYGRXDu1apmrqw3Tpump signals=BUY_RATIO reason: liquidity $9,183 < $40,000
+2026-11-21 19:53:52 FILTERED gregina (pump.fun) mint=4FL7bZAmxgX32par6zi1CsNfEiBBnwe2Gakt5wvZpump signals=BUY_RATIO reason: liquidity UNKNOWN (source gives none)
+2026-11-21 19:54:52 FILTERED GTA6 (meteora) mint=GX6DeBFzNuTXsaQiwoPBjm1Birg2Xe5oF2xfTiyd1JFm signals=VOL_SPIKE reason: liquidity $3,288 < $40,000
+2026-11-21 19:58:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:59:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 19:59:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:00:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:00:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:01:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:01:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:02:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:02:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:03:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:03:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:04:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:04:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:05:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:05:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:06:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:06:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:07:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:07:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:08:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:08:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:09:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:09:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:10:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:10:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:11:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:11:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:12:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:12:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:13:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:13:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:14:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:14:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:15:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:15:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:16:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:16:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:17:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:17:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:18:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:18:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:19:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:19:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:20:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 20:20:52 FILTERED SGREM (pump.fun) mint=4d9G2nq3dezs5e3yqiv24Mz6s63HAMtCn4GDzNUHC6HC signals=VOL_SPIKE+BUY_RATIO reason: liquidity $29,584 < $40,000
+2026-11-21 20:20:52 INFO     ANT entry repriced: signal 3.681e-06 -> entry basis 3.69e-06 (+0.24%), price refresh took 0.2s (after the sell simulation)
+2026-11-21 20:20:52 ENTER    ANT mint=2PhhxqAAMoXm8nUzug8eRS6jVeeKVrYGH2dPfbLFzKr8 part 1/2 size=$25.00 price_after_detection=3.69e-06 quote_fill=3.6800487e-06 (-0.27%, quoted impact 92.00%) tokens=6,793,388 (own quote for this $25.00 tranche) delay=9.1s net_fee=$0.02 signals=HOLDER_GROWTH
+2026-11-21 20:20:52 SKIPPED  HOUSE (raydium) mint=4Kfos2jUqUxwbDqNAJL16B4C99tdtaMSWZS5XmuSZr6Z signals=HOLDER_GROWTH reason: max 2 open positions
+2026-11-21 20:20:52 FILTERED AMD (pump.fun) mint=72P2Hribt6JxhGGXU4r17CzMhJ4A58ay5tka3ZfzioDS signals=BUY_RATIO reason: liquidity $10,659 < $40,000
+2026-11-21 20:20:52 FILTERED HOUSE (pump.fun) mint=H9vXSjdupydi4h3xZ2weAd9ptmRJMZr8hb72QCm9rjmV signals=BUY_RATIO reason: liquidity $12,790 < $40,000
+2026-11-21 20:20:52 FILTERED HOUSE (pump.fun) mint=FVwGWP1cmVuuHdEb34un7S9n6WEoDqBC7m48pwKFuGrC signals=BUY_RATIO reason: liquidity $35,057 < $40,000
+2026-11-21 20:20:52 FILTERED BUTTHOLE (meteora) mint=8JxK2LwnQ6Qw7RsUCTYUrMdNavuR9bo6dfd8rouGQHPU signals=VOL_SPIKE reason: liquidity $37,306 < $40,000
+2026-11-21 20:21:22 ENTER    ANT mint=2PhhxqAAMoXm8nUzug8eRS6jVeeKVrYGH2dPfbLFzKr8 part 2/2 size=$25.00 price_after_detection=3.681e-06 quote_fill=3.6891283e-06 (+0.22%, quoted impact 92.02%) tokens=6,776,669 (own quote for this $25.00 tranche) delay=0.3s net_fee=$0.02 signals=HOLDER_GROWTH
+2026-11-21 20:21:52 FILTERED SI (pump.fun) mint=7ZvVvfLrjdCpCrPLhmSk3VMFB3hGgHoWNtzPtS14pump signals=VOL_SPIKE reason: liquidity $25,303 < $40,000
+2026-11-21 20:21:52 FILTERED BUTTHOLE (pump.fun) mint=GM8DK56XEFdsbHZ5tEndMf9ypfVbUVfothW7RPsupump signals=VOL_SPIKE reason: liquidity $13,992 < $40,000
+2026-11-21 20:23:22 STALE    ANT mint=2PhhxqAAMoXm8nUzug8eRS6jVeeKVrYGH2dPfbLFzKr8: market data 121s old; no exit decision on it, position kept until fresh data
+2026-11-21 20:23:52 FILTERED Fia (pump.fun) mint=G2m7PA1WUNZMH9Jx5JKwuU7ofHu5poxwYksEttz4pump signals=VOL_SPIKE reason: liquidity UNKNOWN (source gives none)
+2026-11-21 20:23:52 FILTERED testt7 (meteora) mint=CJHa5gcdA4Q2DrFAQhmz1Dz8tCBbM2fbknm7ZKL2d8AP signals=BUY_RATIO reason: liquidity $11 < $40,000
+2026-11-21 20:24:52 FILTERED HOSS (pump.fun) mint=4XU3YWKE2sGDynK6WPVpnSr66xHZAFouk4o8Jahbpump signals=VOL_SPIKE reason: liquidity $368 < $40,000
+2026-11-21 20:24:52 FILTERED Candy (pump.fun) mint=BBRYfBbTAwbwQptJBP7Tb6gDBUA5CGFzqFFFGkFySyDz signals=VOL_SPIKE reason: liquidity $2,082 < $40,000
+2026-11-21 20:25:22 FILTERED TrumpCoin (pump.fun) mint=4xsX8LRMQTiezobX2cqadKnvDTWCJNQ7F878onbCpump signals=VOL_SPIKE reason: liquidity $56 < $40,000
+2026-11-21 20:27:52 FILTERED PI (meteora) mint=GtM2QaBZp51mgwDhXDAEmgaTtwYEZAPj18jTLTDrpZGq signals=VOL_SPIKE reason: liquidity $25,281 < $40,000
+2026-11-21 20:32:52 FILTERED GTA7 (meteora) mint=Fu4BDz6EWN1WGj5Nj5Q5uY6jjsVJqT45esigX9URTbv3 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $13,443 < $40,000
+2026-11-21 20:32:52 FILTERED milo (pump.fun) mint=4RtmiCdvKszPoW5oNyjXC5uK8kfM6HjE4Gt2g7sNpump signals=VOL_SPIKE reason: liquidity $9,828 < $40,000
+2026-11-21 20:32:52 FILTERED PI (meteora) mint=2agTxtRCSPrXLdtqpfXbiDJXvY72UUKe3mkhxNJEpump signals=VOL_SPIKE reason: liquidity $53 < $40,000
+2026-11-21 20:32:52 FILTERED Rockstar (meteora) mint=GpY946EcNGwSbRzX1MH1uYZm7DiYF6iR7BFQF8QCDjpH signals=VOL_SPIKE reason: liquidity $12,291 < $40,000
+2026-11-21 20:32:52 FILTERED ՍЅᎠТ (meteora) mint=D1rkjyiRRFgHuvT5P3BeyiZaHNJp5S7qnpoBrqsoEomd signals=VOL_SPIKE reason: liquidity $4,004 < $40,000
+2026-11-21 20:35:22 FILTERED HADAL (meteoradbc) mint=B1P3oXhJNoQsRLqWGGkXgowRtHuXrR8CQrHsgfk3UAKS signals=BUY_RATIO reason: liquidity UNKNOWN (source gives none)
+2026-11-21 20:37:52 FILTERED VCAT (meteora) mint=8iQEPnhRZiaNxX8EaS9krLpNzAynykZPe4P7TQaVvFKp signals=VOL_SPIKE reason: liquidity $33,689 < $40,000
+2026-11-21 20:45:52 FILTERED JEREMY (pump.fun) mint=7URbagAwFsxCYLZkvsDXUaUkUmotGoSxjGqzi9a6pump signals=BUY_RATIO reason: liquidity $4,808 < $40,000
+2026-11-21 20:46:52 FILTERED Prayge (pump.fun) mint=5MzYUa4z7ZtJEWAyj6pcCmhky8NVS1PLa9NFGEQcpump signals=VOL_SPIKE+BUY_RATIO reason: liquidity $3,267 < $40,000
+2026-11-21 20:47:52 FILTERED GTA7 (meteora) mint=5NG9uU4sDQSzNRt5ZyGVkrcmUGb5Zyeu8duMErCx7Wie signals=VOL_SPIKE+BUY_RATIO reason: liquidity $16,712 < $40,000
+2026-11-21 20:47:52 FILTERED FIONA (meteora) mint=DyaKcWPPM8QWTbYtvGF4xtBWS7PTRhSihoyzoeDkLLTd signals=VOL_SPIKE reason: liquidity $8,702 < $40,000
+2026-11-21 20:47:52 FILTERED PI (meteora) mint=9eNz82KbSgPqVxEnSTiBXZBsLHBTV75yvMQkEVgW6U8c signals=VOL_SPIKE reason: liquidity $2,831 < $40,000
+2026-11-21 20:48:52 FILTERED CLAWDIA (pump.fun) mint=BjvD62CeknCCn94ciFN5aHPoNvSmcXvVHr8XonBpump signals=VOL_SPIKE+BUY_RATIO reason: liquidity $24,645 < $40,000
+2026-11-21 20:49:52 FILTERED SIDOOR (meteora) mint=zcRvzm7gAfYGde8gRwaSYxNryL47SjLVUQLAf1bdoor signals=VOL_SPIKE reason: liquidity $14,093 < $40,000
+2026-11-21 20:52:52 FILTERED GTA7 (meteora) mint=F7MmsDJjhtWesa1xEdwqXtXQzN76iPuYEh87hKL55i9T signals=VOL_SPIKE+BUY_RATIO reason: liquidity $17,812 < $40,000
+2026-11-21 20:54:52 FILTERED TIMON (pump.fun) mint=9Z3vdxmdfzVqFF46GMsHnRXwzWYjFFdDtEDmFw38pump signals=VOL_SPIKE reason: liquidity $35 < $40,000
+2026-11-21 20:57:52 FILTERED Venice (meteora) mint=93JS6pxVac2kmF7gADNPzRigvgeHaaFbE9vo2vn1zGj6 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $23,276 < $40,000
+2026-11-21 20:57:52 FILTERED CI (pump.fun) mint=9CzH43caG7FLeWyc4jS9Mzbp3FmjxnDV15zspW4Cpump signals=BUY_RATIO reason: liquidity $21,530 < $40,000
+2026-11-21 21:00:22 FILTERED Cybergeddon (pump.fun) mint=7SjpHoT4mJrqCdS8F1sN3EaNNm7Zv4ijCwgXeYr7xVkr signals=BUY_RATIO reason: liquidity $4,722 < $40,000
+2026-11-21 21:03:52 FILTERED Green cat (pump.fun) mint=3oLqqzTuUXzVnuZTDRoN6KHsNFYFNFNZTgVpJ1THq6wf signals=VOL_SPIKE+BUY_RATIO reason: liquidity $32,817 < $40,000
+2026-11-21 21:03:52 FILTERED DCTY (meteora) mint=FihzYRk8tGSfFcATmBwHRirEeg5f422kozXTTFJQtRoH signals=VOL_SPIKE reason: liquidity $9,747 < $40,000
+2026-11-21 21:07:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:08:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:08:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:09:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:09:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:10:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:10:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:11:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:11:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:12:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:12:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:13:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:13:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:14:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:14:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:15:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:15:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:16:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:16:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:17:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:17:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:18:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:18:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:19:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:19:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:20:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:20:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:21:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:21:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:22:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:22:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:23:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:23:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:24:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:24:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:25:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:25:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:26:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:26:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:27:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:27:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:28:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:28:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:29:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:29:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:30:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:30:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:31:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:31:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:32:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:32:52 FILTERED PUTIN (pump.fun) mint=BrXFthpc6SLSyKMb4VyxB9gjpMDsBU2zzPCMtjDpaewy signals=VOL_SPIKE+BUY_RATIO reason: liquidity $24,624 < $40,000
+2026-11-21 21:32:52 FILTERED FINGERS (pump.fun) mint=BSF5xg7CuxkQWsbJWyHYw2HnuNbQtKybGaNhz9cCpump signals=BUY_RATIO reason: liquidity $28,616 < $40,000
+2026-11-21 21:32:52 FILTERED Green cat (pump.fun) mint=ALPHzZUGGtBzxsko1AczGED4bBHqkRCanRCec7zJVp9b signals=BUY_RATIO reason: liquidity $34,202 < $40,000
+2026-11-21 21:32:52 FILTERED UrAnus (pump.fun) mint=27u3diWofnXGUkddjLGhcy1nRssFKHW3RtNbpWzUpump signals=BUY_RATIO reason: liquidity $29,306 < $40,000
+2026-11-21 21:32:52 FILTERED PUTIN (meteora) mint=5qQynuWZWuBvwLXCBeREuBzdLsPiwt1DTsTv329uJory signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-21 21:32:52 FILTERED PUTIN (meteora) mint=66cxim2AGrCbB8H2PtfYhfyP9aaBFwEa5m54bL5At8rs signals=VOL_SPIKE reason: liquidity $4 < $40,000
+2026-11-21 21:33:52 FILTERED Air (pump.fun) mint=EAvEkfAnQtazgMsGeY2LD5u3SuZLGXZqiMhoKg29pump signals=VOL_SPIKE reason: liquidity $2,869 < $40,000
+2026-11-21 21:34:52 FILTERED ANIMAL (pump.fun) mint=pumptGRwCjbBVT9dskwqNDpYGLwS3VuDNiD6uiRssEm signals=VOL_SPIKE reason: liquidity $1,837 < $40,000
+2026-11-21 21:36:22 FILTERED PUTIN (meteora) mint=5qQynuWZWuBvwLXCBeREuBzdLsPiwt1DTsTv329uJory signals=VOL_SPIKE reason: liquidity $32,849 < $40,000
+2026-11-21 21:38:22 FILTERED ILY (pump.fun) mint=51TUkCJcBPi5fj9gZgjnXh6Ny5RSiEbrxUBoikDLpump signals=BUY_RATIO reason: liquidity $11,152 < $40,000
+2026-11-21 21:38:52 FILTERED VODKAT (pump.fun) mint=2th126haPjEkZRKwutnUWKFdmJnVnDxVYvq9fPVSmBeC signals=VOL_SPIKE reason: liquidity $15,141 < $40,000
+2026-11-21 21:42:22 FILTERED RING (pump.fun) mint=DiQpNLJgvYumRMRstiZUnJkxZQTwafRWfSfDYSYWpump signals=VOL_SPIKE reason: liquidity $1,495 < $40,000
+2026-11-21 21:42:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:43:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:43:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:44:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:44:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:45:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:45:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:46:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:46:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:47:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:47:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:48:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:48:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:49:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:49:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:50:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:50:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:51:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:51:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:52:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:52:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:53:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:53:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:54:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:54:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:55:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:55:52 FILTERED VIRUS (pump.fun) mint=HUpUhhHm3rh5kx47KE3h9MbHq6sHLNgaXGEf5e7Xpump signals=VOL_SPIKE reason: liquidity $10,887 < $40,000
+2026-11-21 21:56:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:56:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:57:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:57:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:58:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:58:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:59:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 21:59:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:00:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:00:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:01:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:01:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:02:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:02:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:03:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:03:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:04:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:04:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:05:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:05:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:06:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:06:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:07:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:07:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:08:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:08:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:09:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:09:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-21 22:10:22 FILTERED SIFT (raydium) mint=A7f86oAiuNi7x8v68axKdGE5VP8JMxHwpU2THn7B1BuQ signals=VOL_SPIKE+BUY_RATIO reason: liquidity $1,149 < $40,000
+2026-11-21 22:10:22 FILTERED BTC (meteora) mint=CPnTknwkrzREGs1g1Rh7soZLm2o53jAjERSXUJ5icGu9 signals=VOL_SPIKE reason: liquidity $34,319 < $40,000
+2026-11-21 22:10:22 FILTERED SIFT (fluxbeam) mint=HdoNM5R2Mma77VPz97Fr3ZBxtx1f6tTebrKoNdjDEXRD signals=VOL_SPIKE reason: 5m volume $246 < $25,000
+2026-11-21 22:12:22 FILTERED DROGUE (meteora) mint=4kcs3LMxgf9JU4NPbg2woZeZK1hH3F84Azrm6Zf29xka signals=VOL_SPIKE reason: liquidity $36,491 < $40,000
+2026-11-21 22:12:52 FILTERED Chewy (pump.fun) mint=5vdhKfRpwUeGgt87YKPydyDNh9jJ2U4jrcWVGQ4Dpump signals=BUY_RATIO reason: liquidity $889 < $40,000
+2026-11-21 22:14:52 FILTERED HODL (meteora) mint=SCiJ51n5obsCaa4eBDcukrxv7QsxRdu7M2iPVeHb317 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $1 < $40,000
+2026-11-21 22:14:52 FILTERED URANUS (pump.fun) mint=bgE5PRyeYTZQ7sbgrcgcUb9k4ggzoH6iwYcwn6mpump signals=VOL_SPIKE reason: liquidity $10,747 < $40,000
+2026-11-21 22:19:52 FILTERED DCTY (pump.fun) mint=GCLE9BMmfaLtNAc8ds9SmhsSPdLBuXZQMmXU8hQGpump signals=VOL_SPIKE+BUY_RATIO reason: liquidity $23,973 < $40,000
+2026-11-21 22:19:52 FILTERED HODL (meteora) mint=DFbNynFqUDVXzWUJtzkAmLuaMhEZqW7aA6wCgf3Rnr9h signals=VOL_SPIKE reason: liquidity $23,635 < $40,000
+2026-11-21 22:19:52 FILTERED VIRUS (meteora) mint=CVwfESMC2QhwXCuLjargEAxpPF5ftiHzNJcjCC1QwsEA signals=VOL_SPIKE reason: liquidity $22,007 < $40,000
+2026-11-21 22:19:52 FILTERED TRADER (meteora) mint=4rGBEtb3DfDPVmjDwpauA9LApEpsDYS9ukn9WErsaYVj signals=VOL_SPIKE reason: liquidity $2 < $40,000
+2026-11-21 22:19:52 FILTERED TRADER (meteora) mint=2uV2EVmdRDtJxE7USUzpokpU2JaLW4rWmevREHrwE2Uq signals=VOL_SPIKE reason: liquidity $1 < $40,000
+2026-11-21 22:20:22 FILTERED TRADER (meteora) mint=BLPa3AG2nf11D4WAFAde571zeAZ14WSN6Yb78hkrHdZm signals=VOL_SPIKE reason: liquidity $32,985 < $40,000
+2026-11-21 22:22:52 FILTERED TRADER (meteora) mint=BLPa3AG2nf11D4WAFAde571zeAZ14WSN6Yb78hkrHdZm signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-21 22:25:52 FILTERED SIDOOR (pump.fun) mint=8fCGg3qNsXEKeBX66iYLexaaW3j49R2KfAkduVaDKwfF signals=VOL_SPIKE+BUY_RATIO reason: liquidity $23,865 < $40,000
+2026-11-21 22:25:52 FILTERED PANBAOBAO (pump.fun) mint=DyQwRjZu548ZXEKMrHUtweAnwu4eJ87DdATX4Z686ady signals=VOL_SPIKE reason: liquidity $17,966 < $40,000
+2026-11-21 22:25:52 FILTERED Mfer (meteora) mint=7uxEz82mJjiY56LcpdLLKbGJNqw8p1A862rUEnBTdJSn signals=VOL_SPIKE reason: liquidity $1,877 < $40,000
+2026-11-21 22:27:22 FILTERED BTC (pump.fun) mint=2G5b75jm9HtJmAccjxpzdWGs5r7XXeMYLTANoEcvpump signals=BUY_RATIO reason: liquidity $16,799 < $40,000
+2026-11-21 22:28:52 SKIPPED  SIDOOR (meteora) mint=zcRvzm7gAfYGde8gRwaSYxNryL47SjLVUQLAf1bdoor signals=HOLDER_GROWTH reason: max 2 open positions
+2026-11-21 22:29:22 FILTERED DCTY (meteora) mint=7icU4679W1gfEGVZ1KRG4851nfFBUWWPF2gukncvxBGP signals=VOL_SPIKE reason: liquidity $119 < $40,000
+2026-11-21 22:31:52 FILTERED pointy hat (pump.fun) mint=9d8SsWKWvgc1EaGpo4gobBSfkbvdijgLdWbCzZguGhVw signals=VOL_SPIKE+BUY_RATIO reason: liquidity $29,963 < $40,000
+2026-11-21 22:31:52 FILTERED POST (meteora) mint=B14SCD8ps7hMndxdShvCzVk83mRY18E6wWdVbPN3Lvvf signals=VOL_SPIKE reason: liquidity $30,740 < $40,000
+2026-11-21 22:34:52 FILTERED MONKE (pump.fun) mint=8XhBJQbSitPkrHaneJL8i7FZrZk9cNiKZRaWALoYpump signals=BUY_RATIO reason: liquidity $4,657 < $40,000
+2026-11-21 22:35:52 SKIPPED  UrAnus (pump.fun) mint=27u3diWofnXGUkddjLGhcy1nRssFKHW3RtNbpWzUpump signals=BUY_RATIO+HOLDER_GROWTH reason: max 2 open positions
+2026-11-21 22:36:52 FILTERED UrAnus (pump.fun) mint=27u3diWofnXGUkddjLGhcy1nRssFKHW3RtNbpWzUpump signals=BUY_RATIO reason: 5m volume $21,032 < $25,000
+2026-11-21 22:37:52 FILTERED JENSEN (pump.fun) mint=78T25hUPagJb1DpokNz4F9gmnD6EMroQkQFfPdojAFdQ signals=VOL_SPIKE+BUY_RATIO reason: liquidity $33,437 < $40,000
+2026-11-21 22:37:52 FILTERED it (pump.fun) mint=3Az4ajBuLdF2Y9Cei1n8YCozAGXE5NuyTu9ykFaGpump signals=VOL_SPIKE reason: liquidity $11,900 < $40,000
+2026-11-21 22:37:52 FILTERED IT (meteora) mint=AvT1hRjinstFBTtoQEB5U7c9FbL8ZYeaZ2NcfgvkS9UP signals=VOL_SPIKE reason: liquidity $16,373 < $40,000
+2026-11-21 22:41:52 FILTERED JENSEN (pump.fun) mint=78T25hUPagJb1DpokNz4F9gmnD6EMroQkQFfPdojAFdQ signals=VOL_SPIKE+BUY_RATIO reason: 5m volume $18,241 < $25,000
+2026-11-21 22:42:52 FILTERED CatTok (pump.fun) mint=CFXbnpTNFb3VPR1wsspKP9kJZxJgZ5vUQVcEFcdTpump signals=VOL_SPIKE+BUY_RATIO reason: liquidity $22,283 < $40,000
+2026-11-21 22:45:22 FILTERED ANUSHA (pump.fun) mint=Cw2n3qhmmqY9zojc5sTc2MMYCr7VSTd4aDHpKApZpump signals=BUY_RATIO reason: liquidity $6,806 < $40,000
+2026-11-21 22:45:52 FILTERED DCTY (pump.fun) mint=GCLE9BMmfaLtNAc8ds9SmhsSPdLBuXZQMmXU8hQGpump signals=BUY_RATIO reason: 5m volume $227 < $25,000
+2026-11-21 22:52:52 FILTERED SIDOOR (pump.fun) mint=8fCGg3qNsXEKeBX66iYLexaaW3j49R2KfAkduVaDKwfF signals=BUY_RATIO reason: 5m volume $244 < $25,000
+2026-11-21 22:53:52 SKIPPED  FSD v15 (pump.fun) mint=ANYZmmeD8yhoTDNszTfZtYD7eCZSdF7VZQwR2UyMxZeT signals=VOL_SPIKE+BUY_RATIO reason: max 2 open positions
+2026-11-21 22:53:52 FILTERED tap (pump.fun) mint=G8uej6HYR627NHmfuMrrbdttkzuBLbCYsmGfHBNxpump signals=BUY_RATIO reason: liquidity $4,524 < $40,000
+2026-11-21 22:53:52 FILTERED Minelius (meteora) mint=FftCXofWz92XyZMVsSkfdjtU8V9PkFcGDjZaFqghgfck signals=VOL_SPIKE reason: liquidity $26,894 < $40,000
+2026-11-21 22:53:52 FILTERED UranusCoin (meteora) mint=E2z11WzfUccPJJVi7RsdhbsxuQek6iYSBDmE9hhpf3R6 signals=VOL_SPIKE reason: liquidity $28,956 < $40,000
+2026-11-21 22:53:52 FILTERED Virus (meteora) mint=FgZs7WkuEqCguqAzAQkSyQzFpoYuoQfGQBUV536LB1xk signals=VOL_SPIKE reason: liquidity $39,344 < $40,000
+2026-11-21 22:54:22 FILTERED Virus (meteora) mint=FgZs7WkuEqCguqAzAQkSyQzFpoYuoQfGQBUV536LB1xk signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-21 22:55:52 FILTERED WEALTH (pump.fun) mint=ApRusYyBmcX5Nrk4UAdxSLfAhSMkV2xS6Erohsaapump signals=VOL_SPIKE reason: liquidity $1,981 < $40,000
+2026-11-21 22:55:52 FILTERED UNI (pump.fun) mint=7rGmC4qH99shHrxgXgQbkM38zhefd8eBqrRusUKgpump signals=VOL_SPIKE reason: liquidity $1,888 < $40,000
+2026-11-21 22:57:52 FILTERED CUNTS (pump.fun) mint=7CvW68FD9KjNYGByfykhaNps7VNPLN8dFwMRfmgQpump signals=BUY_RATIO reason: liquidity $7,276 < $40,000
+2026-11-21 22:58:52 FILTERED URANUS (pump.fun) mint=DUvFjnaE3r46WLbz9rz6MNk2bq9xPFPUfMd8bDgmpump signals=BUY_RATIO reason: liquidity $22,767 < $40,000
+2026-11-21 22:59:52 FILTERED Vodkat (pump.fun) mint=FxUMvvYHW6r41wtbbm4V52Hnu7cyyFfqhSXuwmuypump signals=BUY_RATIO reason: liquidity $9,643 < $40,000
+2026-11-21 22:59:52 FILTERED FROG (pump.fun) mint=4vNfM66FzVsvjed9jK6hoz7p68xvcCDMEstuv2PcWbMZ signals=VOL_SPIKE reason: liquidity $15,420 < $40,000
+2026-11-21 23:01:22 FILTERED Bigfoot (pump.fun) mint=FzdAR4bBxAsH1LP5CxxS25JU6ecfZD9ZoVZQQL3Lpump signals=BUY_RATIO reason: liquidity $4,315 < $40,000
+2026-11-21 23:04:52 FILTERED KKK (meteora) mint=ojXUa7vetbTfWknN3f8MBjaXm8KS3s4Hs1ViwC6c7Xe signals=VOL_SPIKE+BUY_RATIO reason: liquidity $24,809 < $40,000
+2026-11-21 23:04:52 FILTERED Null (pump.fun) mint=6MCxswdmhobZdZP9u4ZZspUp6bkq3wg3s3XbDfoBitt4 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $19,318 < $40,000
+2026-11-21 23:04:52 FILTERED Frog (meteora) mint=Jc5RS1GZXCQbYmbowE4NubPcCqytXg11b2VdQMCNQUU signals=VOL_SPIKE reason: liquidity $23,412 < $40,000
+2026-11-21 23:04:52 FILTERED GARY (pump.fun) mint=3JaNRGJmirWEKNYwgfFyVxsQ5gjGzRG7QbU3C17ud2uJ signals=VOL_SPIKE reason: liquidity $9,748 < $40,000
+2026-11-21 23:14:52 FILTERED ANT (pump.fun) mint=3Wn7XdRFJgFhC31qaHd67SP4kp3t9BU7zftHp4Pspump signals=VOL_SPIKE reason: liquidity $12,763 < $40,000
+2026-11-21 23:14:52 FILTERED MANEKI (pump.fun) mint=vMwGpWVbpTF2hXNXzEy4j1GsUeVvCdG3gYfykUxq2JW signals=VOL_SPIKE reason: liquidity $18,109 < $40,000
+2026-11-21 23:14:52 FILTERED lens (meteora) mint=2QzSSukYNVkp6hbBDuhtkBuGsKShrZGNyLMuT3khhgWG signals=VOL_SPIKE reason: liquidity $31,687 < $40,000
+2026-11-21 23:14:52 FILTERED FOMO (meteora) mint=6eMS1FJLJH7KgzX2ywgZSmEesSPRhYC1KExDHamycHao signals=VOL_SPIKE reason: liquidity $18,974 < $40,000
+2026-11-21 23:19:52 FILTERED MANEKI (pump.fun) mint=53h17tZKfeeoj3VEH1bLrv8eWBsZuDSVf7r39wdkwhT signals=VOL_SPIKE+BUY_RATIO reason: 5m volume $2,258 < $25,000
+2026-11-21 23:19:52 FILTERED MANEKI (meteora) mint=85prSseTsY7YjSxTv7qpjKTonrpzSHioM6CRGPrATv4P signals=VOL_SPIKE+BUY_RATIO reason: liquidity $22,051 < $40,000
+2026-11-21 23:22:52 FILTERED lens (pump.fun) mint=dxLNZcQXY55uRTRTVKbx1UmzK1WGWekmydqdiWWpump signals=VOL_SPIKE reason: liquidity $5,655 < $40,000
+2026-11-21 23:23:52 FILTERED MANEKI (pump.fun) mint=53h17tZKfeeoj3VEH1bLrv8eWBsZuDSVf7r39wdkwhT signals=VOL_SPIKE+BUY_RATIO reason: holders 194 < 300
+2026-11-21 23:23:52 FILTERED GTANUS (pump.fun) mint=mKx5KckQyHUAuTYt1H24je2QCBR1s1Wt4AaCEMtpump signals=BUY_RATIO reason: liquidity $1,203 < $40,000
+2026-11-21 23:24:52 FILTERED Minelius (meteora) mint=BbZVDkkuUya3EmEjJHvMs775cGxU6qnAZthZep4TGKx1 signals=VOL_SPIKE reason: liquidity $36,012 < $40,000
+2026-11-21 23:24:52 FILTERED MOTH (meteora) mint=4aeySA6to2LgKGDivjdATLZKrXSDyMHx7QNsGznR8rRa signals=VOL_SPIKE reason: liquidity $5,922 < $40,000
+2026-11-21 23:28:52 FILTERED MANEKI (pump.fun) mint=53h17tZKfeeoj3VEH1bLrv8eWBsZuDSVf7r39wdkwhT signals=BUY_RATIO reason: liquidity $0 < $40,000
+2026-11-21 23:29:52 FILTERED Bigfoot (pump.fun) mint=8PBhwdeaPkS1AxZyEuxPwu1VexWwTPVxrQYhdSMxXMdC signals=VOL_SPIKE reason: liquidity $15,038 < $40,000
+2026-11-21 23:31:52 SKIPPED  BIGFOOT (pump.fun) mint=EMjVCbyVHVZ88zvmQPVZffB6Nk2eksS6aCACGVGnpump signals=VOL_SPIKE+BUY_RATIO reason: max 2 open positions
+2026-11-21 23:32:52 FILTERED BREAKUP (pump.fun) mint=GTkfUY4HhfJ5JmYbJqWrnVBMb6vvx246agXmP5BFpump signals=BUY_RATIO reason: liquidity $3,528 < $40,000
+2026-11-21 23:33:52 FILTERED Albert (pump.fun) mint=EiVNeA4S67BCkaysjMGZubP2rCzYwRhQNbpohAcnpump signals=VOL_SPIKE+BUY_RATIO reason: liquidity UNKNOWN (source gives none)
+2026-11-21 23:34:52 FILTERED MANEKI (meteora) mint=Hyv1YF7jkEzmwDXJeVn3HmRFSEDzEWEMa7NnqvWHLcsE signals=VOL_SPIKE reason: liquidity $9,369 < $40,000
+2026-11-21 23:34:52 FILTERED BTC (pump.fun) mint=Dap5XBQL9856zBp9rsJbFYSdpAasf8TLEk5jGbWG9wzP signals=VOL_SPIKE reason: liquidity $15,163 < $40,000
+2026-11-21 23:34:52 FILTERED DCTY (pump.fun) mint=FqSYaBUgo5YG8x18TGaAf9DKWjF9Sp3r23DXwGu76LK8 signals=VOL_SPIKE reason: liquidity $13,499 < $40,000
+2026-11-21 23:39:52 FILTERED lens (pump.fun) mint=FBU2ogNQEmrKXtPFCdk68zgoHX5fW3EhZYAHKXbhpump signals=VOL_SPIKE reason: liquidity $8,791 < $40,000
+2026-11-21 23:39:52 FILTERED SHIT (pump.fun) mint=HZqyAMHPdhjiEHySdA7CHXHck1e4abgtjWqqbCBxU51o signals=VOL_SPIKE reason: liquidity $15,757 < $40,000
+2026-11-21 23:39:52 FILTERED HORNYApe (meteora) mint=9cHm4wsvZqt56wDHZLD4gn2mz1BXwxKn8fo7ZbbUJQx6 signals=VOL_SPIKE reason: liquidity $30,516 < $40,000
+2026-11-21 23:41:52 FILTERED HORNYApe (meteora) mint=9cHm4wsvZqt56wDHZLD4gn2mz1BXwxKn8fo7ZbbUJQx6 signals=VOL_SPIKE+BUY_RATIO reason: holders 256 < 300
+2026-11-21 23:45:52 FILTERED Green cat (pump.fun) mint=3wNB9NF6xnkMw4iy1kd8Nwjo6xJk7AXEw3yAhTXGaXWA signals=VOL_SPIKE+BUY_RATIO reason: liquidity $32,573 < $40,000
+2026-11-21 23:45:52 FILTERED Spike (meteora) mint=2XQUDkTuo9aAmMLJg8AkKin5G1p5U4jbYR8BBmNcQUNC signals=VOL_SPIKE+BUY_RATIO reason: liquidity $13,285 < $40,000
+2026-11-21 23:48:52 SKIPPED  Null (pump.fun) mint=6MCxswdmhobZdZP9u4ZZspUp6bkq3wg3s3XbDfoBitt4 signals=VOL_SPIKE reason: max 2 open positions
+2026-11-21 23:48:52 FILTERED BIGFOOT (pump.fun) mint=EMjVCbyVHVZ88zvmQPVZffB6Nk2eksS6aCACGVGnpump signals=BUY_RATIO reason: 5m volume $12,389 < $25,000
+2026-11-21 23:49:52 FILTERED KAREN (pump.fun) mint=9kaQR3dorDz4vwim3iGaoRa9amoLcUHPp6wuLHpEpump signals=VOL_SPIKE reason: liquidity $11,500 < $40,000
+2026-11-21 23:51:52 FILTERED ‮ekipS (meteora) mint=C2kEKfLR5zU2B4pdKAAZtmev1WMZutYmuKvSpcHfM44u signals=VOL_SPIKE+BUY_RATIO reason: liquidity $2,984 < $40,000
+2026-11-21 23:51:52 FILTERED lens (meteora) mint=A3TtoV5pvGu9RpjVUbgcHkXkG1Wq6K9p1jCXrbbea7Jo signals=VOL_SPIKE reason: liquidity $23,590 < $40,000
+2026-11-21 23:54:52 FILTERED BIGFOOT (pump.fun) mint=EMjVCbyVHVZ88zvmQPVZffB6Nk2eksS6aCACGVGnpump signals=BUY_RATIO reason: liquidity $34,786 < $40,000
+2026-11-21 23:56:52 FILTERED time (pump.fun) mint=EEQYWLs6DUE8Hni33k48pKjMA9PPvioJhoYW1kthpump signals=VOL_SPIKE reason: liquidity $9,406 < $40,000
+2026-11-21 23:56:52 FILTERED DCTY (pump.fun) mint=Dfeb8pJKWobYdvWUpbupbut5js3bZWuYEgo8qDum4Gwe signals=VOL_SPIKE reason: liquidity $12,712 < $40,000
+2026-11-22 00:00:22 FILTERED UNI (pump.fun) mint=Fb4u75SCxDmQ2Vgq5eyo8tGpaULfqMMExvpvJYyJpump signals=VOL_SPIKE reason: liquidity $2,716 < $40,000
+2026-11-22 00:01:52 FILTERED C@T (pump.fun) mint=8R7rompcCDEZKGjRRybZt1UrDrZTdmSXqFjDtvSCpump signals=VOL_SPIKE+BUY_RATIO reason: liquidity $25,707 < $40,000
+2026-11-22 00:01:52 FILTERED JENSEN (pump.fun) mint=CAy1hVc6vDxgAtaRrRKeM3KfT2C9o2Z5WPPmDZGMmDNy signals=VOL_SPIKE+BUY_RATIO reason: liquidity $31,622 < $40,000
+2026-11-22 00:01:52 FILTERED MANEKI (pump.fun) mint=G74SSWk4qF4BeWfyR53fVZYqdNWo9wH7UR55jF4uuxds signals=BUY_RATIO reason: liquidity $13,294 < $40,000
+2026-11-22 00:05:52 SKIPPED  C@T (pump.fun) mint=8R7rompcCDEZKGjRRybZt1UrDrZTdmSXqFjDtvSCpump signals=VOL_SPIKE+BUY_RATIO reason: max 2 open positions
+2026-11-22 00:05:52 FILTERED Wow (pump.fun) mint=4jPVfKpDNzZ9WrVrPoDBAGPsVcu8zbkN2WUw5GiCpump signals=VOL_SPIKE reason: liquidity $10,177 < $40,000
+2026-11-22 00:06:52 FILTERED Claude (pump.fun) mint=Bh8z6qPRuRy5aWAXJHb3DXmRgoH7gPo4DVV7fqoVbsFk signals=VOL_SPIKE+BUY_RATIO reason: liquidity $33,681 < $40,000
+2026-11-22 00:06:52 FILTERED Dandelion (pump.fun) mint=59BjMnB98sj9xAc6B2bVRxaM7Xjg9Riwei4EfQiPUNTe signals=VOL_SPIKE+BUY_RATIO reason: liquidity $29,842 < $40,000
+2026-11-22 00:06:52 FILTERED Mfer (pump.fun) mint=9tX1UpBGeNqMb1VqqzVumwzW71ybsNZFyWKYiL8Ppump signals=BUY_RATIO reason: liquidity $16,105 < $40,000
+2026-11-22 00:06:52 FILTERED ANT (meteora) mint=CCWbEz7fo8uCGoauZPm6WycvepZVxyXCE9E7RTEzzwc3 signals=VOL_SPIKE reason: liquidity $12,902 < $40,000
+2026-11-22 00:11:52 FILTERED DCTY (pump.fun) mint=4L5abGNV77SktXebhaTA4Z6zR73oYjUuEY7jmxPvarEr signals=VOL_SPIKE reason: liquidity $15,457 < $40,000
+2026-11-22 00:11:52 FILTERED RIZZMAS3 (pump.fun) mint=BHXMEAANh9MvG8iBfuSJREGc1ZmPAAUf8zpF9Xiz5fZx signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-22 00:15:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:16:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:16:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:17:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:17:52 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:18:22 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:19:15 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:19:45 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:20:15 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:20:45 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:21:15 EXIT     ANT mint=2PhhxqAAMoXm8nUzug8eRS6jVeeKVrYGH2dPfbLFzKr8 TIME_STOP sold=100% tokens=13,570,057 (quoted and simulated exactly) price_at_decision=5.269e-06 value_at_price=$71.50 simulated_proceeds=$71.75 (+0.35% vs price, quoted impact 0.00%) delay=47.5s pnl=+21.75
+2026-11-22 00:21:15 EQUITY   balance=$180.64 equity=$181.33 W/L=1/3 streak_losses=0
+2026-11-22 00:21:15 CLOSED   ANT total pnl=+21.75 (+43.5%) balance=$180.64 reasons=TIME_STOP
+2026-11-22 00:21:15 FILTERED Uranus (pump.fun) mint=3LZZjic3P3m5GGNf5QpWxufpk8FyNXrNLpQKNP7SWyhx signals=VOL_SPIKE+BUY_RATIO reason: liquidity $31,437 < $40,000
+2026-11-22 00:21:15 FILTERED OFFICIAL (meteora) mint=B2Xwmf7bffTXZVLpBGuJyFTQvmT6BjZVevhRXmkjjJWa signals=VOL_SPIKE+BUY_RATIO reason: liquidity $2 < $40,000
+2026-11-22 00:21:15 FILTERED FSD (meteora) mint=82phBarttwccsCSekrGQfijdNyca4VhU6m6p4Zr3emAJ signals=VOL_SPIKE reason: liquidity $20,561 < $40,000
+2026-11-22 00:21:15 FILTERED STREETS (pump.fun) mint=GY23CdhszidJZpLyNQ9PB63HPXq8RXqhnLtUYUH7pump signals=VOL_SPIKE reason: holders 248 < 300
+2026-11-22 00:21:15 FILTERED RIZZMAS3 (meteora) mint=BwJXmPdzKXimHM2qfemu4hwE36Q1WRv5zvQmBtfNCSLR signals=VOL_SPIKE reason: liquidity $24,253 < $40,000
+2026-11-22 00:24:32 FILTERED BOOBILLIONS (pump.fun) mint=13qebRhFyiB32FH9b1YYTgh8RW4VvmNEbi79eG28pump signals=BUY_RATIO reason: liquidity $21,330 < $40,000
+2026-11-22 00:25:32 FILTERED RIZZMAS3 (pump.fun) mint=DXuBwWkYRWwYuDGMCsoe1Tr5hstrpGvQky1AAeWbbUP signals=VOL_SPIKE+BUY_RATIO reason: 5m volume $3,379 < $25,000
+2026-11-22 00:28:02 FILTERED RIZZMAS3 (pump.fun) mint=DXuBwWkYRWwYuDGMCsoe1Tr5hstrpGvQky1AAeWbbUP signals=VOL_SPIKE+BUY_RATIO reason: liquidity $0 < $40,000
+2026-11-22 00:30:32 FILTERED pippin (meteora) mint=Fw8p5SmCUrHf23h2MDG4n1dZfXqvDMu2SiMm5iLPRdCK signals=VOL_SPIKE reason: liquidity $10,318 < $40,000
+2026-11-22 00:30:32 FILTERED WASTED (meteora) mint=993BS5fFcUE1HkYKXYcPfhHzM1wDr9Q1p5EGXtsxQzY4 signals=VOL_SPIKE reason: liquidity $8,687 < $40,000
+2026-11-22 00:30:32 FILTERED RIZZMAS3 (meteora) mint=9nYiDyN4z9pKT4GHeLE3DRko6wVhqtiV5ZFWBQDEVRrb signals=VOL_SPIKE reason: liquidity $5,350 < $40,000
+2026-11-22 00:30:32 FILTERED ANON (meteora) mint=AxzEQAkTGawVK1V2RtYy9Cuq3vZEPRPe2dyxn8cNemBW signals=VOL_SPIKE reason: liquidity $16,645 < $40,000
+2026-11-22 00:40:32 FILTERED ANON (meteora) mint=44B6wzzdmsmhukApAWEPt6ZeUqdsYsz54t4cZoWoLTrQ signals=VOL_SPIKE reason: liquidity $23,798 < $40,000
+2026-11-22 00:41:32 FILTERED VICE (pump.fun) mint=GSR9ZVR7MH6z3dp6sAtPua5Xk8FWTVtjquk2vhVfpump signals=VOL_SPIKE reason: liquidity $18,444 < $40,000
+2026-11-22 00:43:32 FILTERED SIDOOR (meteora) mint=zcRvzm7gAfYGde8gRwaSYxNryL47SjLVUQLAf1bdoor signals=BUY_RATIO reason: 5m volume $4,647 < $25,000
+2026-11-22 00:45:02 FILTERED STREETS (pump.fun) mint=82mseLFauphc2yutbaDGgViahquJ1jGVLpyof99xpump signals=HOLDER_GROWTH reason: no-chase: +300% in 1h without pullback
+2026-11-22 00:47:32 FILTERED GTAMAS (pump.fun) mint=BbLzU6Pcz9rR6oTsymYj3t6sPWhdrWLfrC7rzbMPpump signals=VOL_SPIKE reason: liquidity $1,828 < $40,000
+2026-11-22 00:48:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:49:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:49:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:50:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:50:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:51:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:51:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:52:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:52:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:53:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:53:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:54:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:54:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:55:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-22 00:55:32 FILTERED Pibblemas (meteora) mint=FDxmtbgsbZyrvqM6yU97xaLxRJVyL5a1s6xutLFjTUdq signals=VOL_SPIKE+BUY_RATIO reason: liquidity $18,822 < $40,000
+2026-11-22 00:55:32 FILTERED Maxlong (pump.fun) mint=5pEWJLgtJuL3L5brWUewVxfGDQ6yMdGV63edX9Wnpump signals=VOL_SPIKE reason: liquidity $135 < $40,000
+2026-11-22 00:55:32 FILTERED Espicrown (pump.fun) mint=G1hcipDXc2RqGpvnANjcRHUqsgCH5BoZz2SgZhAmBAGS signals=BUY_RATIO reason: liquidity $0 < $40,000
+2026-11-22 00:55:32 FILTERED VICE (meteora) mint=8GSN8TwSW9bzEcLJRkRTdtmAfX6eWuPFZxkp5urGhA47 signals=VOL_SPIKE reason: liquidity $4 < $40,000
+2026-11-22 00:55:32 FILTERED SANTAHAT (meteora) mint=8E1jHK3JBktmtZKnMSeTpCfJBDhGZrGLEChDBixmvSTQ signals=VOL_SPIKE reason: liquidity $17,608 < $40,000
+2026-11-22 00:55:32 FILTERED PUMPMAS (meteora) mint=59PXNoUC49zv6s3JEBW1V4VrpLCu8R7MoQqV76GaJBEC signals=VOL_SPIKE reason: liquidity $2 < $40,000
+2026-11-22 00:57:02 INFO     end cycles=688 open=1 closed=4 failed_exits=0 (open positions stay open; no sale is invented)

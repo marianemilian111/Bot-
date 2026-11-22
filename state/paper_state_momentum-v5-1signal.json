@@ -1,13 +1,13 @@
 {
  "strategy": "momentum-v5-1signal",
- "saved": "2026-11-21T12:46:04.302122",
+ "saved": "2026-11-22T00:57:02.748241",
  "start": 250.0,
- "cash": 158.8906186944,
- "wins": 0,
+ "cash": 180.64465036896,
+ "wins": 1,
  "losses": 3,
- "loss_streak": 3,
- "day": "2026-11-21",
- "peak": 160.10739243978642,
+ "loss_streak": 0,
+ "day": "2026-11-22",
+ "peak": 181.32593704874262,
  "paused": false,
  "curve": [
   [
@@ -105,6 +105,30 @@
   [
    "2026-11-21T08:27:34.242302",
    159.57190537418262
+  ],
+  [
+   "2026-11-21T19:11:46.207514",
+   159.57190537418262
+  ],
+  [
+   "2026-11-21T20:20:52.293354",
+   159.57190537418262
+  ],
+  [
+   "2026-11-21T21:32:52.309666",
+   159.52328518315804
+  ],
+  [
+   "2026-11-21T22:32:52.323258",
+   159.52328518315804
+  ],
+  [
+   "2026-11-21T23:32:52.336855",
+   159.52328518315804
+  ],
+  [
+   "2026-11-22T00:21:15.233415",
+   181.32593704874262
   ]
  ],
  "positions": {
@@ -165,10 +189,23 @@
    ],
    "written_off": 0.0,
    "addr": "CUfphqswgDK3VP3FX7CiShVCTdGQneFusYRFViABpump"
+  },
+  {
+   "symbol": "ANT",
+   "opened": "2026-11-21T20:20:52.293354",
+   "closed": "2026-11-22T00:21:15.233415",
+   "cost": 50.0,
+   "proceeds": 71.75403167456,
+   "reasons": [
+    "TIME_STOP"
+   ],
+   "written_off": 0.0,
+   "addr": "2PhhxqAAMoXm8nUzug8eRS6jVeeKVrYGH2dPfbLFzKr8"
   }
  ],
  "failed_exits": 0,
  "traded": [
+  "2PhhxqAAMoXm8nUzug8eRS6jVeeKVrYGH2dPfbLFzKr8",
   "3hdXmQqZHmm7gWWweFKGdkjnxyWQZ2SWVNt1Jty5pump",
   "64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump",
   "7DQQejSWt4bgNmGFFD6QPPUA1YLoMxWhz4roN5CQjE9k",
