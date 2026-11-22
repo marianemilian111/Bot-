@@ -1,13 +1,13 @@
 {
  "strategy": "capture-v6",
- "saved": "2026-11-21T13:27:18.085932",
+ "saved": "2026-11-22T01:32:59.226479",
  "start": 70.0,
- "cash": 95.91057867941001,
+ "cash": 94.184556909799,
  "wins": 1,
  "losses": 1,
  "loss_streak": 0,
  "day": "2026-11-19",
- "peak": 95.91057867941001,
+ "peak": 106.46267823803308,
  "paused": false,
  "curve": [
   [
@@ -161,9 +161,56 @@
   [
    "2026-11-21T12:42:18.075724",
    95.91057867941001
+  ],
+  [
+   "2026-11-21T19:47:32.177330",
+   95.91057867941001
+  ],
+  [
+   "2026-11-21T20:47:32.187899",
+   95.91057867941001
+  ],
+  [
+   "2026-11-21T21:47:41.443923",
+   95.91057867941001
+  ],
+  [
+   "2026-11-21T22:48:05.714542",
+   95.91057867941001
+  ],
+  [
+   "2026-11-21T23:48:29.516917",
+   102.198365376525
+  ],
+  [
+   "2026-11-22T00:48:59.218618",
+   94.21261170443833
   ]
  ],
- "positions": {},
+ "positions": {
+  "EMjVCbyVHVZ88zvmQPVZffB6Nk2eksS6aCACGVGnpump": {
+   "addr": "EMjVCbyVHVZ88zvmQPVZffB6Nk2eksS6aCACGVGnpump",
+   "symbol": "BIGFOOT",
+   "opened": "2026-11-21T23:42:59.515957",
+   "planned_usd": 19.182115735882004,
+   "signals": [
+    "BUY_RATIO",
+    "HOLDER_GROWTH"
+   ],
+   "tokens": 19523.1695472,
+   "tokens_bought": 32538.615912,
+   "cost": 9.591057867941002,
+   "proceeds": 7.865036098330001,
+   "parts_done": 1,
+   "stage": 1,
+   "peak": 0.0006289,
+   "last_price": 1.428e-06,
+   "reasons": [
+    "TP1_2x"
+   ],
+   "written_off": 0.0
+  }
+ },
  "pending": {},
  "trades": [
   {
@@ -195,9 +242,11 @@
  ],
  "failed_exits": 1,
  "traded": [
+  "27u3diWofnXGUkddjLGhcy1nRssFKHW3RtNbpWzUpump",
   "82u71wqQSa4NmD1UTTDwKyh5EUm3xe9pMp4UZXhFpump",
   "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump",
   "DkHsZ1kjd2Fua8sgKE6PhHhyCdXYscbDVN7mAfiGpump",
+  "EMjVCbyVHVZ88zvmQPVZffB6Nk2eksS6aCACGVGnpump",
   "EkTfN4Pb7K3NXzxsbzkn3AA4MGbsdTniFJ3G2RsVpump"
  ]
 }
