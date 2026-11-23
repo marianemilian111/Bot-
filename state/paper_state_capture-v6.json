@@ -1,13 +1,13 @@
 {
  "strategy": "capture-v6",
- "saved": "2026-11-22T13:12:44.448090",
+ "saved": "2026-11-23T01:43:58.902498",
  "start": 70.0,
- "cash": 94.184556909799,
- "wins": 1,
+ "cash": 96.38427619580472,
+ "wins": 2,
  "losses": 1,
  "loss_streak": 0,
  "day": "2026-11-19",
- "peak": 94.21257265809923,
+ "peak": 103.51621081603857,
  "paused": false,
  "curve": [
   [
@@ -209,6 +209,34 @@
   [
    "2026-11-22T12:27:44.437679",
    94.21257265809923
+  ],
+  [
+   "2026-11-22T19:58:58.819298",
+   94.21257265809923
+  ],
+  [
+   "2026-11-22T20:58:58.834402",
+   94.21241647274286
+  ],
+  [
+   "2026-11-22T21:58:58.849105",
+   95.46977086520357
+  ],
+  [
+   "2026-11-22T22:20:58.854520",
+   96.41213575874858
+  ],
+  [
+   "2026-11-22T23:20:58.868489",
+   96.41213575874858
+  ],
+  [
+   "2026-11-23T00:20:58.882405",
+   96.41213575874858
+  ],
+  [
+   "2026-11-23T01:20:58.896668",
+   96.41213575874858
   ]
  ],
  "positions": {
@@ -228,7 +256,7 @@
    "parts_done": 1,
    "stage": 1,
    "peak": 0.0006289,
-   "last_price": 1.435e-06,
+   "last_price": 1.427e-06,
    "reasons": [
     "TP1_2x"
    ],
@@ -262,14 +290,29 @@
    ],
    "written_off": 5.5212760536320005,
    "addr": "DkHsZ1kjd2Fua8sgKE6PhHhyCdXYscbDVN7mAfiGpump"
+  },
+  {
+   "symbol": "MINELIUS",
+   "opened": "2026-11-22T21:55:58.848335",
+   "closed": "2026-11-22T22:20:58.854520",
+   "cost": 9.421241647274286,
+   "proceeds": 11.620960933280001,
+   "reasons": [
+    "EXIT_FAILED",
+    "TIME_STOP"
+   ],
+   "written_off": 3.768496658909714,
+   "addr": "E9rWKjVhHMxQkxfREr7Li8Yy46rVcWiWHoKVQAe9pump"
   }
  ],
- "failed_exits": 1,
+ "failed_exits": 2,
  "traded": [
   "27u3diWofnXGUkddjLGhcy1nRssFKHW3RtNbpWzUpump",
+  "3BcJ4SSCfbxDMrWcUDucyCWxMjmy4M2ECCtvxu86pump",
   "82u71wqQSa4NmD1UTTDwKyh5EUm3xe9pMp4UZXhFpump",
   "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump",
   "DkHsZ1kjd2Fua8sgKE6PhHhyCdXYscbDVN7mAfiGpump",
+  "E9rWKjVhHMxQkxfREr7Li8Yy46rVcWiWHoKVQAe9pump",
   "EMjVCbyVHVZ88zvmQPVZffB6Nk2eksS6aCACGVGnpump",
   "EkTfN4Pb7K3NXzxsbzkn3AA4MGbsdTniFJ3G2RsVpump"
  ]
