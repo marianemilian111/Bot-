@@ -19,44 +19,31 @@
   "stale_data_s": 120
  },
  "cycles": 690,
- "started_utc": "2026-11-22T19:34:02+00:00",
- "ended_utc": "2026-11-23T01:19:02+00:00",
+ "started_utc": "2026-11-23T07:31:38+00:00",
+ "ended_utc": "2026-11-23T13:16:38+00:00",
  "resumed": true,
  "minutes_planned": 345.0,
  "minutes_run": 345.0,
  "stop": null,
  "sha": "3c809eaae042455a35f5aa6ec6a0877e51934bbe",
- "run_id": "45061393375",
- "jsonl": "v3_collect_20261122_193402.jsonl",
+ "run_id": "45131602997",
+ "jsonl": "v3_collect_20261123_073138.jsonl",
  "pools_discovered": 300,
- "evaluable_pairs": 5,
+ "evaluable_pairs": 1,
  "entry_simulations": {
-  "OK": 2,
+  "OK": 0,
   "FAIL": 0,
   "UNKNOWN": 0
  },
- "baseline_draws": [
-  {
-   "ts": "2026-11-22T20:51:32",
-   "momentum_entry": "FuKY3dk7QmpbDdQRjzbjB3G6PiCuqKNvN4dAWDpwpump",
-   "eligible_options": 1,
-   "includes_momentum_pick": true
-  },
-  {
-   "ts": "2026-11-22T22:03:02",
-   "momentum_entry": "Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat",
-   "eligible_options": 3,
-   "includes_momentum_pick": true
-  }
- ],
+ "baseline_draws": [],
  "baseline_entry_simulations": {
-  "OK": 2,
+  "OK": 0,
   "FAIL": 0,
   "UNKNOWN": 0
  },
  "discovery_errors": {},
  "logs": {
-  "momentum-v5-1signal": "night_momentum-v5-1signal_20261122_193402.log",
-  "random-baseline-v5": "night_random-baseline-v5_20261122_193402.log"
+  "momentum-v5-1signal": "night_momentum-v5-1signal_20261123_073138.log",
+  "random-baseline-v5": "night_random-baseline-v5_20261123_073138.log"
  }
 }
