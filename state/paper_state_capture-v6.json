@@ -1,13 +1,13 @@
 {
  "strategy": "capture-v6",
- "saved": "2026-11-23T14:00:15.846863",
+ "saved": "2026-11-24T06:07:36.318160",
  "start": 70.0,
  "cash": 96.38427619580472,
  "wins": 2,
  "losses": 1,
  "loss_streak": 0,
  "day": "2026-11-19",
- "peak": 96.41213575874858,
+ "peak": 96.41274097700453,
  "paused": false,
  "curve": [
   [
@@ -261,6 +261,30 @@
   [
    "2026-11-23T13:15:15.836793",
    96.41213575874858
+  ],
+  [
+   "2026-11-24T00:22:36.234505",
+   96.41213575874858
+  ],
+  [
+   "2026-11-24T01:22:36.248631",
+   96.41213575874858
+  ],
+  [
+   "2026-11-24T02:22:36.263223",
+   96.41213575874858
+  ],
+  [
+   "2026-11-24T03:22:36.277488",
+   96.41213575874858
+  ],
+  [
+   "2026-11-24T04:22:36.291846",
+   96.41274097700453
+  ],
+  [
+   "2026-11-24T05:22:36.306457",
+   96.41274097700453
   ]
  ],
  "positions": {
@@ -280,7 +304,7 @@
    "parts_done": 1,
    "stage": 1,
    "peak": 0.0006289,
-   "last_price": 1.427e-06,
+   "last_price": 1.453e-06,
    "reasons": [
     "TP1_2x"
    ],
@@ -333,11 +357,14 @@
  "traded": [
   "27u3diWofnXGUkddjLGhcy1nRssFKHW3RtNbpWzUpump",
   "3BcJ4SSCfbxDMrWcUDucyCWxMjmy4M2ECCtvxu86pump",
+  "3cL47ohWa2HApLYKtqPsqkjaxJ6HLvT5Ri1KvWdXpump",
+  "5LDowscYVD3a6ZS4m8gCqG5nU16eLTwRXhciFi1bpump",
   "82u71wqQSa4NmD1UTTDwKyh5EUm3xe9pMp4UZXhFpump",
   "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump",
   "DkHsZ1kjd2Fua8sgKE6PhHhyCdXYscbDVN7mAfiGpump",
   "E9rWKjVhHMxQkxfREr7Li8Yy46rVcWiWHoKVQAe9pump",
   "EMjVCbyVHVZ88zvmQPVZffB6Nk2eksS6aCACGVGnpump",
-  "EkTfN4Pb7K3NXzxsbzkn3AA4MGbsdTniFJ3G2RsVpump"
+  "EkTfN4Pb7K3NXzxsbzkn3AA4MGbsdTniFJ3G2RsVpump",
+  "GaNJeASYBM9k3TvEeUC2Pdyu1TjcpzTmPpoom92fpump"
  ]
 }

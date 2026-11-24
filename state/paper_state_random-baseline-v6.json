@@ -1,13 +1,13 @@
 {
  "strategy": "random-baseline-v6",
- "saved": "2026-11-23T14:00:15.847694",
+ "saved": "2026-11-24T06:07:36.318777",
  "start": 70.0,
- "cash": 81.53821676263618,
+ "cash": 65.23057341010895,
  "wins": 2,
  "losses": 2,
  "loss_streak": 0,
  "day": "2026-11-19",
- "peak": 81.53821676263618,
+ "peak": 65.33190055753772,
  "paused": false,
  "curve": [
   [
@@ -261,9 +261,53 @@
   [
    "2026-11-23T13:15:15.836793",
    81.53821676263618
+  ],
+  [
+   "2026-11-24T00:22:36.234505",
+   81.53821676263618
+  ],
+  [
+   "2026-11-24T01:22:36.248631",
+   81.53821676263618
+  ],
+  [
+   "2026-11-24T02:22:36.263223",
+   81.53821676263618
+  ],
+  [
+   "2026-11-24T03:22:36.277488",
+   83.55425768134114
+  ],
+  [
+   "2026-11-24T04:22:36.291846",
+   65.32938120456951
+  ],
+  [
+   "2026-11-24T05:22:36.306457",
+   65.3291968616694
   ]
  ],
- "positions": {},
+ "positions": {
+  "9vLdkMGZ9jbKAZZKrxVzShEBuafLkjB7UgHfNh3xpump": {
+   "addr": "9vLdkMGZ9jbKAZZKrxVzShEBuafLkjB7UgHfNh3xpump",
+   "symbol": "JENSEN",
+   "opened": "2026-11-24T03:04:36.273273",
+   "planned_usd": 16.307643352527236,
+   "signals": [
+    "RANDOM"
+   ],
+   "tokens": 61447.633371,
+   "tokens_bought": 61447.633371,
+   "cost": 16.307643352527236,
+   "proceeds": 0.0,
+   "parts_done": 2,
+   "stage": 0,
+   "peak": 0.0003531,
+   "last_price": 1.649e-06,
+   "reasons": [],
+   "written_off": 0.0
+  }
+ },
  "pending": {},
  "trades": [
   {
@@ -321,10 +365,13 @@
  "traded": [
   "27u3diWofnXGUkddjLGhcy1nRssFKHW3RtNbpWzUpump",
   "3BcJ4SSCfbxDMrWcUDucyCWxMjmy4M2ECCtvxu86pump",
+  "5LDowscYVD3a6ZS4m8gCqG5nU16eLTwRXhciFi1bpump",
+  "9vLdkMGZ9jbKAZZKrxVzShEBuafLkjB7UgHfNh3xpump",
   "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump",
   "B34nXKzCgsJb9ChLuSHPRpXLE3WFSWyeT8Cqkzzmpump",
   "E9rWKjVhHMxQkxfREr7Li8Yy46rVcWiWHoKVQAe9pump",
   "EMjVCbyVHVZ88zvmQPVZffB6Nk2eksS6aCACGVGnpump",
-  "EkTfN4Pb7K3NXzxsbzkn3AA4MGbsdTniFJ3G2RsVpump"
+  "EkTfN4Pb7K3NXzxsbzkn3AA4MGbsdTniFJ3G2RsVpump",
+  "GaNJeASYBM9k3TvEeUC2Pdyu1TjcpzTmPpoom92fpump"
  ]
 }
