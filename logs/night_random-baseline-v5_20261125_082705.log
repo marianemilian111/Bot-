@@ -1,0 +1,214 @@
+2026-11-25 08:27:05 INFO     start balance=$250.00
+2026-11-25 08:27:05 INFO     strategy=random-baseline-v5 fingerprint=d9d4191e906de84d rules={"baseline": "paired: one random draw among same-cycle pairs passing universe+safety, per Momentum entry", "baseline_seed": 20261119, "changed_vs_v1": "min_signals 2 -> 1 (only change); execution as v3", "discovery": "LiveFeed: DexScreener profiles + boosts latest/top, GeckoTerminal new/trending (discovery only, never a signal)", "entry_parts": 2, "exit_fill": "only a passing sell simulation at size; FAIL -> $0 imputed; UNKNOWN -> retry next cycle", "fills": "jupiter quote at size + net fee", "max_age_s": 21600, "min_age_s": 0, "min_signals": 1, "net_fee_usd": 0.02, "position_usd": 50.0, "stale_data_s": 120, "start_balance": 250.0} resumed=True (PAPER ONLY)
+2026-11-25 08:27:05 EXIT_DEFERRED COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat HARD_STOP: SELL_SIMULATION=UNKNOWN cat=NO_HOLDER stage=holder lookup (no public holder with >= 972,348 tokens) tokens=972,348 price=7.426e-06; retried next cycle, no fill
+2026-11-25 08:27:05 FILTERED Päivi (pump.fun) mint=6TLY91Ee6qRULfLDdmCoP5ZqCP7Wo5jpFmJiBG7wXtKX signals=BUY_RATIO reason: liquidity $2,774 < $40,000
+2026-11-25 08:27:05 FILTERED CLOVER (pump.fun) mint=F4p47HW6RmkmVAEszyGtVyRrqyj6AfUCHe1assZSpump signals=VOL_SPIKE reason: liquidity $14 < $40,000
+2026-11-25 08:28:05 FILTERED N3ON (pump.fun) mint=8HBAgQbwNucWbRyFHn7Y1DB8Y348WAsPWDJTT7JRpump signals=VOL_SPIKE reason: liquidity $63 < $40,000
+2026-11-25 08:28:05 FILTERED GORP (pump.fun) mint=BWsKrX2gGsz86jL6vvFPPYoY7w3bnpJ4D7yBrCPoyfxz signals=VOL_SPIKE reason: liquidity $33,750 < $40,000
+2026-11-25 08:28:05 FILTERED Hope (meteora) mint=FsqMzbPC6vu25vLGVjNrUrvBW9ESQ5PGkGXgxaZt4rKC signals=VOL_SPIKE reason: liquidity $2 < $40,000
+2026-11-25 08:28:05 FILTERED QT (pump.fun) mint=Cco3nxzaooUH2NLn36wZzVvJ61BcP5HAnAeNkX4spump signals=VOL_SPIKE reason: liquidity $16 < $40,000
+2026-11-25 08:28:05 FILTERED USRD (orca) mint=4tJvVt9MYzJBNHA22SqwTatRqLzaSnENDifAW3yk4RKG signals=VOL_SPIKE reason: 5m volume $10 < $25,000
+2026-11-25 08:31:05 FILTERED HELIORA (pump.fun) mint=96qfge1RkUWhSsv8i9V4QZFANGypKEe1u7pzCDGGpump signals=VOL_SPIKE+BUY_RATIO reason: liquidity $9,973 < $40,000
+2026-11-25 08:32:05 FILTERED 小人物 (meteora) mint=K2cLZrNzkK16rX2oJbbHinKkm16vgU1bYdy1ye5su3D signals=VOL_SPIKE+BUY_RATIO reason: 5m volume $2,033 < $25,000
+2026-11-25 08:33:05 FILTERED 英伟达 (pump.fun) mint=8S1KVGUeaQZU36dLC4deQytFW9sr9zEXnCQLbgLLZiNr signals=VOL_SPIKE+BUY_RATIO reason: liquidity $27,856 < $40,000
+2026-11-25 08:33:05 FILTERED REDACTED (pump.fun) mint=8KqvrZiSw63fzjkwyzyNqFa4Pcm1hXf5J4Jt3Aw1pump signals=BUY_RATIO reason: liquidity UNKNOWN (source gives none)
+2026-11-25 08:37:05 FILTERED 小人物 (meteora) mint=K2cLZrNzkK16rX2oJbbHinKkm16vgU1bYdy1ye5su3D signals=VOL_SPIKE+BUY_RATIO reason: holders 278 < 300
+2026-11-25 08:37:05 FILTERED INUVEST (meteora) mint=9gAExEHYk3XKDxXQrCcWHLHTioJpGtdxv7cpcmbBn4fc signals=VOL_SPIKE reason: liquidity $3,791 < $40,000
+2026-11-25 08:39:05 FILTERED Werwulf (pump.fun) mint=6t4TuSG3to7KNoDpJtx9MqV9gDRiKFm29Ei1CsXJbonk signals=VOL_SPIKE+BUY_RATIO reason: 5m volume $2,593 < $25,000
+2026-11-25 08:39:05 FILTERED TANDEM (pump.fun) mint=4XvnS1B28BgsUcwjR2bTm3csxnp8hmTsXZM6jH3Ypump signals=BUY_RATIO reason: liquidity $7,640 < $40,000
+2026-11-25 08:39:05 FILTERED JaoJiow (pump.fun) mint=BBupBrQsZyJF92vCvqfsSdJAx5CWmm1zSEdhBH7qpump signals=BUY_RATIO reason: liquidity $4,165 < $40,000
+2026-11-25 08:39:05 FILTERED Twitch (pump.fun) mint=6QtshTWFdGsscfo5cH6D8EUyyFgy7BDfdbMevUvbpump signals=VOL_SPIKE reason: liquidity $1,538 < $40,000
+2026-11-25 08:42:35 FILTERED 小人物 (meteora) mint=K2cLZrNzkK16rX2oJbbHinKkm16vgU1bYdy1ye5su3D signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-25 08:44:05 FILTERED 全球第一吊 (meteora) mint=3kJ7rrNntUmnBiX44nUHXKjQDEVcQ48JreVtXxQJ7777 signals=VOL_SPIKE reason: liquidity $13,975 < $40,000
+2026-11-25 08:44:05 FILTERED HELIORA (pump.fun) mint=BSQpexB8QzowvBPWZ6k2xNBZCdNVBCQimG4br55cRPnU signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-25 08:45:35 FILTERED Werwulf (pump.fun) mint=6t4TuSG3to7KNoDpJtx9MqV9gDRiKFm29Ei1CsXJbonk signals=VOL_SPIKE+BUY_RATIO reason: liquidity $0 < $40,000
+2026-11-25 08:48:05 FILTERED DWTA (pump.fun) mint=FVMXd6VYtYMtuUt3NkXxapuFUjxEPjL7KeUU112Cpump signals=VOL_SPIKE reason: liquidity UNKNOWN (source gives none)
+2026-11-25 08:49:05 FILTERED Lumii (meteora) mint=HiGrqpNUFM9sEqUaHQBCpk15CPgfviijZ67xFethMxwG signals=VOL_SPIKE+BUY_RATIO reason: liquidity $13,648 < $40,000
+2026-11-25 08:49:05 FILTERED 4CHAN (pump.fun) mint=4xrWiQJhi6oKjjLaVoCD1NNTWjCLDukDXRCCXTCog3u4 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $8,997 < $40,000
+2026-11-25 08:49:05 FILTERED HELIORA (meteora) mint=6QnjMr2MqYNWqUKPz1qgA8dvZknGB3qVwyoMCWR7Esc3 signals=VOL_SPIKE reason: liquidity $32,986 < $40,000
+2026-11-25 08:49:05 FILTERED BTCDRN (pump.fun) mint=Dm9wtMDVcY6GCnQrAoPaayghWy5rE1JTWxV4XWySBAGS signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-25 08:55:05 FILTERED JENSEN (pump.fun) mint=GnpT523kTYZtGJWuGqKphu8PWa5SsPfqdnctk9vfVHUu signals=VOL_SPIKE+BUY_RATIO reason: liquidity $30,613 < $40,000
+2026-11-25 08:55:05 FILTERED NB (pump.fun) mint=DXAFEsHi7642A1jom15ah7n2YY9LU4dWwXaCu13enDNC signals=VOL_SPIKE+BUY_RATIO reason: liquidity $29,280 < $40,000
+2026-11-25 08:55:05 FILTERED JIMMY (pump.fun) mint=AhgBubXXfMNmoVQApeCLLbBixy58wogj9vKFaBnUUPxP signals=VOL_SPIKE+BUY_RATIO reason: liquidity $9,778 < $40,000
+2026-11-25 09:00:05 FILTERED Lumii (meteora) mint=5csKPix8j71dv4BNkJPU8CPgxqT9Keqq9EJxfd18ALoU signals=VOL_SPIKE+BUY_RATIO reason: liquidity $14,479 < $40,000
+2026-11-25 09:00:05 FILTERED 4PUMP (pump.fun) mint=8ypx9tHqwLjJk51tqrm1iCrhTQ1PKshnw1FfpQjWpump signals=BUY_RATIO reason: liquidity $5,134 < $40,000
+2026-11-25 09:02:35 FILTERED CHUDJAK (pump.fun) mint=DKkTTtue6sb7kw5mJcASgfzpLtnQM9s9qcKriqurpump signals=VOL_SPIKE reason: liquidity $1,264 < $40,000
+2026-11-25 09:05:05 FILTERED ‮PMUP4 (meteora) mint=8xirdSgfHPWShAXABqsDBEBRN1KJsv5nrnYSgAmsb999 signals=VOL_SPIKE reason: liquidity $4,706 < $40,000
+2026-11-25 09:08:05 FILTERED Clover (pump.fun) mint=9bj2NxtzmccaADo8Rg14G9dddXU1NfFL8pxweCypump signals=VOL_SPIKE reason: liquidity $5,364 < $40,000
+2026-11-25 09:08:05 FILTERED NAUGHTY  (pump.fun) mint=436BcX8hF6ERozLniyL8d75bVJbRvxJJtdroKWC2pump signals=VOL_SPIKE reason: liquidity $1,261 < $40,000
+2026-11-25 09:09:05 FILTERED Reddit (pump.fun) mint=6MsaWYaAQ3vPKpQMi9ptiX4yhLv1EEt7NYcX5DH6pump signals=VOL_SPIKE reason: liquidity $90 < $40,000
+2026-11-25 09:10:05 FILTERED JENSEN (pump.fun) mint=9CWhyoovZGyubCK23vbLGzYyd1K9nGP4vWjvq7yrFFbp signals=VOL_SPIKE+BUY_RATIO reason: liquidity $30,411 < $40,000
+2026-11-25 09:10:05 FILTERED CAPTCHA (meteora) mint=CXLyn2A2foYvcxmEmn6ZhsMNHojWHdbLv5eCmJ1c1dty signals=VOL_SPIKE reason: liquidity $34,333 < $40,000
+2026-11-25 09:14:05 FILTERED 404GIRL (pump.fun) mint=7wohLebdTHjfCjP6PTVM3HJwMNed4vEL1ZyTawtupump signals=VOL_SPIKE reason: liquidity $4,091 < $40,000
+2026-11-25 09:14:05 FILTERED HELIORA (meteora) mint=9yXnf6nbPVjTSGowsacxh9SSpcnjNtoM1QwWB7WuPxUp signals=VOL_SPIKE reason: liquidity $2,764 < $40,000
+2026-11-25 09:14:05 FILTERED CAPTCHA (meteora) mint=3LRmsttd4ecGrc6qgC5YQtJyBQ8vUtb9fZgYNRtjhN9z signals=VOL_SPIKE reason: liquidity $1,885 < $40,000
+2026-11-25 09:15:05 FILTERED KING (meteora) mint=HSBzrKjpcSApRDekwz197YbYi5kz5ETn4V4qxd4hxWT9 signals=VOL_SPIKE reason: liquidity $34,491 < $40,000
+2026-11-25 09:16:05 FILTERED confidential (pump.fun) mint=EfQ6TNwSjjUHo2mcrj5q93ugvuUJkEv1DdPUSRtrpump signals=BUY_RATIO reason: liquidity UNKNOWN (source gives none)
+2026-11-25 09:19:05 FILTERED Aquamer (pump.fun) mint=G6F1daq9DouNW4LHvhm3pLie88CDkuVsFsitZU3xbonk signals=VOL_SPIKE+BUY_RATIO reason: 5m volume $5,331 < $25,000
+2026-11-25 09:19:05 FILTERED Koinu (meteora) mint=DgyHACF3gbrEgDoLwRmca3pY9cqhte9XS45c1EEKBgaq signals=VOL_SPIKE+BUY_RATIO reason: liquidity $12,471 < $40,000
+2026-11-25 09:22:05 FILTERED KING (meteora) mint=HSBzrKjpcSApRDekwz197YbYi5kz5ETn4V4qxd4hxWT9 signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-25 09:24:05 FILTERED BEAST (pump.fun) mint=6EkdVkMQhv1ckLkGgN42D8DiqnsNchBprUC9yJEzpump signals=VOL_SPIKE reason: liquidity $10,920 < $40,000
+2026-11-25 09:24:05 FILTERED Koinu (meteora) mint=6uertmojsB3CskihuoMFBRVE898JYV8xViMVzChwyxFz signals=VOL_SPIKE reason: liquidity $7,401 < $40,000
+2026-11-25 09:25:05 FILTERED 黄仁勋 (pump.fun) mint=2JUVq2EZwRmLUM6Q8xGW3DvKMiFKVeYnPnQTK7NppRPL signals=VOL_SPIKE+BUY_RATIO reason: liquidity $28,510 < $40,000
+2026-11-25 09:25:05 FILTERED NVDAx (pump.fun) mint=GPr1WUhB4XGHntPZFNqcbjTmo4NVMeZGxbJHGiiKQrpm signals=VOL_SPIKE+BUY_RATIO reason: liquidity $26,855 < $40,000
+2026-11-25 09:26:05 FILTERED Aquamer (pump.fun) mint=G6F1daq9DouNW4LHvhm3pLie88CDkuVsFsitZU3xbonk signals=BUY_RATIO reason: liquidity $0 < $40,000
+2026-11-25 09:26:35 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 121s old; no exit decision on it, position kept until fresh data
+2026-11-25 09:30:05 FILTERED JaoJiu (meteora) mint=EnLFbY4qpGmb4UNymZjh8cHZxo4KMfM5HWzyRH8YipU signals=VOL_SPIKE+BUY_RATIO reason: 5m volume $3,329 < $25,000
+2026-11-25 09:31:35 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 120s old; no exit decision on it, position kept until fresh data
+2026-11-25 09:31:35 FILTERED JaoJiu (meteora) mint=EnLFbY4qpGmb4UNymZjh8cHZxo4KMfM5HWzyRH8YipU signals=VOL_SPIKE+BUY_RATIO reason: holders 129 < 300
+2026-11-25 09:35:05 FILTERED JIMMY (pump.fun) mint=4T1HGFYMdA75R1MeBjfPEoJQEiWuCUARnZ3EYm24ps4J signals=VOL_SPIKE+BUY_RATIO reason: liquidity $9,221 < $40,000
+2026-11-25 09:35:05 FILTERED NYAMIT (pump.fun) mint=GsPPkCwPmxtXwpeXpr6Vv3zMREgRo2n2N13hpE7VasC7 signals=VOL_SPIKE reason: liquidity $17,326 < $40,000
+2026-11-25 09:36:35 FILTERED JaoJiu (meteora) mint=EnLFbY4qpGmb4UNymZjh8cHZxo4KMfM5HWzyRH8YipU signals=VOL_SPIKE+BUY_RATIO reason: LP unlocked/unknown
+2026-11-25 09:37:35 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 120s old; no exit decision on it, position kept until fresh data
+2026-11-25 09:39:05 FILTERED Nyamit (pump.fun) mint=JCd9vynvmBex2t79iGPb5L4jm62b5c4nwQG7sei5pump signals=VOL_SPIKE reason: liquidity $10,910 < $40,000
+2026-11-25 09:40:05 FILTERED ATX (pump.fun) mint=5KoNv1diBSfxgCou3JZCE7m3t2VDbnrDQQviXEDfLZZ9 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $28,367 < $40,000
+2026-11-25 09:40:05 FILTERED Anthropic (meteora) mint=21sysx3egsTqcXLvGa6mo2vp9TZNggG48h6iMFBRrg9S signals=VOL_SPIKE+BUY_RATIO reason: liquidity $13,742 < $40,000
+2026-11-25 09:41:35 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 120s old; no exit decision on it, position kept until fresh data
+2026-11-25 09:45:05 FILTERED SOLCHAN (pump.fun) mint=9woryP8Yxe5jU1YzcYVtW38PppzPjZTKxy4yYctapump signals=VOL_SPIKE reason: liquidity $8,677 < $40,000
+2026-11-25 09:46:05 FILTERED RAPSHEET (meteora) mint=6wAwSrNSR3hjrnAJTmKZWS8rw2fyDoojV3uVEJSLsRbY signals=VOL_SPIKE reason: liquidity $3,221 < $40,000
+2026-11-25 09:46:05 FILTERED POOK (meteora) mint=GRnpZaiyXUhrMjc3s7bbCRWcNJUeSqhbCHxkfqZVZbE9 signals=VOL_SPIKE reason: liquidity $1,571 < $40,000
+2026-11-25 09:46:05 FILTERED MGOAT (pump.fun) mint=J8JcqZTFyXsKtvrmoWZr8Zuz7xpAdoX11znHPoGVpump signals=VOL_SPIKE reason: liquidity $166 < $40,000
+2026-11-25 09:47:35 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 120s old; no exit decision on it, position kept until fresh data
+2026-11-25 09:49:05 FILTERED Bernard (pump.fun) mint=8LPJzr3SfD8Ehv13jjNj6LAUsxbaPeRsLemFdV8Wpump signals=VOL_SPIKE reason: liquidity $1,716 < $40,000
+2026-11-25 09:50:05 FILTERED SOLCHAN (pump.fun) mint=5GfgQ79T5P8hSmyKhvRWZvNehgV8gJ3JNTsUvjegbYze signals=VOL_SPIKE reason: liquidity $12,598 < $40,000
+2026-11-25 09:50:05 FILTERED GORP (pump.fun) mint=DjTvA6WC1YckGNxt5tSmUPBpeisf8DmHSbXdTJpkmJ2F signals=VOL_SPIKE reason: liquidity $30,778 < $40,000
+2026-11-25 09:54:05 FILTERED Zfire (pump.fun) mint=3eVUufFUmNeSsTyPrAJgsXNyD276NTKc6Nuc3Ao8bonk signals=VOL_SPIKE+BUY_RATIO reason: 5m volume $8,889 < $25,000
+2026-11-25 09:55:05 FILTERED HELIORA (meteora) mint=3Ho9EuD7pJa7RTZpSRKnVrYTASnUrDhFt9kSCE5hLJLs signals=VOL_SPIKE reason: liquidity $33,055 < $40,000
+2026-11-25 09:59:05 FILTERED Zfire (pump.fun) mint=3eVUufFUmNeSsTyPrAJgsXNyD276NTKc6Nuc3Ao8bonk signals=BUY_RATIO reason: liquidity $0 < $40,000
+2026-11-25 09:59:05 FILTERED GTA (fluxbeam) mint=82569cfGrECpDw8qSWtdJHnzi9gWAgeWFDZBQGT8BzRC signals=VOL_SPIKE reason: 5m volume $298 < $25,000
+2026-11-25 09:59:05 FILTERED SOLCHAN (meteora) mint=J7477FTD6Yhy6QSX5eTqc9BeAPWU7LuxxtvHBcZaGah7 signals=VOL_SPIKE reason: liquidity $12,787 < $40,000
+2026-11-25 10:00:05 FILTERED SOLCHAN (meteora) mint=DbhccUauJsKdvfvDAAzF2enPYitjtz34vmkFZBg3VYow signals=VOL_SPIKE reason: liquidity $31,041 < $40,000
+2026-11-25 10:00:05 FILTERED Jensen (pump.fun) mint=GrqTC5rD3WW9YPYc55WikwdSdztZY3Pnookeb8dV35Ka signals=VOL_SPIKE reason: liquidity $32,794 < $40,000
+2026-11-25 10:00:05 FILTERED SOLCHAN (meteora) mint=9q6fN7BTPZy17EjhHurrRWhRJp3dbqzE4FeG4NM5bz3Q signals=VOL_SPIKE reason: liquidity $18,219 < $40,000
+2026-11-25 10:00:05 FILTERED ANSEM (pump.fun) mint=2j6n3XcBU5iP9VJQaptjFUbtyveGZGoBfjhzUsra2B33 signals=VOL_SPIKE reason: liquidity $12,597 < $40,000
+2026-11-25 10:01:35 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 122s old; no exit decision on it, position kept until fresh data
+2026-11-25 10:05:05 FILTERED SLOTBOUND (pump.fun) mint=DTAmoSRKpuwbKYXPwnfoyiKfCtoZyrvwJLrnSkzcNZ9H signals=VOL_SPIKE reason: liquidity $18,592 < $40,000
+2026-11-25 10:05:05 FILTERED SLOTBOUND (pump.fun) mint=HiPoSAhQdUKPptaByLPD8ZbavYCWnUR8wh778FHMzuBr signals=VOL_SPIKE reason: liquidity $17,776 < $40,000
+2026-11-25 10:07:05 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 151s old; no exit decision on it, position kept until fresh data
+2026-11-25 10:07:05 SKIPPED  BASKET (raydium) mint=3Tg6YnNrfPdFfsY14MaNsDMWLseAyrUDS3myJtbaJN6f signals=HOLDER_GROWTH reason: entries closed in the last minutes of the run
+2026-11-25 10:07:05 FILTERED CJ (pump.fun) mint=G4XpGNbj9pFKuXTcj6PymAmiVGnZJTbq5S4ia8SiEPkC signals=VOL_SPIKE reason: liquidity $11,242 < $40,000
+2026-11-25 10:10:05 FILTERED Jensen (pump.fun) mint=GrqTC5rD3WW9YPYc55WikwdSdztZY3Pnookeb8dV35Ka signals=BUY_RATIO reason: 5m volume $18,204 < $25,000
+2026-11-25 10:10:05 FILTERED SKYNET (pump.fun) mint=3EfiSnfTrZHxF8NWXeqRprWgmMwpfjcpagicxrsvW1ys signals=VOL_SPIKE reason: liquidity $981 < $40,000
+2026-11-25 10:11:35 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 121s old; no exit decision on it, position kept until fresh data
+2026-11-25 10:13:05 FILTERED Nyamitto (pump.fun) mint=5BX4LiBheGbrPd7rCxdpbdE14hEgm542Wdpt1zs65fAo signals=VOL_SPIKE reason: liquidity $9,598 < $40,000
+2026-11-25 10:13:05 FILTERED Slotbound (pump.fun) mint=CoN1PPXSgDWHs9u29hKQ39gBH5roeP5c54hxZ49Upump signals=VOL_SPIKE reason: liquidity $6,245 < $40,000
+2026-11-25 10:14:05 FILTERED USOD (orca) mint=DGKeKyyaZQ9ZaCjmPPDLopGmLPT3q1VvC2kdemsuYbbN signals=VOL_SPIKE reason: liquidity $25,066 < $40,000
+2026-11-25 10:14:05 FILTERED SLOTBOUND (pump.fun) mint=D2M4hqWFuRHXx1VemZR6KcvPSGcUwfESPkCWbRtpNynG signals=VOL_SPIKE reason: liquidity $16,236 < $40,000
+2026-11-25 10:15:05 FILTERED ATX (pump.fun) mint=6roKAPWqxEovZz1M9XLSa5MzRdrmsCj2W8j5TZqPGWA6 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $29,511 < $40,000
+2026-11-25 10:20:05 FILTERED ‮ANIMUL (meteora) mint=6c5ggYuBNULwqPNHqyZqRJrFqswVLZkbKdAQCP2zffbp signals=VOL_SPIKE reason: liquidity $3,491 < $40,000
+2026-11-25 10:20:05 FILTERED NALA (meteora) mint=62ABoH8wfUsbJBMzk8QLUciEZDP6kTH3FU2YWvwFWNbM signals=VOL_SPIKE reason: liquidity $32,053 < $40,000
+2026-11-25 10:25:05 FILTERED ZELENSKYY (pump.fun) mint=ENRh7Am2GzbFvpjorE7nHfdfVq9zoScsc4snsxtKmpCL signals=VOL_SPIKE+BUY_RATIO reason: liquidity $16,243 < $40,000
+2026-11-25 10:25:05 FILTERED NALA (meteora) mint=62ABoH8wfUsbJBMzk8QLUciEZDP6kTH3FU2YWvwFWNbM signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-25 10:25:05 FILTERED BCH  (raydium) mint=3JdmbXaA7Etsd48JBW9JwLpmXg9FBvHSmccLDrUtHD9q signals=VOL_SPIKE reason: 5m volume $5,120 < $25,000
+2026-11-25 10:25:05 FILTERED ZELENSKYY (pump.fun) mint=F83Fafg3SqGvUgkFQH4M53y85niQbeaWFwWBfBbQ89j1 signals=VOL_SPIKE reason: liquidity $17,558 < $40,000
+2026-11-25 10:30:05 FILTERED JaoJiu (pump.fun) mint=2UyrvgCRXiEwiKRVk96gs6B4myrBHZAfcLyMVLE8vSCy signals=BUY_RATIO reason: liquidity $29,564 < $40,000
+2026-11-25 10:30:05 FILTERED REBACCA (pump.fun) mint=CKe7rAirzm36ugxkGNLyeABKmir1TvuFtVwh2zSCNwNJ signals=VOL_SPIKE reason: liquidity $20,700 < $40,000
+2026-11-25 10:30:05 FILTERED JaoJiu (pump.fun) mint=J5HpUDc6AqpXyHrGFWWUAdrK3Go6342GknYDPSVasB7R signals=VOL_SPIKE reason: liquidity $15,398 < $40,000
+2026-11-25 10:31:05 FILTERED PC (pump.fun) mint=pUmpLHQPUDbk92NwncKUiSpzafBuNXqAgnc5B7oCArd signals=VOL_SPIKE reason: liquidity $7,955 < $40,000
+2026-11-25 10:37:05 FILTERED USOI (pump.fun) mint=8Gp4N48kYz9DtFh5DyWoT26tj1bi6KkpBtPRwZ1V9eCE signals=VOL_SPIKE+BUY_RATIO reason: liquidity $27,949 < $40,000
+2026-11-25 10:38:05 FILTERED ZELENSKYY (meteora) mint=BhMHDz3zahCwEnZGNgU49mDrbDzB2dg1qTnUbtcQEcv4 signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-25 10:41:05 FILTERED 旺旺 (pump.fun) mint=89MXeqTqDprM9r9KUswDp5Dq119KbWey3EvLNMnM7777 signals=VOL_SPIKE reason: liquidity $14,469 < $40,000
+2026-11-25 10:47:05 FILTERED UNIC (meteora) mint=EjTeAzV6ztzvwyLRPJcGWZZLCgwMHcYmmHEQsZtZAoRX signals=VOL_SPIKE reason: liquidity $12,664 < $40,000
+2026-11-25 10:49:05 FILTERED Memecoin (pump.fun) mint=2rhoUVCygC2LyQWNMXsofKXo1rcbZFJnSTpDbU9Ppump signals=VOL_SPIKE reason: liquidity $5,126 < $40,000
+2026-11-25 10:52:05 FILTERED JaoJiu (pump.fun) mint=5xEnFG6QiwdUK5n9tkvUXa9Nxax1esUDMwfDjKHM1mXF signals=VOL_SPIKE reason: liquidity $11,313 < $40,000
+2026-11-25 10:56:05 FILTERED KING (pump.fun) mint=9Gdhz3WVnTaFcbGPrK2GbBdZpbwAQFfFK42bSgsupump signals=BUY_RATIO reason: liquidity $7,204 < $40,000
+2026-11-25 10:56:35 FILTERED FAPGUY (pump.fun) mint=7CHNjDbmREJXzXeFF4SnGgMmd31YcUZZHno3Y5rCpump signals=VOL_SPIKE reason: liquidity $3,976 < $40,000
+2026-11-25 10:58:05 FILTERED BUTTKET (meteora) mint=4HHpPnuhzvznW8ivQ4Vb8oYhVveBDsEjw1Acg1F13KtE signals=VOL_SPIKE+BUY_RATIO reason: liquidity $14,820 < $40,000
+2026-11-25 10:59:05 FILTERED Slotbound (pump.fun) mint=6woMBVpn4QwQVYeLysGKB2JiBSUCxkENmbemj5eE9Zz3 signals=BUY_RATIO reason: liquidity $5,425 < $40,000
+2026-11-25 11:01:05 FILTERED bon (pump.fun) mint=FMS1KXoLPrbYXEDgpRfDgYwPtwJ7JV5ZXduX2SUFpump signals=VOL_SPIKE reason: liquidity $6,287 < $40,000
+2026-11-25 11:02:05 FILTERED Merged (pump.fun) mint=AMYpNGi5aGrKr1ZDsotUdWh7k1mMi569ygtaHJmErGEd signals=VOL_SPIKE reason: liquidity $1,792 < $40,000
+2026-11-25 11:10:05 FILTERED SNOWCUMBRR (pump.fun) mint=Gf9wm93TTDpbPC467Eio5Vc42Kr6MAomUD172drWpump signals=VOL_SPIKE reason: liquidity $8,470 < $40,000
+2026-11-25 11:10:05 FILTERED Helipaid (meteora) mint=GYa6yJQXN5cFQuT8WXf7TxhiFw5kCqNALZiPdA765JyT signals=VOL_SPIKE reason: liquidity $4,627 < $40,000
+2026-11-25 11:13:05 FILTERED HELLO (pump.fun) mint=CaixgMz9cVf4e5WM1TYJRLz32xbgGVLkSqvPtjMytwP6 signals=VOL_SPIKE reason: liquidity $13,935 < $40,000
+2026-11-25 11:13:05 FILTERED hello (meteora) mint=4hFuexoKzh2sn1EpSRYUBZH46Zs4K87s5Xyd6fPq2NGv signals=VOL_SPIKE reason: liquidity $29,791 < $40,000
+2026-11-25 11:16:05 FILTERED wCAT (pump.fun) mint=E6YDeFJy4HUhas8fSMxNzRS7R3vwff6tinSEDW5U89Yx signals=VOL_SPIKE reason: liquidity $5,111 < $40,000
+2026-11-25 11:19:05 FILTERED REBACCA (pump.fun) mint=CW2GNsWs6Fmgj8MKXqWWKNSgiEGTyHRxKKQNkQzrpump signals=BUY_RATIO reason: liquidity $5,508 < $40,000
+2026-11-25 11:19:05 FILTERED JaoJiu (pump.fun) mint=ArE7X7VstysrGCA7PJ2sGQx4EHMceEPQjLm5QghL1BGH signals=VOL_SPIKE reason: liquidity $15,802 < $40,000
+2026-11-25 11:20:05 FILTERED hello (meteora) mint=4hFuexoKzh2sn1EpSRYUBZH46Zs4K87s5Xyd6fPq2NGv signals=VOL_SPIKE reason: holders None < 300
+2026-11-25 11:20:05 FILTERED SNOWCUMBRR (pump.fun) mint=EgrNPZBUh3iGH2bpD9WCZZrM7DHXLcd8s4KFph9zVM1k signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-25 11:21:35 FILTERED hello (meteora) mint=4hFuexoKzh2sn1EpSRYUBZH46Zs4K87s5Xyd6fPq2NGv signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-25 11:24:05 FILTERED LEMON (meteora) mint=5DHAaST8mrY3xmdyJSb2ECRnSzyZJLhPwwFJLdjTJS3P signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-25 11:28:05 FILTERED bon (meteora) mint=9VeEZRdJv2ybb8d6coLw4UQwueg7ykyjTFEExTJu8S5R signals=VOL_SPIKE+BUY_RATIO reason: liquidity $17,488 < $40,000
+2026-11-25 11:37:05 FILTERED Boor (pump.fun) mint=GHFpSSw2ZMjmKCyc1wrHUjJiqnJeP18mekY9GL1Xpump signals=VOL_SPIKE reason: liquidity $9,213 < $40,000
+2026-11-25 11:37:05 FILTERED SWARM (pump.fun) mint=2Rw6rLRRZXQLNreForjeVvDjnpYUaW6rmMFXmRP9pump signals=VOL_SPIKE reason: liquidity $4,160 < $40,000
+2026-11-25 11:47:05 FILTERED 4 (pump.fun) mint=8wacdzPkcfSGq99YpbWnfikeV8sBfqZBwCvYjPUxtpMW signals=BUY_RATIO reason: liquidity $5,147 < $40,000
+2026-11-25 11:48:05 FILTERED JaoJiu (meteora) mint=EAwGK4NPtdbXhuAtj7ZFYLFcJzCa7CuSgsE48VQ2JfGD signals=VOL_SPIKE reason: liquidity $2,773 < $40,000
+2026-11-25 11:48:05 FILTERED JIMMY (meteora) mint=GgbrUc2uTHQorSDmbd5AueX6YJa6ZB6E2kfu1ny1W52g signals=VOL_SPIKE reason: liquidity $2,967 < $40,000
+2026-11-25 11:51:05 FILTERED Helipaid (meteora) mint=F9uXudpDQVvQDUSqieuD79oxYVQMQzHbgCbYkrorpump signals=VOL_SPIKE reason: liquidity $47 < $40,000
+2026-11-25 11:54:05 FILTERED Pompom (meteora) mint=5B7tkaL5Y2rHk3oobsbgm1AxbzM6X3AsEWaxvUzFEBQ9 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $2 < $40,000
+2026-11-25 12:09:05 FILTERED 3sat (pump.fun) mint=FaWEANo8Kz9B415xv3cocE8q5JgghN7CY8FYG4C5pump signals=BUY_RATIO reason: liquidity $7,650 < $40,000
+2026-11-25 12:10:05 FILTERED Pompom (meteora) mint=6okJdzU2FkEPKHxjEWBzJsSNvZtzdDkh3t4Vc7dUW8E8 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $1 < $40,000
+2026-11-25 12:15:05 FILTERED Pompom (meteora) mint=AaUujJy1LG3cfzcaPeUtgAnZScU6pFSCUpgfJo9xQBf1 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $15,818 < $40,000
+2026-11-25 12:16:05 FILTERED PAYLOOP (meteora) mint=4FPBvGXbbcpbBAfNvbMpQVgFGuA9t69qsZTe8PbCwM7e signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-25 12:16:05 FILTERED Pompom (meteora) mint=7uq1SVRe5H3zK21wxsUUeJMp8bV7EWyDbBKq8D5RCzCr signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-25 12:22:05 FILTERED Mizore (meteora) mint=Dr3jeTJrnShmcy6Leoc3st385eWe5kU6M1qUHPGkHdCq signals=VOL_SPIKE reason: liquidity $34,095 < $40,000
+2026-11-25 12:22:05 FILTERED QELIUS (meteora) mint=6jp5o6rBecTKcPVaavDMvNZabQeVF8Cu32e5zLydXuLs signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-25 12:27:05 FILTERED Qelius (meteora) mint=4k77iyQxgTDLLriB8namVE64jQcXQ3yia4EkorfSwhBd signals=VOL_SPIKE reason: liquidity $32,557 < $40,000
+2026-11-25 12:32:05 FILTERED FROOVIK (pump.fun) mint=nH8V661CjV7o5jEffnpHhkGvvxwo3k4tirRpZmeUZk6 signals=VOL_SPIKE reason: liquidity $15,656 < $40,000
+2026-11-25 12:32:05 FILTERED Froovik (meteora) mint=CvLUFfMwV5dGCPQ2Y59NXfxnHViKw4Gh94UwNLsRkof9 signals=VOL_SPIKE reason: liquidity $30,922 < $40,000
+2026-11-25 12:33:05 FILTERED Pompom (pump.fun) mint=8ArRsCwf3FqiMTY4wHqPmViWGJyJWQqQ6YucgTrhpump signals=BUY_RATIO reason: liquidity $8,164 < $40,000
+2026-11-25 12:33:05 FILTERED Froovik (meteora) mint=CkxznHmaHU414mHMqGFTfKwn7uNZW9S8oGJSFMPGV8Fp signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-25 12:35:05 FILTERED PILOTUS (pump.fun) mint=2BKQXFh7Rss1ykqsj34GXbaU4zpnrnJJZHGDeouFpump signals=VOL_SPIKE reason: liquidity $6,714 < $40,000
+2026-11-25 12:36:05 FILTERED OUROBOROS (raydium) mint=38EDdUxnJvrnDsJyB45E2W3pK26qLEjmWTvsEmMuG9ZR signals=BUY_RATIO reason: liquidity $15,647 < $40,000
+2026-11-25 12:43:05 FILTERED JI (meteora) mint=2oRwZfBxVZX1eeavYEDa1iYY5UDorcxQkue6rCniSrnw signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-25 12:46:35 FILTERED JI (meteora) mint=2oRwZfBxVZX1eeavYEDa1iYY5UDorcxQkue6rCniSrnw signals=VOL_SPIKE reason: liquidity $11 < $40,000
+2026-11-25 12:56:05 FILTERED ALLOC (pump.fun) mint=12gycaao2rR4sga2joFMA1k87unGpNSbBT1CiJRopump signals=VOL_SPIKE reason: liquidity $5,933 < $40,000
+2026-11-25 13:00:05 FILTERED PFP (pump.fun) mint=5PiugAAPsRxmatFE6uJ7jrtJ817TNKpypSa1JoZspump signals=VOL_SPIKE reason: liquidity $10,743 < $40,000
+2026-11-25 13:03:05 FILTERED Pompom (meteora) mint=AVCTTCQs39LSdn9aKczW2VAh9jUkhoAC1UAf75Ypdmt signals=VOL_SPIKE+BUY_RATIO reason: 5m volume $2,578 < $25,000
+2026-11-25 13:03:05 FILTERED DU (pump.fun) mint=5mWwFaEF5eLEHSAUzhCiEKiWiYPUGwenQFpBQMz4pump signals=VOL_SPIKE reason: liquidity $5,057 < $40,000
+2026-11-25 13:04:05 FILTERED Pompom (meteora) mint=GNihDAwwRf83884tCgZ1Z9TGFDu4GpgfZPBn4NQagf5p signals=VOL_SPIKE+BUY_RATIO reason: liquidity $28,595 < $40,000
+2026-11-25 13:04:05 FILTERED JOE (meteora) mint=2aMswwcchiDmZYSH3L7ufaGhe7KPAum1s7gp77g8gz57 signals=VOL_SPIKE reason: liquidity $30,507 < $40,000
+2026-11-25 13:04:35 FILTERED Pompom (meteora) mint=AVCTTCQs39LSdn9aKczW2VAh9jUkhoAC1UAf75Ypdmt signals=VOL_SPIKE+BUY_RATIO reason: holders 105 < 300
+2026-11-25 13:09:05 FILTERED GAYCOIN (meteora) mint=DbVFq6NBeajmCVZ9TvPFU3D8ZpUPFyYW2TcAng5cCyzJ signals=VOL_SPIKE+BUY_RATIO reason: liquidity $26,833 < $40,000
+2026-11-25 13:09:05 FILTERED USOI (pump.fun) mint=6Ay9W4D6MhGCZh5MaBcb3Yc35VNsVfPLLGxp4FqR6VRA signals=VOL_SPIKE+BUY_RATIO reason: liquidity $27,476 < $40,000
+2026-11-25 13:09:05 FILTERED Pompom (meteora) mint=GNihDAwwRf83884tCgZ1Z9TGFDu4GpgfZPBn4NQagf5p signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-25 13:10:05 FILTERED Pompom (meteora) mint=AVCTTCQs39LSdn9aKczW2VAh9jUkhoAC1UAf75Ypdmt signals=VOL_SPIKE+BUY_RATIO reason: LP unlocked/unknown
+2026-11-25 13:12:05 FILTERED GAYCOIN (meteora) mint=7ztJbhTfgik8Q6oVfTiXhQKeYDosAbpdCPpm9xwkNwm5 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $20,910 < $40,000
+2026-11-25 13:16:05 FILTERED kol (pump.fun) mint=9EuxZ4oKk7axaXTbiJPk8RJ2Q9fBshH3UtuUWExQpump signals=VOL_SPIKE reason: liquidity $6,703 < $40,000
+2026-11-25 13:17:35 FILTERED Pompom (meteora) mint=AVCTTCQs39LSdn9aKczW2VAh9jUkhoAC1UAf75Ypdmt signals=BUY_RATIO reason: liquidity $12 < $40,000
+2026-11-25 13:18:05 FILTERED ‮NW4RD (meteora) mint=BBpmQdHavfHJd81vB4mqbPaXxexnKNGKEQAuAUY7wsCR signals=VOL_SPIKE reason: liquidity $2,811 < $40,000
+2026-11-25 13:19:05 FILTERED Pompom (meteora) mint=8ZGHYJfzTiZUV8Y6MKQKLRg8sDihd24Hq6jn69KZZz4p signals=VOL_SPIKE+BUY_RATIO reason: liquidity $29,174 < $40,000
+2026-11-25 13:19:05 FILTERED Pompom (pump.fun) mint=CX1thCmMcHk4saZGqYNN5BJEaGVoKQYUTxX1Rcwo4YNe signals=VOL_SPIKE+BUY_RATIO reason: liquidity $28,447 < $40,000
+2026-11-25 13:19:05 FILTERED WIF (pump.fun) mint=FXY7wYo5N5BhXFsJ8izNgiScQatuUgHHbdgbvLfppump signals=VOL_SPIKE reason: liquidity $11,959 < $40,000
+2026-11-25 13:19:05 FILTERED JOE (meteora) mint=7YwZ5AGV8RiYiergteXqmo9PdhVeRU1Am3Ax7iBkZaXc signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-25 13:24:05 FILTERED Pompom (meteora) mint=5EmvWDizkpjAXbcfCcVq69w1id8GaLzi4LLwtuSgpump signals=BUY_RATIO reason: 5m volume $7,448 < $25,000
+2026-11-25 13:25:05 FILTERED Pompom (meteora) mint=6STjdDxw8K1W1PasnGvH93L2uw5j8TnAzBxgzWHUYjt9 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $30,467 < $40,000
+2026-11-25 13:30:05 FILTERED Jensen (pump.fun) mint=22ASqihSAfsd7PgNF3rGhQcvUnYwsJqpnm29ee8oMYxq signals=VOL_SPIKE+BUY_RATIO reason: liquidity $33,826 < $40,000
+2026-11-25 13:30:05 FILTERED CI (meteora) mint=H5Gy943YQNBSBMqPxrRnXFfXnnzcLfQNPsZeoZ1k7LzQ signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-25 13:31:05 FILTERED Pompom (meteora) mint=6STjdDxw8K1W1PasnGvH93L2uw5j8TnAzBxgzWHUYjt9 signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-25 13:36:05 FILTERED 英伟达 (pump.fun) mint=JD7QWqDSiriGCqjspfGLjj2My3nWzZfEnz7J2WeiktYX signals=VOL_SPIKE+BUY_RATIO reason: liquidity $0 < $40,000
+2026-11-25 13:36:05 FILTERED HACKED (pump.fun) mint=9bJUnMKVjc36ZTm9M1cSMY9iy4nnepvLUP2AbRZeEdpq signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-25 13:37:35 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 121s old; no exit decision on it, position kept until fresh data
+2026-11-25 13:41:05 FILTERED USOI (pump.fun) mint=ebksaE4Uus9exiuxzQATJX4XVY5mJgtz3u6xfFBMXd6 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $27,415 < $40,000
+2026-11-25 13:41:05 FILTERED gem (meteora) mint=ChKyQqPyVkWv9EEMCp69RUQuc7YXzvNUrZDJJaKzNzER signals=VOL_SPIKE reason: liquidity $32,796 < $40,000
+2026-11-25 13:41:05 FILTERED TANGENT (meteora) mint=4o1xumSYFF6qpddMddhNKoJMHzdTo6gA7BZPiWdfPJbE signals=VOL_SPIKE reason: liquidity $17,790 < $40,000
+2026-11-25 13:43:05 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 151s old; no exit decision on it, position kept until fresh data
+2026-11-25 13:45:05 FILTERED gem (meteora) mint=ChKyQqPyVkWv9EEMCp69RUQuc7YXzvNUrZDJJaKzNzER signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-25 13:46:05 FILTERED INUF (pump.fun) mint=E3AKebhTnToMxcTFMtLQWwdHnM9maSSa96DW8Pf1gnZZ signals=VOL_SPIKE reason: liquidity $17,545 < $40,000
+2026-11-25 13:46:05 FILTERED UKRAINU (pump.fun) mint=23d3QdHYef1vJZmLbYz3HUGXEGEeeiXEMmD5B6DXkbQX signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-25 13:46:05 FILTERED UKRAINU (pump.fun) mint=27EtSkafz1Nx7qo5qX3o7ucaE3m374FEiVeSstK2okJb signals=VOL_SPIKE reason: liquidity $0 < $40,000
+2026-11-25 13:47:35 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 124s old; no exit decision on it, position kept until fresh data
+2026-11-25 13:49:05 FILTERED GEMIDIA (pump.fun) mint=3wrZTXRbMk3pCXmmNDWqkaowSsxGzhTnmhPTSXYApump signals=VOL_SPIKE+BUY_RATIO reason: liquidity $36,972 < $40,000
+2026-11-25 13:50:05 FILTERED GEMIDIA (pump.fun) mint=3wrZTXRbMk3pCXmmNDWqkaowSsxGzhTnmhPTSXYApump signals=VOL_SPIKE+BUY_RATIO reason: LP unlocked/unknown
+2026-11-25 13:50:05 FILTERED Ukrainu (pump.fun) mint=9Pe9Fj2BCWf1o5tWXvNYi6f8JTGr3qtq3JL66JRZpump signals=VOL_SPIKE reason: liquidity $6,965 < $40,000
+2026-11-25 13:52:05 FILTERED FREYJA (pump.fun) mint=9ev61SzHeHrFtDYiykMjyKHUDiB7PK3rwCeCkiDFpump signals=VOL_SPIKE reason: liquidity $1,693 < $40,000
+2026-11-25 13:58:05 SKIPPED  Pompom (pump.fun) mint=5EmvWDizkpjAXbcfCcVq69w1id8GaLzi4LLwtuSgpump signals=HOLDER_GROWTH reason: entries closed in the last minutes of the run
+2026-11-25 14:03:05 FILTERED Grokie (pump.fun) mint=6hC5GfSzD1c9xCdNuixX6suzboMT8EzKnD3PisuKpump signals=VOL_SPIKE+BUY_RATIO reason: liquidity $35,604 < $40,000
+2026-11-25 14:03:05 FILTERED KYM (pump.fun) mint=DQpxKgyHwRb3L871naNBVQ4xy1xwBfmugWKc4CMridA6 signals=VOL_SPIKE reason: liquidity $11,600 < $40,000
+2026-11-25 14:03:05 FILTERED KYM (meteora) mint=F2No587hsFDcB5fWgqTYW5NPzqYHeQj9KQYoqF2Fx4yS signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-25 14:03:05 FILTERED KYM (pump.fun) mint=Hvi9xTj6vWCypxEZh3mCbiS9Ywshex8LyYAdBt7Epump signals=VOL_SPIKE reason: liquidity $9,737 < $40,000
+2026-11-25 14:04:05 FILTERED 蚁巢 (pump.fun) mint=9FQQ7cDjnUuQTMQWEfb1tDqrmRdKQPXRKGqw8AD1cQWz signals=VOL_SPIKE+BUY_RATIO reason: liquidity $28,222 < $40,000
+2026-11-25 14:04:05 FILTERED KYM (meteora) mint=3RwMMReNuwUvFdzch2qMqhKVbet2chqNzn4mbb2ZTsmH signals=VOL_SPIKE+BUY_RATIO reason: liquidity $0 < $40,000
+2026-11-25 14:04:05 FILTERED TANGENT (raydium) mint=BQYzmKyoSzdgeaeRiRwKJdWVaiLjpngUH6YT49PNNhsS signals=BUY_RATIO reason: liquidity $14,253 < $40,000
+2026-11-25 14:04:05 FILTERED JIMMY (meteora) mint=Au7vRCkHVDbh9D4LDpNXvbReociWrkQhQ63LkJDB4wRN signals=VOL_SPIKE reason: liquidity $36,549 < $40,000
+2026-11-25 14:06:05 FILTERED Lore (pump.fun) mint=91SRgG84XsmTKj5mHZiLGgx88DCvgqw46owfv36xpump signals=VOL_SPIKE reason: liquidity $4,286 < $40,000
+2026-11-25 14:07:05 FILTERED hacked (pump.fun) mint=FK7bc3fR8UL8uogN2u8J9yEpEbQJKR7yKsp3G8rvpump signals=VOL_SPIKE reason: liquidity $10,216 < $40,000
+2026-11-25 14:07:05 FILTERED GEMIDIA (pump.fun) mint=3wrZTXRbMk3pCXmmNDWqkaowSsxGzhTnmhPTSXYApump signals=BUY_RATIO reason: 5m volume $18,508 < $25,000
+2026-11-25 14:07:05 FILTERED KYM (pump.fun) mint=2u2qqfRjb382otdzeZSFWbaAHrXcjgxCGT6QQzMSXBnM signals=VOL_SPIKE reason: liquidity $18,438 < $40,000
+2026-11-25 14:08:05 FILTERED Pompom (pump.fun) mint=DfzoCEGiiZSA3N4y9os59uc6ihE7gD464njgU7SdoXcu signals=VOL_SPIKE+BUY_RATIO reason: liquidity $29,174 < $40,000
+2026-11-25 14:08:05 FILTERED KYM (meteora) mint=F2No587hsFDcB5fWgqTYW5NPzqYHeQj9KQYoqF2Fx4yS signals=VOL_SPIKE reason: liquidity $9 < $40,000
+2026-11-25 14:08:05 FILTERED JIMMY (meteora) mint=Au7vRCkHVDbh9D4LDpNXvbReociWrkQhQ63LkJDB4wRN signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-25 14:08:05 FILTERED KYM (meteora) mint=5AiGkHdKQPXtYJjVFmaXKzU37v5Sxuhu4V9Z26VS1GuE signals=VOL_SPIKE reason: liquidity $30,207 < $40,000
+2026-11-25 14:08:05 FILTERED HEYOS (meteora) mint=79vQwT9mDzVgzzj4KjyvKC7PBdrcJ8VNAhTnNLXkiVmf signals=VOL_SPIKE reason: liquidity $16,204 < $40,000
+2026-11-25 14:10:05 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 151s old; no exit decision on it, position kept until fresh data
+2026-11-25 14:12:05 INFO     end cycles=690 open=1 closed=4 failed_exits=1 (open positions stay open; no sale is invented)
