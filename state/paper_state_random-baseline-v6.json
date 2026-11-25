@@ -1,13 +1,13 @@
 {
  "strategy": "random-baseline-v6",
- "saved": "2026-11-24T16:11:07.814836",
+ "saved": "2026-11-25T04:31:16.970837",
  "start": 70.0,
  "cash": 65.23057341010895,
  "wins": 2,
  "losses": 2,
  "loss_streak": 0,
  "day": "2026-11-19",
- "peak": 65.33190055753772,
+ "peak": 65.32686185160131,
  "paused": false,
  "curve": [
   [
@@ -309,6 +309,30 @@
   [
    "2026-11-24T15:26:28.125607",
    65.32686185160131
+  ],
+  [
+   "2026-11-24T22:46:16.891872",
+   65.32686185160131
+  ],
+  [
+   "2026-11-24T23:46:16.905613",
+   65.32686185160131
+  ],
+  [
+   "2026-11-25T00:46:16.919282",
+   65.32686185160131
+  ],
+  [
+   "2026-11-25T01:46:16.932723",
+   65.32587868946737
+  ],
+  [
+   "2026-11-25T02:46:16.945979",
+   65.32587868946737
+  ],
+  [
+   "2026-11-25T03:46:16.959299",
+   65.32587868946737
   ]
  ],
  "positions": {
@@ -327,7 +351,7 @@
    "parts_done": 2,
    "stage": 0,
    "peak": 0.0003531,
-   "last_price": 1.567e-06,
+   "last_price": 1.551e-06,
    "reasons": [],
    "written_off": 0.0
   }
@@ -390,6 +414,7 @@
   "27u3diWofnXGUkddjLGhcy1nRssFKHW3RtNbpWzUpump",
   "3BcJ4SSCfbxDMrWcUDucyCWxMjmy4M2ECCtvxu86pump",
   "5LDowscYVD3a6ZS4m8gCqG5nU16eLTwRXhciFi1bpump",
+  "816BuXnCFQqt6KXbBTcFgHWD29Ckpaqt8HMKSN4Vpump",
   "9vLdkMGZ9jbKAZZKrxVzShEBuafLkjB7UgHfNh3xpump",
   "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump",
   "B34nXKzCgsJb9ChLuSHPRpXLE3WFSWyeT8Cqkzzmpump",

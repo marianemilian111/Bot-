@@ -1,11 +1,11 @@
 {
  "strategy": "capture-v6",
- "saved": "2026-11-24T16:11:07.813869",
+ "saved": "2026-11-25T04:31:16.969744",
  "start": 70.0,
- "cash": 96.38427619580472,
+ "cash": 94.97736733618903,
  "wins": 2,
- "losses": 1,
- "loss_streak": 0,
+ "losses": 2,
+ "loss_streak": 1,
  "day": "2026-11-19",
  "peak": 96.4126433611568,
  "paused": false,
@@ -309,6 +309,30 @@
   [
    "2026-11-24T15:26:28.125607",
    96.4126433611568
+  ],
+  [
+   "2026-11-24T22:46:16.891872",
+   96.4126433611568
+  ],
+  [
+   "2026-11-24T23:33:16.902580",
+   95.00573450154111
+  ],
+  [
+   "2026-11-25T00:33:16.916362",
+   95.00573450154111
+  ],
+  [
+   "2026-11-25T01:33:16.929793",
+   95.00573450154111
+  ],
+  [
+   "2026-11-25T02:33:16.943041",
+   95.00573450154111
+  ],
+  [
+   "2026-11-25T03:33:16.956666",
+   95.00573450154111
   ]
  ],
  "positions": {
@@ -375,6 +399,18 @@
    ],
    "written_off": 3.768496658909714,
    "addr": "E9rWKjVhHMxQkxfREr7Li8Yy46rVcWiWHoKVQAe9pump"
+  },
+  {
+   "symbol": "MARS",
+   "opened": "2026-11-24T23:30:46.902020",
+   "closed": "2026-11-24T23:33:16.902580",
+   "cost": 9.64126433611568,
+   "proceeds": 8.2343554765,
+   "reasons": [
+    "HARD_STOP"
+   ],
+   "written_off": 0.0,
+   "addr": "816BuXnCFQqt6KXbBTcFgHWD29Ckpaqt8HMKSN4Vpump"
   }
  ],
  "failed_exits": 2,
@@ -383,9 +419,11 @@
   "3BcJ4SSCfbxDMrWcUDucyCWxMjmy4M2ECCtvxu86pump",
   "3cL47ohWa2HApLYKtqPsqkjaxJ6HLvT5Ri1KvWdXpump",
   "5LDowscYVD3a6ZS4m8gCqG5nU16eLTwRXhciFi1bpump",
+  "816BuXnCFQqt6KXbBTcFgHWD29Ckpaqt8HMKSN4Vpump",
   "82u71wqQSa4NmD1UTTDwKyh5EUm3xe9pMp4UZXhFpump",
   "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump",
   "DkHsZ1kjd2Fua8sgKE6PhHhyCdXYscbDVN7mAfiGpump",
+  "E35iEA2yLLHc1tjm6et1Z3YuH8DhxJYWtWezPHgSpump",
   "E9rWKjVhHMxQkxfREr7Li8Yy46rVcWiWHoKVQAe9pump",
   "EMjVCbyVHVZ88zvmQPVZffB6Nk2eksS6aCACGVGnpump",
   "EkTfN4Pb7K3NXzxsbzkn3AA4MGbsdTniFJ3G2RsVpump",
