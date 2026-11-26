@@ -1,13 +1,13 @@
 {
  "strategy": "capture-v6",
- "saved": "2026-11-25T14:54:39.921074",
+ "saved": "2026-11-26T03:45:21.408592",
  "start": 70.0,
- "cash": 94.97736733618903,
+ "cash": 83.42274740548082,
  "wins": 2,
  "losses": 2,
  "loss_streak": 1,
  "day": "2026-11-19",
- "peak": 95.00573450154111,
+ "peak": 111.7868427348685,
  "paused": false,
  "curve": [
   [
@@ -357,6 +357,30 @@
   [
    "2026-11-25T14:09:39.910376",
    95.00573450154111
+  ],
+  [
+   "2026-11-25T21:59:56.263134",
+   95.00573450154111
+  ],
+  [
+   "2026-11-25T22:59:56.276542",
+   86.81214899375314
+  ],
+  [
+   "2026-11-25T23:59:56.289742",
+   83.53056835405555
+  ],
+  [
+   "2026-11-26T00:59:56.303603",
+   83.52928594211582
+  ],
+  [
+   "2026-11-26T02:01:46.043396",
+   83.52895139987066
+  ],
+  [
+   "2026-11-26T03:02:51.446527",
+   83.52889564282981
   ]
  ],
  "positions": {
@@ -377,6 +401,28 @@
    "stage": 1,
    "peak": 0.0006289,
    "last_price": 1.453e-06,
+   "reasons": [
+    "TP1_2x"
+   ],
+   "written_off": 0.0
+  },
+  "6sA2MQ16pug6gUo78UXBiJjqWWpwejRKk6s4BNdEpump": {
+   "addr": "6sA2MQ16pug6gUo78UXBiJjqWWpwejRKk6s4BNdEpump",
+   "symbol": "MONEY",
+   "opened": "2026-11-25T22:25:26.268909",
+   "planned_usd": 19.001146900308225,
+   "signals": [
+    "BUY_RATIO",
+    "HOLDER_GROWTH"
+   ],
+   "tokens": 55757.040858,
+   "tokens_bought": 92928.40143,
+   "cost": 19.001146900308225,
+   "proceeds": 7.4465269696,
+   "parts_done": 2,
+   "stage": 1,
+   "peak": 0.0006157,
+   "last_price": 1.395e-06,
    "reasons": [
     "TP1_2x"
    ],
@@ -443,6 +489,7 @@
   "3BcJ4SSCfbxDMrWcUDucyCWxMjmy4M2ECCtvxu86pump",
   "3cL47ohWa2HApLYKtqPsqkjaxJ6HLvT5Ri1KvWdXpump",
   "5LDowscYVD3a6ZS4m8gCqG5nU16eLTwRXhciFi1bpump",
+  "6sA2MQ16pug6gUo78UXBiJjqWWpwejRKk6s4BNdEpump",
   "816BuXnCFQqt6KXbBTcFgHWD29Ckpaqt8HMKSN4Vpump",
   "82u71wqQSa4NmD1UTTDwKyh5EUm3xe9pMp4UZXhFpump",
   "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump",

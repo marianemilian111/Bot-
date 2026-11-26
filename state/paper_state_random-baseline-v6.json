@@ -1,13 +1,13 @@
 {
  "strategy": "random-baseline-v6",
- "saved": "2026-11-25T14:54:39.922041",
+ "saved": "2026-11-26T03:45:21.409267",
  "start": 70.0,
- "cash": 65.23057341010895,
+ "cash": 57.25391228013548,
  "wins": 2,
  "losses": 2,
  "loss_streak": 0,
  "day": "2026-11-19",
- "peak": 65.32587868946737,
+ "peak": 76.67727270227182,
  "paused": false,
  "curve": [
   [
@@ -357,6 +357,30 @@
   [
    "2026-11-25T14:09:39.910376",
    65.32587868946737
+  ],
+  [
+   "2026-11-25T21:59:56.263134",
+   65.32587868946737
+  ],
+  [
+   "2026-11-25T22:59:56.276542",
+   59.64180938162427
+  ],
+  [
+   "2026-11-25T23:59:56.289742",
+   57.40341369994738
+  ],
+  [
+   "2026-11-26T00:59:56.303603",
+   57.40253895522427
+  ],
+  [
+   "2026-11-26T02:01:46.043396",
+   57.40231076094868
+  ],
+  [
+   "2026-11-26T03:02:51.446527",
+   57.402272728569415
   ]
  ],
  "positions": {
@@ -377,6 +401,27 @@
    "peak": 0.0003531,
    "last_price": 1.551e-06,
    "reasons": [],
+   "written_off": 0.0
+  },
+  "6sA2MQ16pug6gUo78UXBiJjqWWpwejRKk6s4BNdEpump": {
+   "addr": "6sA2MQ16pug6gUo78UXBiJjqWWpwejRKk6s4BNdEpump",
+   "symbol": "MONEY",
+   "opened": "2026-11-25T22:25:26.268909",
+   "planned_usd": 13.065175737893476,
+   "signals": [
+    "RANDOM"
+   ],
+   "tokens": 38032.3792656,
+   "tokens_bought": 63387.298775999996,
+   "cost": 13.065175737893476,
+   "proceeds": 5.0885146079200005,
+   "parts_done": 2,
+   "stage": 1,
+   "peak": 0.0006157,
+   "last_price": 1.395e-06,
+   "reasons": [
+    "TP1_2x"
+   ],
    "written_off": 0.0
   }
  },
@@ -438,6 +483,7 @@
   "27u3diWofnXGUkddjLGhcy1nRssFKHW3RtNbpWzUpump",
   "3BcJ4SSCfbxDMrWcUDucyCWxMjmy4M2ECCtvxu86pump",
   "5LDowscYVD3a6ZS4m8gCqG5nU16eLTwRXhciFi1bpump",
+  "6sA2MQ16pug6gUo78UXBiJjqWWpwejRKk6s4BNdEpump",
   "816BuXnCFQqt6KXbBTcFgHWD29Ckpaqt8HMKSN4Vpump",
   "9vLdkMGZ9jbKAZZKrxVzShEBuafLkjB7UgHfNh3xpump",
   "A4jXnWk1rDRDth6HmDASi45c89n1AguTHivAQPTVpump",
