@@ -18,18 +18,18 @@
   "baseline_seed": 20261119,
   "stale_data_s": 120
  },
- "cycles": 633,
- "started_utc": "2026-11-25T21:39:50+00:00",
- "ended_utc": "2026-11-26T03:26:09+00:00",
+ "cycles": 690,
+ "started_utc": "2026-11-26T08:11:57+00:00",
+ "ended_utc": "2026-11-26T13:56:57+00:00",
  "resumed": true,
  "minutes_planned": 345.0,
- "minutes_run": 346.3,
+ "minutes_run": 345.0,
  "stop": null,
  "sha": "3c809eaae042455a35f5aa6ec6a0877e51934bbe",
- "run_id": "45706194577",
- "jsonl": "v3_collect_20261125_213950.jsonl",
- "pools_discovered": 256,
- "evaluable_pairs": 13,
+ "run_id": "45780955491",
+ "jsonl": "v3_collect_20261126_081157.jsonl",
+ "pools_discovered": 300,
+ "evaluable_pairs": 1,
  "entry_simulations": {
   "OK": 0,
   "FAIL": 0,
@@ -43,7 +43,7 @@
  },
  "discovery_errors": {},
  "logs": {
-  "momentum-v5-1signal": "night_momentum-v5-1signal_20261125_213950.log",
-  "random-baseline-v5": "night_random-baseline-v5_20261125_213950.log"
+  "momentum-v5-1signal": "night_momentum-v5-1signal_20261126_081157.log",
+  "random-baseline-v5": "night_random-baseline-v5_20261126_081157.log"
  }
 }
