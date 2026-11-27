@@ -1,0 +1,56 @@
+{
+ "strategy": "momentum-v5-1signal",
+ "baseline": "random-baseline-v5",
+ "fingerprint": "d9d4191e906de84d",
+ "rules": {
+  "min_age_s": 0,
+  "max_age_s": 21600,
+  "position_usd": 50.0,
+  "start_balance": 250.0,
+  "entry_parts": 2,
+  "min_signals": 1,
+  "changed_vs_v1": "min_signals 2 -> 1 (only change); execution as v3",
+  "discovery": "LiveFeed: DexScreener profiles + boosts latest/top, GeckoTerminal new/trending (discovery only, never a signal)",
+  "fills": "jupiter quote at size + net fee",
+  "net_fee_usd": 0.02,
+  "exit_fill": "only a passing sell simulation at size; FAIL -> $0 imputed; UNKNOWN -> retry next cycle",
+  "baseline": "paired: one random draw among same-cycle pairs passing universe+safety, per Momentum entry",
+  "baseline_seed": 20261119,
+  "stale_data_s": 120
+ },
+ "cycles": 690,
+ "started_utc": "2026-11-26T21:28:19+00:00",
+ "ended_utc": "2026-11-27T03:13:32+00:00",
+ "resumed": true,
+ "minutes_planned": 345.0,
+ "minutes_run": 345.2,
+ "stop": null,
+ "sha": "3c809eaae042455a35f5aa6ec6a0877e51934bbe",
+ "run_id": "45898278070",
+ "jsonl": "v3_collect_20261126_212819.jsonl",
+ "pools_discovered": 300,
+ "evaluable_pairs": 9,
+ "entry_simulations": {
+  "OK": 0,
+  "FAIL": 0,
+  "UNKNOWN": 0
+ },
+ "baseline_draws": [],
+ "baseline_entry_simulations": {
+  "OK": 0,
+  "FAIL": 0,
+  "UNKNOWN": 0
+ },
+ "discovery_errors": {
+  "gt_new_pools": {
+   "http 429": 2
+  },
+  "gt_trending_pools": {
+   "http 429": 1
+  }
+ },
+ "logs": {
+  "momentum-v5-1signal": "night_momentum-v5-1signal_20261126_212819.log",
+  "random-baseline-v5": "night_random-baseline-v5_20261126_212819.log"
+ }
+}

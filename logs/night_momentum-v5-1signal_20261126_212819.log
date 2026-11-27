@@ -1,0 +1,538 @@
+2026-11-26 21:28:19 INFO     start balance=$250.00
+2026-11-26 21:28:19 INFO     strategy=momentum-v5-1signal fingerprint=d9d4191e906de84d rules={"baseline": "paired: one random draw among same-cycle pairs passing universe+safety, per Momentum entry", "baseline_seed": 20261119, "changed_vs_v1": "min_signals 2 -> 1 (only change); execution as v3", "discovery": "LiveFeed: DexScreener profiles + boosts latest/top, GeckoTerminal new/trending (discovery only, never a signal)", "entry_parts": 2, "exit_fill": "only a passing sell simulation at size; FAIL -> $0 imputed; UNKNOWN -> retry next cycle", "fills": "jupiter quote at size + net fee", "max_age_s": 21600, "min_age_s": 0, "min_signals": 1, "net_fee_usd": 0.02, "position_usd": 50.0, "stale_data_s": 120, "start_balance": 250.0} resumed=True (PAPER ONLY)
+2026-11-26 21:28:19 EXIT_DEFERRED COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat HARD_STOP: SELL_SIMULATION=UNKNOWN cat=NO_HOLDER stage=holder lookup (no public holder with >= 961,846 tokens) tokens=961,846 price=7.731e-06; retried next cycle, no fill
+2026-11-26 21:28:19 SKIPPED  Hoppy (pump.fun) mint=CFX1gH7CKYwqYXrfDkS2MUxJcEhs8PT63DyRA1chpump signals=BUY_RATIO reason: max 2 open positions
+2026-11-26 21:28:19 FILTERED Elonmas (pump.fun) mint=ChYn9ZpCUzrwd8rcpUtr7K7iKgDWUfJijM4xwxBCpump signals=BUY_RATIO reason: liquidity $24,118 < $40,000
+2026-11-26 21:28:19 FILTERED CatMcGee (meteora) mint=Ce71i294s6Me7soux5cSeJRgN3Nffn5sxSCDFz9MYCVf signals=VOL_SPIKE reason: liquidity $12,363 < $40,000
+2026-11-26 21:28:19 FILTERED Goon (pump.fun) mint=6Sm9SMP11iFuL7AqFCJeyQc23WF4s1ZGxS7JXveQJRW signals=VOL_SPIKE reason: liquidity $7,574 < $40,000
+2026-11-26 21:29:19 FILTERED 3 (meteora) mint=4mneAu6MJFNhLcsAvALKV3uaQGqNuhWGU9BQ2ri5QjWk signals=VOL_SPIKE+BUY_RATIO reason: LP unlocked/unknown
+2026-11-26 21:29:19 FILTERED Goon (pump.fun) mint=Foo8XcjAy5paYkUi17MXmNd2A1X3qKTRUfswMLKidGbS signals=VOL_SPIKE reason: liquidity $15,134 < $40,000
+2026-11-26 21:29:49 SKIPPED  Cateball (pump.fun) mint=Bb38n8AVLMh9amo8qtjLvqE8nPtfs8GEsyzg1pC6pump signals=BUY_RATIO reason: max 2 open positions
+2026-11-26 21:30:49 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 120s old; no exit decision on it, position kept until fresh data
+2026-11-26 21:33:49 FILTERED FIREBALL (pump.fun) mint=3FXQU7aFGcKoAAnEbAM28RjKoxB8FM9iNnBD6uXmfire signals=BUY_RATIO reason: liquidity $6,836 < $40,000
+2026-11-26 21:34:19 FILTERED Hoppy (pump.fun) mint=CFX1gH7CKYwqYXrfDkS2MUxJcEhs8PT63DyRA1chpump signals=BUY_RATIO reason: 5m volume $9,305 < $25,000
+2026-11-26 21:35:19 FILTERED DON (meteora) mint=3BXP8eXVJvZSbkVzhrVL1uHTQ5nEJNdivvXNPC9eNEbq signals=VOL_SPIKE+BUY_RATIO reason: liquidity $33,670 < $40,000
+2026-11-26 21:35:19 FILTERED Mercedes (pump.fun) mint=TK1LpCBiboY93DNuYXkb932ZMrrpxEp2ysxDdGwpump signals=VOL_SPIKE reason: liquidity $11,742 < $40,000
+2026-11-26 21:36:49 FILTERED DON (meteora) mint=3BXP8eXVJvZSbkVzhrVL1uHTQ5nEJNdivvXNPC9eNEbq signals=VOL_SPIKE+BUY_RATIO reason: LP unlocked/unknown
+2026-11-26 21:37:49 FILTERED Cateball (pump.fun) mint=Bb38n8AVLMh9amo8qtjLvqE8nPtfs8GEsyzg1pC6pump signals=BUY_RATIO reason: 5m volume $22,572 < $25,000
+2026-11-26 21:41:19 FILTERED MONA (pump.fun) mint=6is11V1KgpybgPdMkYGBacbiT62kqunsvnLDNzDfpump signals=BUY_RATIO reason: liquidity $7,022 < $40,000
+2026-11-26 21:45:19 FILTERED Corleone (meteora) mint=8DpzkLqJU8zCj2ZCdu8rwVKH4kAcRbMnPhXtem9gGu4D signals=VOL_SPIKE+BUY_RATIO reason: liquidity $18,245 < $40,000
+2026-11-26 21:45:19 FILTERED vetocat (meteora) mint=8jyMCoAn599N6hATq2VUweQYWNSwLyVfRhpXMCmPVCce signals=VOL_SPIKE reason: liquidity $30,706 < $40,000
+2026-11-26 21:46:19 FILTERED vetocat (meteora) mint=8jyMCoAn599N6hATq2VUweQYWNSwLyVfRhpXMCmPVCce signals=VOL_SPIKE+BUY_RATIO reason: LP unlocked/unknown
+2026-11-26 21:46:19 FILTERED Kuro (pump.fun) mint=9SXgSTDZ9HiPJYzqXE43tbZPAQdzhDgu2h2YN7Mo9Ye7 signals=VOL_SPIKE reason: liquidity $9,493 < $40,000
+2026-11-26 21:47:19 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 150s old; no exit decision on it, position kept until fresh data
+2026-11-26 21:47:19 FILTERED Claws (pump.fun) mint=4c7qoYFiyoe6YivnLygEikxDu6dQhRwhX4iGZ6pw6x1J signals=VOL_SPIKE+BUY_RATIO reason: liquidity $11,609 < $40,000
+2026-11-26 21:47:19 FILTERED Dogeball (pump.fun) mint=EMhHvdxs3L1T38pV1yNe9JXF6KfkxFTShNLaxL7rpump signals=VOL_SPIKE reason: liquidity $1,361 < $40,000
+2026-11-26 21:48:19 FILTERED HOLD (pump.fun) mint=BuNeErf9FjL6dgzE74S21Qm9EeBaYMJXSW4A8ihxpump signals=VOL_SPIKE reason: liquidity $6,909 < $40,000
+2026-11-26 21:51:19 FILTERED HOLD (meteora) mint=Gn6MmAriEmNS9jEx5pF7b26zSapBs5WetHcVcv6z2eLx signals=VOL_SPIKE+BUY_RATIO reason: liquidity $35,421 < $40,000
+2026-11-26 21:51:19 FILTERED SI (meteora) mint=4FJU2QvCUqvFQA9kmo6bdcFSHiN8dojWcHawvMy3pqpV signals=VOL_SPIKE reason: liquidity $2,516 < $40,000
+2026-11-26 21:53:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 21:53:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 21:54:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 21:54:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 21:55:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 21:55:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 21:56:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 21:56:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 21:57:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 21:57:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 21:58:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 21:58:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 21:59:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 21:59:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:00:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:00:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:01:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:01:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:02:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:02:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:03:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:03:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:04:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:04:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:05:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:05:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:06:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:06:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:07:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:07:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:08:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:08:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:09:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:09:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:10:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:10:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:11:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:11:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:12:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:12:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:13:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:13:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:14:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:14:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:15:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:15:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:16:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:16:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:17:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:17:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:18:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:18:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:19:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:19:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:20:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:20:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:21:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:21:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:22:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:22:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:23:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:23:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:24:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:24:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:25:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:25:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:26:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:26:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:27:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:27:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:28:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:28:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:29:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:29:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:30:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:30:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:31:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:31:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:32:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:32:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:33:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:33:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:34:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:34:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:35:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:35:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:36:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:36:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:37:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:37:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:38:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:38:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:39:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:39:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:40:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:40:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:41:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:41:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:42:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:42:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:43:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:43:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:44:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:44:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:45:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:45:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:46:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:46:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:47:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:47:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:48:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:48:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:49:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:49:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:50:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:50:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:51:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:51:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:52:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:52:49 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 420s old; no exit decision on it, position kept until fresh data
+2026-11-26 22:52:49 FILTERED MeiMeiCat (pump.fun) mint=4tf8SgybEGPF6jY5E47PvXadHy993xmocu8PEKyxtr4e signals=VOL_SPIKE+BUY_RATIO reason: liquidity $32,398 < $40,000
+2026-11-26 22:52:49 FILTERED WATERBALL (pump.fun) mint=23Yun5pvmzaMX4PYnjYA2zHq3X2zrd6Dq8RBpYg1pump signals=BUY_RATIO reason: liquidity $4,943 < $40,000
+2026-11-26 22:52:49 FILTERED COIN (pump.fun) mint=8n7mSQ8KUqP17AQii1bmWR1wdRhtKe5fDW7yiuLqpump signals=VOL_SPIKE reason: liquidity $14,131 < $40,000
+2026-11-26 22:52:49 FILTERED CINU (pump.fun) mint=CvXQ9qEriGgTbMWyF8L1U7oqn9ev8A49N1dzNE8cpump signals=BUY_RATIO reason: liquidity $25,432 < $40,000
+2026-11-26 22:54:19 FILTERED Cateball (pump.fun) mint=Bb38n8AVLMh9amo8qtjLvqE8nPtfs8GEsyzg1pC6pump signals=BUY_RATIO reason: liquidity $37,374 < $40,000
+2026-11-26 22:55:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:55:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 22:56:19 FILTERED CATE (pump.fun) mint=A5z2jXdSp2hvBPkaV3QeB4XHaNHuTXMEPXbABmnkby5X signals=VOL_SPIKE+BUY_RATIO reason: liquidity $9,693 < $40,000
+2026-11-26 22:56:19 FILTERED Gemma (meteora) mint=nCwMUZCXXdW68tDdNT65EpoRXJi1sV2cdeDun5Ucq3b signals=VOL_SPIKE reason: liquidity $25,594 < $40,000
+2026-11-26 22:58:49 FILTERED ZINU (pump.fun) mint=9SVj5ZTAL41tqswVNwT1TT9yv3oSHYMYv8zqoHtPpump signals=VOL_SPIKE reason: liquidity $1,468 < $40,000
+2026-11-26 22:59:19 FILTERED GKOL (pump.fun) mint=3XtUVhBaq3oFE15Y2ZosuGGiQspnh4BgpexURTNDpump signals=VOL_SPIKE reason: liquidity $8,083 < $40,000
+2026-11-26 23:01:19 FILTERED HOLD (meteora) mint=59ubTThHMRieY9xNPUUqojX6K49frRVq4acVtaxSkYeS signals=VOL_SPIKE reason: liquidity $1,861 < $40,000
+2026-11-26 23:01:19 FILTERED MWG (meteora) mint=TujneXyVYPNKeizyQucS4Zp9gniLrvfXzsyNE8rYrNQ signals=VOL_SPIKE reason: liquidity $22,372 < $40,000
+2026-11-26 23:01:19 FILTERED MWG (meteora) mint=EVZBQZQzuLTX4WpZL3ZUxsp6DMuy9fdV6hauDXS83ruX signals=VOL_SPIKE reason: liquidity $16,434 < $40,000
+2026-11-26 23:04:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:04:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:05:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:05:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:06:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:06:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:07:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:07:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:08:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:08:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:09:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:09:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:10:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:10:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:11:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:11:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:12:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:12:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:13:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:13:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:14:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:14:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:15:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:15:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:16:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:16:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:17:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:17:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:18:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:18:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:19:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:19:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:20:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:20:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:21:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:21:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:22:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:22:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:23:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:23:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:24:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:24:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:25:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:25:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:26:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:26:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:27:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:27:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:28:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:28:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:29:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:29:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:30:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:30:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:31:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:31:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:32:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:32:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:33:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:33:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:34:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:34:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-26 23:35:19 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 1831s old; no exit decision on it, position kept until fresh data
+2026-11-26 23:35:19 FILTERED Rings (pump.fun) mint=6rRvbmHaNt4jStJvntUXMW2PzU3L4Vbdwfp9jxprmY49 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $31,281 < $40,000
+2026-11-26 23:35:19 FILTERED Hoppy (pump.fun) mint=CFX1gH7CKYwqYXrfDkS2MUxJcEhs8PT63DyRA1chpump signals=BUY_RATIO reason: liquidity $25,578 < $40,000
+2026-11-26 23:36:19 FILTERED Vetocat (pump.fun) mint=9J2cy3AfDquDDKqjteYaFSrYEvUAGnb1Qxw8pZQApump signals=VOL_SPIKE+BUY_RATIO reason: liquidity $23,688 < $40,000
+2026-11-26 23:36:19 FILTERED 404 (meteora) mint=Fc8Y4LsJagGzsMFh8h61iNt9nsF36A9cKdaoXqf59JwF signals=VOL_SPIKE+BUY_RATIO reason: liquidity $30,026 < $40,000
+2026-11-26 23:36:19 FILTERED FLOW (pump.fun) mint=FxWDDcxosMaRnFRzzDQisFjN4a5Gip5ECs7MtsQYFLoW signals=VOL_SPIKE reason: liquidity $11,508 < $40,000
+2026-11-26 23:46:19 FILTERED TOGI (meteora) mint=FzDKTT2CVAKP66Z54YzfjLTinPKZKWZ7kTAnjBKfxX88 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $21,520 < $40,000
+2026-11-26 23:46:19 FILTERED PUMPCHAN (pump.fun) mint=hrtyNLh7NqoUABbFa8KULPBNZ8FB51a57yd4EE3EG95 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $30,074 < $40,000
+2026-11-26 23:49:19 FILTERED POPBALL (pump.fun) mint=CKiuTwHFMXKBaQ4V1WgsYctsdbLeit3wytXRkphzpump signals=BUY_RATIO reason: liquidity $28,247 < $40,000
+2026-11-26 23:55:19 FILTERED FF (pump.fun) mint=B2JjjQfrDAiDM99haXM5jpFibxbQaPvdqX7aB9Tupump signals=VOL_SPIKE reason: liquidity $8,107 < $40,000
+2026-11-26 23:57:19 FILTERED BRATH (pump.fun) mint=C4QLVij7P6zqr6s53SJps76ndEn9K5sjXfzbRFeqpump signals=VOL_SPIKE+BUY_RATIO reason: 5m volume $5,664 < $25,000
+2026-11-27 00:03:19 FILTERED Axiom (meteora) mint=6XrVbUHtsF8zv9CqsxLfwKpgokym5nTWpQAVCW4J7ezs signals=VOL_SPIKE+BUY_RATIO reason: liquidity $2 < $40,000
+2026-11-27 00:03:19 FILTERED TOGI (pump.fun) mint=2VeUSgG7uyFdEvvPVn8vhBWDagegU3mZ6pL51r9Bvv2r signals=BUY_RATIO reason: liquidity $38,870 < $40,000
+2026-11-27 00:04:19 FILTERED CHAIN95 (pump.fun) mint=E4ZnLtSmEjUvnWCL56fRHK4SHxYVZndB9Y3242DRpump signals=VOL_SPIKE reason: liquidity $1,195 < $40,000
+2026-11-27 00:05:19 SKIPPED  Vetocat (pump.fun) mint=9J2cy3AfDquDDKqjteYaFSrYEvUAGnb1Qxw8pZQApump signals=BUY_RATIO reason: max 2 open positions
+2026-11-27 00:07:19 FILTERED MDAQ (pump.fun) mint=u7GYQkdR8cEy5EG6R61Qmtjzn765iBWFc5fimLDpump signals=VOL_SPIKE reason: liquidity $7,956 < $40,000
+2026-11-27 00:08:19 FILTERED MEMEKING (meteora) mint=7d7Noa9nJifWJFEYEgnmqfteKh2BSj8s8VF3oynwZ4kB signals=VOL_SPIKE reason: liquidity $24,302 < $40,000
+2026-11-27 00:12:19 FILTERED Duh (pump.fun) mint=6u1NqAcnH7pdHbYUygBSsVr6oAMShqagmWT1ZDYppump signals=VOL_SPIKE reason: liquidity $7,938 < $40,000
+2026-11-27 00:12:19 FILTERED Datacat (pump.fun) mint=BfBVz8CMLG8Bhbp3ya6BTw41b6ginJTmtRv9c5tA5NEo signals=VOL_SPIKE reason: liquidity $9,864 < $40,000
+2026-11-27 00:16:19 FILTERED CAT (meteora) mint=3ai6mFprz6MVV7poSQkhreCUoN2xtnpH6asN4DbhuhcA signals=VOL_SPIKE reason: liquidity $25,447 < $40,000
+2026-11-27 00:18:19 FILTERED BEANIE (pump.fun) mint=7Vk7CdLg2b48BLMkbPRt4Ep3ZE1asrUEgX9nrEabx3bg signals=VOL_SPIKE reason: liquidity $765 < $40,000
+2026-11-27 00:19:19 FILTERED COOLS (pump.fun) mint=A28uKeoB79ksfCarcDuJzaqE4LqJenPHxxPRR2nApump signals=VOL_SPIKE reason: liquidity $18,092 < $40,000
+2026-11-27 00:20:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 00:20:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 00:21:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 00:21:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 00:22:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 00:22:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 00:23:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 00:23:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 00:24:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 00:24:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 00:25:19 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 272s old; no exit decision on it, position kept until fresh data
+2026-11-27 00:25:19 FILTERED Axiom (meteora) mint=BmWpYXaqqmf3tzghnVuxQzmeiNrJRUuKueFaKM52qG5T signals=VOL_SPIKE+BUY_RATIO reason: holders 216 < 300
+2026-11-27 00:25:19 FILTERED SPACEXLIFE (pump.fun) mint=6pg8DgVFpjnK6h2boNjeyhhoCTe4uCRAdqh5PxdtMA6Q signals=VOL_SPIKE+BUY_RATIO reason: liquidity $31,386 < $40,000
+2026-11-27 00:26:19 FILTERED Axiom (meteora) mint=BmWpYXaqqmf3tzghnVuxQzmeiNrJRUuKueFaKM52qG5T signals=BUY_RATIO reason: liquidity $9 < $40,000
+2026-11-27 00:26:19 FILTERED CINU (meteora) mint=ASNQjGY8MCtJE9RoiKND5oxxNZDKoDXGHqjW3cgCELQo signals=VOL_SPIKE reason: liquidity $14,573 < $40,000
+2026-11-27 00:26:49 FILTERED BLOX (pump.fun) mint=65VjZZFhwpfnkZe42qUoqRZksJkpmdk5FA52dyVcpump signals=VOL_SPIKE reason: liquidity $131 < $40,000
+2026-11-27 00:31:49 FILTERED George (pump.fun) mint=FvitVJ528ZCyuy695DoqEGy816rFVafbZ2MSgMw3pump signals=VOL_SPIKE reason: liquidity $1,635 < $40,000
+2026-11-27 00:32:19 FILTERED SHIA (pump.fun) mint=HpKjCnvJbgZ2ymjDvae5ZZ29t21FqECWN8ohWCFcpump signals=VOL_SPIKE reason: liquidity $15,048 < $40,000
+2026-11-27 00:35:19 FILTERED inuvestor (pump.fun) mint=341KHzpxbuXeJUP6yRGQLwmmWgFVwXJM6VxgPhYipump signals=VOL_SPIKE reason: liquidity $8,927 < $40,000
+2026-11-27 00:36:19 FILTERED Babsub (pump.fun) mint=6o2yRnMBvA5i5JNuU52AUFv6mRX6ucRRKt7Z2JoHbonk signals=VOL_SPIKE+BUY_RATIO reason: 5m volume $5,305 < $25,000
+2026-11-27 00:36:19 FILTERED NVIDIA (meteora) mint=5PAuuaRaezgm5AUyTKiF5oxoZNc8wp5kTcodLaqF44uZ signals=VOL_SPIKE+BUY_RATIO reason: liquidity $33,015 < $40,000
+2026-11-27 00:36:19 FILTERED Pair (meteora) mint=2PjaiZ3HyS8cQUd6Qv8ZiUYNRDEQ8ehzvmPDv5juRL33 signals=VOL_SPIKE reason: liquidity $24,909 < $40,000
+2026-11-27 00:36:19 FILTERED INUVESTOR (meteora) mint=Az8Qfb81axRVMmmV33Vt8jTbXo3E2mpWfCqxZcpNnzMb signals=VOL_SPIKE reason: liquidity $18,314 < $40,000
+2026-11-27 00:37:49 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 120s old; no exit decision on it, position kept until fresh data
+2026-11-27 00:38:19 FILTERED NVIDIA (meteora) mint=5PAuuaRaezgm5AUyTKiF5oxoZNc8wp5kTcodLaqF44uZ signals=VOL_SPIKE+BUY_RATIO reason: LP unlocked/unknown
+2026-11-27 00:41:19 FILTERED BARRON (pump.fun) mint=CVCkUiheSUrn97sFVsWdhedrmu4LXZxJubpFebgHpump signals=VOL_SPIKE reason: liquidity $1,771 < $40,000
+2026-11-27 00:42:19 FILTERED Babsub (pump.fun) mint=6o2yRnMBvA5i5JNuU52AUFv6mRX6ucRRKt7Z2JoHbonk signals=BUY_RATIO reason: liquidity $0 < $40,000
+2026-11-27 00:43:19 SKIPPED  Kuro (pump.fun) mint=BuorVu99GQ1LHT194YNYRbdXivTCA8o58nz7iji2pump signals=VOL_SPIKE+BUY_RATIO reason: max 2 open positions
+2026-11-27 00:47:19 FILTERED TRENCHTV (pump.fun) mint=9kE92RkyRXWdCvkc7DbW86Rm1T3NshJRBrtGR17pump signals=VOL_SPIKE reason: liquidity $1,175 < $40,000
+2026-11-27 00:47:19 FILTERED PI (pump.fun) mint=GEUULM43QbeFJ7p1Twodufx7bJDWNBibpwbKyETWpump signals=VOL_SPIKE reason: liquidity $1,341 < $40,000
+2026-11-27 00:47:19 FILTERED TOGI (meteora) mint=5swRjkU5M5Th1cVEbDcr6Tgi2mQFyiaeenKs67KGMyD3 signals=VOL_SPIKE reason: liquidity $2,598 < $40,000
+2026-11-27 00:47:19 FILTERED DeepWeb (pump.fun) mint=Bg84XT66kZDCVojghAzseaBaHayFfXKQGRy9p4gqpump signals=VOL_SPIKE reason: liquidity $9,568 < $40,000
+2026-11-27 00:50:19 FILTERED Kuro (pump.fun) mint=BuorVu99GQ1LHT194YNYRbdXivTCA8o58nz7iji2pump signals=BUY_RATIO reason: liquidity $32,606 < $40,000
+2026-11-27 00:50:19 FILTERED CUMASS (pump.fun) mint=CS8vS3n7Ptc4NBGwt62LxxAeW7gpPigHVYhmKcS7pump signals=VOL_SPIKE reason: liquidity $12,889 < $40,000
+2026-11-27 00:53:19 FILTERED MOSTO (pump.fun) mint=RecRFwNXRbTuDwDnvokNv5h4hLQubaDZMJwKfshpump signals=BUY_RATIO reason: liquidity $3,679 < $40,000
+2026-11-27 00:55:19 FILTERED Zvault (pump.fun) mint=22LdCcDLdkoVurWrFaAG6rjiEXWhcdM6EYEJszVZBAGS signals=VOL_SPIKE+BUY_RATIO reason: 5m volume $11,189 < $25,000
+2026-11-27 00:56:19 FILTERED Doomscroll (pump.fun) mint=427E2wTecAscojz5WuMB6vcm9m4heQDnSArC38Yopump signals=VOL_SPIKE+BUY_RATIO reason: liquidity $9,805 < $40,000
+2026-11-27 00:57:49 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 121s old; no exit decision on it, position kept until fresh data
+2026-11-27 01:00:19 FILTERED VIDA (pump.fun) mint=8NnchH8Y6Z4ieWcqDEqF2w9531xm2oE4YwZyA2ybpump signals=VOL_SPIKE reason: 5m volume $1,086 < $25,000
+2026-11-27 01:05:49 SKIPPED  KAI (pump.fun) mint=G2ZDG8q3QMYk3KR58JFFYsvaTk4Gy94UzMo7Re7spump signals=HOLDER_GROWTH reason: max 2 open positions
+2026-11-27 01:06:19 EXIT_DEFERRED FNDR mint=64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump HARD_STOP: SELL_SIMULATION=UNKNOWN cat=NO_HOLDER stage=holder lookup (no public holder with >= 133,272 tokens) tokens=133,272 price=3.183e-06; retried next cycle, no fill
+2026-11-27 01:06:19 FILTERED USOF (meteora) mint=E2n49Qn9wmgFQn2FAUvvtrWQexthHPdb9RkDFWD7fhhL signals=VOL_SPIKE reason: liquidity $5,974 < $40,000
+2026-11-27 01:07:19 FILTERED ceme (meteora) mint=FbGynTr9j6Gj5zgdFVYr4Eae3t8XhjoLaxAEttByPcu9 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $30,368 < $40,000
+2026-11-27 01:07:19 FILTERED NVIDIA (meteora) mint=uumyyKamAb44uN3xfhHm5FSjmQUmEG2haN4yfWqEqj3 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $0 < $40,000
+2026-11-27 01:08:49 STALE    FNDR mint=64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump: market data 124s old; no exit decision on it, position kept until fresh data
+2026-11-27 01:08:49 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 124s old; no exit decision on it, position kept until fresh data
+2026-11-27 01:08:49 FILTERED ceme (meteora) mint=FbGynTr9j6Gj5zgdFVYr4Eae3t8XhjoLaxAEttByPcu9 signals=VOL_SPIKE+BUY_RATIO reason: LP unlocked/unknown
+2026-11-27 01:11:19 FILTERED JENSEN (pump.fun) mint=FyWktbEkTvqYdoLf8VkVnmnx7CXybWrKwqDfTYD9UzSY signals=VOL_SPIKE+BUY_RATIO reason: liquidity $30,996 < $40,000
+2026-11-27 01:11:19 FILTERED pairless (meteora) mint=4Q32CYQHeKEEV7WXji6j8FGMqM2PSn4WBEJTcfaFR6E6 signals=VOL_SPIKE+BUY_RATIO reason: liquidity $21,901 < $40,000
+2026-11-27 01:11:19 FILTERED Rodrigo (meteora) mint=2RCPgtPY1Z1JuY1vhchwSwwR3TvQgLnwzhQY9YZRYYhm signals=VOL_SPIKE reason: liquidity $1,561 < $40,000
+2026-11-27 01:13:19 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 151s old; no exit decision on it, position kept until fresh data
+2026-11-27 01:16:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:16:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:17:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:17:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:18:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:18:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:19:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:19:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:20:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:20:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:21:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:21:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:22:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:22:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:23:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:23:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:24:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:24:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:25:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:25:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:26:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:26:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:27:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:27:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:28:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:28:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:29:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:29:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:30:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:30:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:31:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:31:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:32:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:32:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:33:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:33:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:34:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:34:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:35:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:35:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:36:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:36:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:37:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:37:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:38:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:38:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:39:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:39:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:40:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:40:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:41:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:41:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:42:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:42:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:43:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:43:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:44:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:44:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:45:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:45:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:46:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:46:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:47:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:47:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:48:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:48:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:49:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:49:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:50:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:50:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:51:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:51:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:52:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:52:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:53:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:53:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:54:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:54:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:55:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:55:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:56:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:56:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:57:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:57:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:58:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:58:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:59:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 01:59:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:00:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:00:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:01:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:01:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:02:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:02:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:03:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:03:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:04:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:04:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:05:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:05:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:06:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:06:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:07:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:07:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:08:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:08:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:09:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:09:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:10:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:10:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:11:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:11:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:12:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:12:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:13:19 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:13:49 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:14:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:15:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:15:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:16:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:16:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:17:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:17:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:18:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:18:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:19:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:19:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:20:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:20:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:21:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:21:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:22:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:22:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:23:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:23:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:24:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:24:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:25:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:25:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:26:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:26:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:27:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:27:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:28:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:28:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:29:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:29:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:30:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:30:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:31:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:31:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:32:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:32:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:33:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:33:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:34:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:34:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:35:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:35:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:36:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:36:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:37:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:37:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:38:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:38:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:39:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:39:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:40:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:40:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:41:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:41:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:42:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:42:32 STALE    FNDR mint=64Uf4fkAWepSjBF8QKWdftHjtgKb2FG6gZsgmx6Fpump: market data 879s old; no exit decision on it, position kept until fresh data
+2026-11-27 02:42:32 FILTERED TEXEL (pump.fun) mint=3ijTmpttdDDqvQjLo5bKciDi97Nsv9W5rehHPKuBdaPn signals=VOL_SPIKE+BUY_RATIO reason: liquidity $29,797 < $40,000
+2026-11-27 02:42:32 FILTERED DragonRiders (pump.fun) mint=8GLysmJ4QUYndKcbEBwPaQacVxukqqimwg7Ma3op14VK signals=VOL_SPIKE+BUY_RATIO reason: holders 79 < 300
+2026-11-27 02:42:32 FILTERED MERCO (pump.fun) mint=Aes7Y2NzRauKvU9ZUp6Kf874Lf4R8FiDCC8J2zmSpump signals=VOL_SPIKE+BUY_RATIO reason: 5m volume $8,092 < $25,000
+2026-11-27 02:42:32 FILTERED CALL (pump.fun) mint=Bs65KuvSxcXd9eSKVLXJxyY1amzGn6k77T4U2B6k6CBP signals=VOL_SPIKE reason: liquidity $1,748 < $40,000
+2026-11-27 02:42:32 FILTERED Santaball (pump.fun) mint=4obGGXRMVyqpWZr12UzyaBdNkgdYwz2GiY8enmd2pump signals=BUY_RATIO reason: 5m volume $20,376 < $25,000
+2026-11-27 02:42:32 FILTERED ZOTH (pump.fun) mint=2QXbXCXinZtrsEYzG6fEmAPX4fpndiv82oJu59o8pEcu signals=HOLDER_GROWTH reason: holders 220 < 300
+2026-11-27 02:42:32 FILTERED SpaceXCoin (pump.fun) mint=G2XqmSc8vJpLLwaLVXUeNkxsrhVT8vQ3Pje8MqeDpump signals=BUY_RATIO reason: liquidity $25,852 < $40,000
+2026-11-27 02:42:32 FILTERED Toggle (meteoradbc) mint=3BYYoJdLfeXDSRXToqusYrjXDDgFnuo3ZnrDxMrntogg signals=VOL_SPIKE reason: liquidity UNKNOWN (source gives none)
+2026-11-27 02:42:32 FILTERED ノヒナ (meteora) mint=qWywekBJqjgdVbFgzWk4em8ZcstZ4QL49VsTkoQUPFj signals=VOL_SPIKE reason: LP unlocked/unknown
+2026-11-27 02:42:32 FILTERED SuperFIONA (pump.fun) mint=R9jKNbqyzfSB4VWdgzregGcJneuUibqdNPyfbjDnkG6 signals=VOL_SPIKE reason: holders 58 < 300
+2026-11-27 02:43:32 FILTERED NICE (pump.fun) mint=Bh5nXBBJXUk7A1RS6VhE8B2VY2hcNGXLo7VkzJWXnkdD signals=VOL_SPIKE+BUY_RATIO reason: liquidity $31,322 < $40,000
+2026-11-27 02:43:32 FILTERED Dragon (meteora) mint=5jizHVAwDL5JHVCBm2xHZ4DbN3bDxu4dzKnA1xAmkZmu signals=VOL_SPIKE+BUY_RATIO reason: liquidity $23,841 < $40,000
+2026-11-27 02:43:32 FILTERED ノヒナ (meteora) mint=qWywekBJqjgdVbFgzWk4em8ZcstZ4QL49VsTkoQUPFj signals=VOL_SPIKE reason: liquidity $38,038 < $40,000
+2026-11-27 02:43:32 FILTERED SpaceXers (pump.fun) mint=7f7DNcCvwW83VV79en46kxrQtUMMkWfEt2fnwvVupump signals=BUY_RATIO reason: liquidity $4,792 < $40,000
+2026-11-27 02:44:32 FILTERED Joey (pump.fun) mint=CgMFCJbKBNCA1nMz7ZPg3XpABfUHsaWfrdSdGGZKgPG5 signals=VOL_SPIKE reason: liquidity $367 < $40,000
+2026-11-27 02:44:32 FILTERED CATE (pump.fun) mint=99xXMvbuwJCukS8u5q6KpRWFQrdJgUiXz1vipPMGeFDH signals=VOL_SPIKE reason: liquidity $11,179 < $40,000
+2026-11-27 02:45:02 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 122s old; no exit decision on it, position kept until fresh data
+2026-11-27 02:46:02 FILTERED PB (pump.fun) mint=DxyHxFJ8McXaTha1Go5raWDVEP4fSWhtqxPJesNKjsXt signals=BUY_RATIO reason: liquidity $2,538 < $40,000
+2026-11-27 02:48:02 SKIPPED  DragonRiders (pump.fun) mint=8GLysmJ4QUYndKcbEBwPaQacVxukqqimwg7Ma3op14VK signals=VOL_SPIKE reason: max 2 open positions
+2026-11-27 02:48:02 SKIPPED  SuperFIONA (pump.fun) mint=R9jKNbqyzfSB4VWdgzregGcJneuUibqdNPyfbjDnkG6 signals=VOL_SPIKE reason: max 2 open positions
+2026-11-27 02:49:32 FILTERED Dragon (meteora) mint=5jizHVAwDL5JHVCBm2xHZ4DbN3bDxu4dzKnA1xAmkZmu signals=VOL_SPIKE+BUY_RATIO reason: LP unlocked/unknown
+2026-11-27 02:49:32 FILTERED McInu (meteora) mint=DtZgXRXs8LCmw1r7wGFiJA3mJeBfXQxQRSyXcBXbdQCQ signals=VOL_SPIKE reason: liquidity $29,340 < $40,000
+2026-11-27 02:49:32 FILTERED POWERBALL (meteora) mint=F1VCkQnFLGEeh7LAdHK82pAsKi3nd9GLXfk7XMyrNZaw signals=VOL_SPIKE reason: liquidity $16,785 < $40,000
+2026-11-27 02:50:32 FILTERED ALBUS (pump.fun) mint=5ogd8JqTBX3PP4Nm6czEyiLzPYSKaj92H51LiXfHpump signals=VOL_SPIKE reason: liquidity $11,393 < $40,000
+2026-11-27 02:50:32 FILTERED dog3d (pump.fun) mint=8YjTr1ehqPHXRTuZuULJAuciFqNMRJmNmzyrY2cUpump signals=BUY_RATIO reason: liquidity $2,890 < $40,000
+2026-11-27 02:50:32 SKIPPED  SpaceXCoin (pump.fun) mint=G2XqmSc8vJpLLwaLVXUeNkxsrhVT8vQ3Pje8MqeDpump signals=BUY_RATIO reason: max 2 open positions
+2026-11-27 02:51:02 STALE    COCKROACH mint=Ex4qQDnV7LXeLFymQZZebrohCn3dxqr9NXDYxavfLoat: market data 126s old; no exit decision on it, position kept until fresh data
+2026-11-27 02:52:02 SKIPPED  ZOTH (pump.fun) mint=2QXbXCXinZtrsEYzG6fEmAPX4fpndiv82oJu59o8pEcu signals=HOLDER_GROWTH reason: max 2 open positions
+2026-11-27 02:52:32 FILTERED KAI (pump.fun) mint=G2ZDG8q3QMYk3KR58JFFYsvaTk4Gy94UzMo7Re7spump signals=BUY_RATIO reason: 5m volume $3,904 < $25,000
+2026-11-27 02:52:32 FILTERED NICE (pump.fun) mint=Bh5nXBBJXUk7A1RS6VhE8B2VY2hcNGXLo7VkzJWXnkdD signals=BUY_RATIO reason: 5m volume $14,447 < $25,000
+2026-11-27 02:53:32 FILTERED steppa (pump.fun) mint=6StXSU7RvsbuwNG2gPw7nmu2UTVM3ZD2aewHA7fMpump signals=BUY_RATIO reason: liquidity $12,214 < $40,000
+2026-11-27 02:55:32 FILTERED SNOWTRUCK (pump.fun) mint=F9brbkTusBijjrVWurxchgEJbaELaxAF8D8yBrn7pump signals=VOL_SPIKE reason: liquidity $1,754 < $40,000
+2026-11-27 02:56:32 SKIPPED  TEXEL (pump.fun) mint=3ijTmpttdDDqvQjLo5bKciDi97Nsv9W5rehHPKuBdaPn signals=BUY_RATIO reason: max 2 open positions
+2026-11-27 02:57:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:57:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:58:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:58:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:59:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 02:59:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:00:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:00:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:01:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:01:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:02:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:02:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:03:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:03:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:04:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:04:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:05:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:05:32 FILTERED 4PUMP (pump.fun) mint=F1zghDfFHwWWtwdh6ohNierxqcMtnjnSpAdRqJfnpump signals=VOL_SPIKE reason: liquidity $1,656 < $40,000
+2026-11-27 03:05:32 FILTERED LISTED (pump.fun) mint=9p3gyC4v5E5rtsKJ4fbKoT2qRbnLGtG3UpqfTJCFVGBu signals=VOL_SPIKE reason: liquidity $1,760 < $40,000
+2026-11-27 03:05:32 FILTERED avalanche (pump.fun) mint=CpsGS1uqg5sgDG16Peio5wXCJekgZwAt5zVhV89mpump signals=BUY_RATIO reason: liquidity $2,833 < $40,000
+2026-11-27 03:05:32 FILTERED SpaceXCoin (pump.fun) mint=G2XqmSc8vJpLLwaLVXUeNkxsrhVT8vQ3Pje8MqeDpump signals=BUY_RATIO reason: 5m volume $6,899 < $25,000
+2026-11-27 03:06:32 FILTERED Beer (meteora) mint=C4JzySbU1rPsuUPCoXvVkuvnUhXCQxn4yi9CbheMyk3E signals=VOL_SPIKE reason: liquidity $1,702 < $40,000
+2026-11-27 03:06:32 FILTERED BEEP (meteora) mint=384uS6et5UTDYKmHyg7frTyhxZxpx592usgJQPzMUtci signals=VOL_SPIKE reason: liquidity $20,252 < $40,000
+2026-11-27 03:08:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:08:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:09:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:09:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:10:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:10:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:11:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:11:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:12:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:12:32 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:13:02 ERROR    ZeroDivisionError('float division by zero')
+2026-11-27 03:13:32 INFO     end cycles=690 open=2 closed=5 failed_exits=1 (open positions stay open; no sale is invented)
